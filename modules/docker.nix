@@ -96,7 +96,7 @@
   '';
 
   # Copy all stacks from the local ./stacks directory dynamically
-  environment.etc."docker-compose/stacks".source = ./stacks;
+  environment.etc."docker-compose/stacks".source = ../stacks;
 
   ######################################################
   # Dynamic Docker Stack Initialization on System Start
