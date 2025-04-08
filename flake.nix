@@ -51,6 +51,15 @@
           path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.he-srv-centauri;
         };
       };
+
+      local-dev = {
+        hostname = "198.19.249.103";
+        profiles.system = {
+          user = "daniel";
+          sshUser = "daniel";
+          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.he-srv-centauri;
+        };
+      };
     };
 
     # Check deployments
