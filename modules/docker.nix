@@ -55,7 +55,7 @@
           --restart unless-stopped \
           -v /var/run/docker.sock:/var/run/docker.sock \
           -e WATCHTOWER_NOTIFICATIONS=shoutrrr \
-          -e WATCHTOWER_NOTIFICATION_URL="discord://$DISCORD_WEBHOOK_TOKEN@" \
+          -e WATCHTOWER_NOTIFICATION_URL="$DISCORD_WEBHOOK_TOKEN@" \
           -e WATCHTOWER_NOTIFICATION_REPORT=true \
           -e WATCHTOWER_CLEANUP=true \
           -e WATCHTOWER_SCHEDULE="0 0 4 * * *" \

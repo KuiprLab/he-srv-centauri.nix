@@ -36,6 +36,7 @@
           ./modules/configuration.nix
           ./modules/settings.nix
           ./modules/sops.nix
+          ./services
           sops-nix.nixosModules.sops
         ];
       };
