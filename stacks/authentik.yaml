@@ -1,0 +1,140 @@
+services:
+  postgresql:
+    image: docker.io/library/postgres:16-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    volumes:
+      - /home/ubuntu/authentik/data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${PG_PASS:?database password required}
+      POSTGRES_USER: ${PG_USER:-authentik}
+      POSTGRES_DB: ${PG_DB:-authentik}
+    networks:
+      - proxy
+      - default
+    env_file:
+      - .env
+  redis:
+    image: docker.io/library/redis:alpine
+    command: --save 60 1 --loglevel warning
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 3s
+    networks:
+      - proxy
+      - default
+    volumes:
+      - redis:/data
+  server:
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:latest
+    restart: unless-stopped
+    container_name: ak-server
+    command: server
+    environment:
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+    volumes:
+      - /home/ubuntu/authentik/media:/media
+      - /home/ubuntu/authentik/media/custom.css:/web/dist/custom.css
+      - /home/ubuntu/authentik/templates:/templates
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=9000"
+      - "traefik.http.routers.server.rule=Host(`auth.kuipr.de`)"
+      - "traefik.http.routers.server.entrypoints=websecure"
+      - "traefik.http.routers.server.tls.certresolver=myresolver"
+      - "traefik.http.services.server.loadbalancer.server.port=9000"
+    ports:
+      - "9191:9000"
+    networks:
+      - proxy
+      - default
+    env_file:
+      - .env
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+  worker:
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:latest
+    restart: unless-stopped
+    command: worker
+    environment:
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+    # `user: root` and the docker socket volume are optional.
+    # See more for the docker socket integration here:
+    # https://goauthentik.io/docs/outposts/integrations/docker
+    # Removing `user: root` also prevents the worker from fixing the permissions
+    # on the mounted folders, so when removing this make sure the folders have the correct UID/GID
+    # (1000:1000 by default)
+    user: root
+    networks:
+      - proxy
+      - default
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/ubuntu/authentik/media:/media
+      - /home/ubuntu/authentik/certs:/certs
+      - /home/ubuntu/authentik/templates:/templates
+    env_file:
+      - .env
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  authentik-proxy:
+    image: ghcr.io/goauthentik/proxy
+    restart: unless-stopped
+    ports:
+      - 9000:9000
+      - 9443:9443
+    depends_on:
+      - server
+    networks:
+      - proxy
+      - default
+    environment:
+      - "AUTHENTIK_HOST=http://ak-server:9000"
+      - "AUTHENTIK_INSECURE=true"
+      - "AUTHENTIK_HOST_BROWSER=https://auth.kuipr.de"
+      - "AUTHENTIK_TOKEN=2na2pCdzpXJf3Hmghc2u8CEhOatMIMadQHiP0PlGSfxSezuwBz6YniWvnV6J"
+      - "AUTHENTIK_DEBUG=true"
+
+    labels:
+        traefik.enable: true
+        traefik.port: 9000
+        traefik.http.routers.authentik.rule: Host(`auth.kuipr.de`) || HostRegexp(`{subdomain:[A-Za-z0-9](?:[A-Za-z0-9\-]{0,61}[A-Za-z0-9])?}.kuipr.de`) && PathPrefix(`/outpost.goauthentik.io/`)        # `authentik-proxy` refers to the service name in the compose file.
+        traefik.http.middlewares.authentik.forwardauth.address: http://authentik-proxy:9000/outpost.goauthentik.io/auth/traefik
+        traefik.http.middlewares.authentik.forwardauth.trustForwardHeader: true
+        traefik.http.middlewares.authentik.forwardauth.authResponseHeaders: X-authentik-username,X-authentik-groups,X-authentik-entitlements,X-authentik-email,X-authentik-name,X-authentik-uid,X-authentik-jwt,X-authentik-meta-jwks,X-authentik-meta-outpost,X-authentik-meta-provider,X-authentik-meta-app,X-authentik-meta-version,Authorization,Set-Cookie
+        traefik.http.routers.authentik.entryPoints: websecure
+        traefik.docker.network: proxy
+volumes:
+  database:
+    driver: local
+  redis:
+    driver: local
+
+networks:
+  default: {}
+  proxy:
+    external: true

@@ -1,0 +1,106 @@
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    restart: unless-stopped
+    container_name: gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - 8888:8888/tcp # HTTP proxy
+      - 8388:8388/tcp # Shadowsocks
+      - 8388:8388/udp # Shadowsocks
+      - 6881:6881 #qbit torrent
+      - 6881:6881/udp #qbit torrent
+      - 8585:8585 # qbit web
+      - 5656:5656 # kapowarr
+    volumes:
+      - /home/ubuntu/gluetun:/gluetun
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "https://ipinfo.io/ip"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    environment:
+      - VPN_SERVICE_PROVIDER=mullvad
+      - VPN_TYPE=wireguard
+      - WIREGUARD_ADDRESSES=10.67.169.230/32
+      - SERVER_CITIES=Amsterdam
+      - FIREWALL=on
+      - FIREWALL_VPN_INPUT_PORTS=8585,6881
+      - FIREWALL_OUTBOUND_SUBNETS=172.16.0.0/12,10.0.0.0/8,192.168.0.0/16
+    env_file:
+      - ${SOPS_SECRETS_DIR}/wireguard-env
+    networks:
+      - default
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+
+      - "traefik.http.routers.qbittorrent.rule=Host(`qbit.kuipr.de`)"
+      - "traefik.http.routers.qbittorrent.entrypoints=websecure"
+      - "traefik.http.routers.qbittorrent.tls.certresolver=myresolver"
+      - "traefik.http.services.qbittorrent.loadbalancer.server.port=8585"
+      - "traefik.http.routers.qbittorrent.service=qbittorrent"
+
+      - "traefik.http.routers.kapowarr.rule=Host(`kapowarr.kuipr.de`)"
+      - "traefik.http.routers.kapowarr.entrypoints=websecure"
+      - "traefik.http.routers.kapowarr.tls.certresolver=myresolver"
+      - "traefik.http.services.kapowarr.loadbalancer.server.port=5656"
+      - "traefik.http.routers.kapowarr.middlewares=authentik@docker"
+      - "traefik.http.routers.kapowarr.service=kapowarr"
+
+      
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    network_mode: "service:gluetun"
+    user: 0:0
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Etc/UTC
+      - WEBUI_PORT=8585
+      - TORRENTING_PORT=6881
+      - DOCKER_MODS=ghcr.io/vuetorrent/vuetorrent-lsio-mod:latest
+    env_file:
+      - ${SOPS_SECRETS_DIR}/qbittorrent-credentials
+    volumes:
+      - /home/ubuntu/qbittorrent:/config
+      - /mnt/data/torrents:/downloads
+    depends_on:
+      gluetun:
+        condition: service_healthy
+    restart: unless-stopped
+
+  kapowarr:
+    container_name: kapowarr
+    image: mrcas/kapowarr-alpha:latest
+    restart: unless-stopped
+    volumes:
+      - "/home/ubuntu/kapowarr:/app/db"
+      - "/mnt/data/downloads:/app/temp_downloads"
+      - "/mnt/data/media/comics:/comics-1"
+    network_mode: "service:gluetun"
+    depends_on:
+      gluetun:
+        condition: service_healthy
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr_comics
+    network_mode: "service:gluetun"
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_HTML=${LOG_HTML:-false}
+      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+      - TZ=Europe/London
+    restart: unless-stopped
+
+networks:
+ default: {}
+ proxy:
+    external: true
