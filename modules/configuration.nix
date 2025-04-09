@@ -27,7 +27,6 @@
 
   services.openssh.enable = true;
 
-
   users.users.ubuntu = {
     isNormalUser = true;
     extraGroups = ["wheel"];
@@ -39,6 +38,16 @@
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILaVcv9/0U1k4q08PiGE9lLd3QFxOyy3eqpne9y9CWQq"
     ];
+  };
+  users.users = {
+    root.hashedPassword = "!"; # Disable root login
+    username = {
+      isNormalUser = true;
+      extraGroups = ["wheel"];
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILaVcv9/0U1k4q08PiGE9lLd3QFxOyy3eqpne9y9CWQq"
+      ];
+    };
   };
 
   programs.neovim = {

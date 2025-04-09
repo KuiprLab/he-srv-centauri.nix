@@ -10,8 +10,8 @@
   ];
 
   boot.initrd.availableKernelModules = ["ahci" "xhci_pci" "virtio_pci" "virtio_scsi" "sd_mod" "sr_mod"];
-boot.initrd.kernelModules = [ "virtio_gpu" ];
-boot.kernelParams = [ "console=tty" ];
+  boot.initrd.kernelModules = ["virtio_gpu"];
+  boot.kernelParams = ["console=tty"];
   boot.kernelModules = [];
   boot.extraModulePackages = [];
   swapDevices = [];
