@@ -8,10 +8,10 @@
   # Import additional configuration files
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
-    ./sops.nix
+    # ./sops.nix
     ./hardware-configuration.nix
     ./disko-config.nix
-    (import ./docker.nix {inherit pkgs lib config;})
+    # (import ./docker.nix {inherit pkgs lib config;})
   ];
 
   time.timeZone = "Europe/London";
