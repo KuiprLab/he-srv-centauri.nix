@@ -25,21 +25,22 @@
     efiInstallAsRemovable = true; # Important for some cloud environments
   };
 
-  users.users.ubuntu = {
-    isNormalUser = true;
-    extraGroups = ["wheel"];
-    createHome = true;
-    group = "users";
-    home = "/home/ubuntu";
-    shell = "/bin/bash";
-    initialHashedPassword = "$y$j9T$2DyEjQxPoIjTkt8zCoWl.0$3mHxH.fqkCgu53xa0vannyu4Cue3Q7xL4CrUhMxREKC"; # Password.123
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILaVcv9/0U1k4q08PiGE9lLd3QFxOyy3eqpne9y9CWQq"
-    ];
-  };
   users.users = {
-    root.hashedPassword = "!";
-    username = {
+    ubuntu = {
+      isNormalUser = true;
+      extraGroups = ["wheel"];
+      createHome = true;
+      group = "users";
+      home = "/home/ubuntu";
+      shell = "/bin/bash";
+      initialHashedPassword = "$y$j9T$2DyEjQxPoIjTkt8zCoWl.0$3mHxH.fqkCgu53xa0vannyu4Cue3Q7xL4CrUhMxREKC"; # Password.123
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILaVcv9/0U1k4q08PiGE9lLd3QFxOyy3eqpne9y9CWQq"
+      ];
+    };
+
+    root = {
+      hashedPassword = "!";
       isNormalUser = true;
       extraGroups = ["wheel"];
       openssh.authorizedKeys.keys = [
