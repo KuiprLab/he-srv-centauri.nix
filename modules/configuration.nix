@@ -27,6 +27,7 @@
 
   services.openssh.enable = true;
 
+
   users.users.ubuntu = {
     isNormalUser = true;
     extraGroups = ["wheel"];
