@@ -32,7 +32,7 @@
     sops-nix,
     ...
   } @ inputs: let
-    system = "x86_64-linux";
+    system = "aarch64-linux";
     pkgs = import nixpkgs {inherit system;};
   in {
     # NixOS configuration
@@ -58,16 +58,7 @@
         profiles.system = {
           user = "ubuntu";
           sshUser = "ubuntu";
-          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.he-srv-centauri;
-        };
-      };
-
-      local-dev = {
-        hostname = "198.19.249.103";
-        profiles.system = {
-          user = "daniel";
-          sshUser = "daniel";
-          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.he-srv-centauri;
+          path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.he-srv-centauri;
         };
       };
     };
@@ -79,6 +70,7 @@
     formatter = {
       aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
       x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
+      aarch64-linux = nixpkgs.legacyPackages.x86_64-linux.alejandra;
     };
   };
 }
