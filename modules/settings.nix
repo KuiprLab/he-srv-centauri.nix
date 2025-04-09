@@ -4,8 +4,6 @@
     nameservers = ["9.9.9.9"];
   };
 
-  system.stateVersion = "23.11";
-
   # Base system packages
   environment.systemPackages = with pkgs; [
     git
