@@ -32,20 +32,6 @@
     auditd.enable = true;
   };
 
-  # Create a default user with SSH access
-  users.users.ubuntu = {
-    isNormalUser = true;
-    extraGroups = ["wheel"];
-    createHome = true;
-    group = "users";
-    home = "/home/ubuntu";
-    shell = "/bin/bash";
-
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILaVcv9/0U1k4q08PiGE9lLd3QFxOyy3eqpne9y9CWQq"
-    ];
-  };
-
   nix = {
     gc = {
       automatic = true;

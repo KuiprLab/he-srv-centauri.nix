@@ -7,6 +7,11 @@ deploy: format
     @git add .
     @nix run nixpkgs#deploy-rs -- --remote-build -s .#he-srv-centauri
 
+
+[doc("Install NixOS using nix-anywhere")]
+install: format
+    @nix run github:nix-community/nixos-anywhere -- --flake .#he-srv-centauri root@37.27.26.175 --build-on remote
+
 [doc("Deploy the config using deploy-rs")]
 deploy-dev: format
     @git add .
