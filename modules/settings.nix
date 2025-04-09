@@ -1,8 +1,4 @@
 {pkgs, ...}: {
-  networking = {
-    hostName = "he-srv-centauri";
-    nameservers = ["9.9.9.9"];
-  };
 
   # Base system packages
   environment.systemPackages = with pkgs; [

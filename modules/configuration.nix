@@ -23,7 +23,12 @@
   i18n.defaultLocale = "en_US.UTF-8";
   console.keyMap = "us";
 
-  boot.loader.grub.enable = true;
+boot.loader.grub = {
+  enable = true;
+  device = "nodev";  # For EFI systems
+  efiSupport = true;
+  efiInstallAsRemovable = true;  # Important for some cloud environments
+};
 
   services.openssh.enable = true;
 
