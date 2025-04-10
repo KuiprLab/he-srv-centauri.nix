@@ -8,7 +8,6 @@
     (modulesPath + "/profiles/qemu-guest.nix")
     ./hardware-configuration.nix
     ./disko-config.nix
-    ./sops.nix
   ];
 
   virtualisation.podman = {
