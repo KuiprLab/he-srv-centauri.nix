@@ -10,7 +10,7 @@
     (modulesPath + "/profiles/qemu-guest.nix")
     ./hardware-configuration.nix
     ./disko-config.nix
-        # ./sops.nix
+    # ./sops.nix
     # (import ./docker.nix {inherit pkgs lib config;})
   ];
 
@@ -86,7 +86,6 @@
   };
 
   nix = {
-
     extraOptions = ''
       experimental-features = nix-command flakes
       warn-dirty = false
