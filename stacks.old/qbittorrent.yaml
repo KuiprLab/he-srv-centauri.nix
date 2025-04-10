@@ -1,3 +1,4 @@
+name: qbittorrent
 services:
   gluetun:
     image: qmcgaw/gluetun

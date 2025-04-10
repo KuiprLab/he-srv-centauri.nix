@@ -1,3 +1,4 @@
+name: obsidian-share-notes
 services:
   notesx-server:
     image: ghcr.io/note-sx/server:latest

@@ -1,9 +1,8 @@
+name: traefik
 services:
   traefik:
     image: "traefik:v3.3"
     container_name: "traefik"
-    env_file:
-      - traefik/.env
     command:
       - "--api"
       - "--log.level=INFO"

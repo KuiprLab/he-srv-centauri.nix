@@ -1,8 +1,6 @@
 {
   pkgs,
-  lib,
   modulesPath,
-  config,
   ...
 }: {
   # Import additional configuration files
@@ -10,9 +8,17 @@
     (modulesPath + "/profiles/qemu-guest.nix")
     ./hardware-configuration.nix
     ./disko-config.nix
-    # ./sops.nix
-    # (import ./docker.nix {inherit pkgs lib config;})
+    ./sops.nix
   ];
+
+  virtualisation.podman = {
+    enable = true;
+    autoPrune = {
+      enable = true;
+      dates = "weekly";
+      flags = ["--all"];
+    };
+  };
 
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_US.UTF-8";

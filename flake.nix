@@ -42,9 +42,9 @@
         specialArgs = {inherit self;};
         modules = [
           ./modules/configuration.nix
-          # ./modules/sops.nix
-          # ./services
-          # sops-nix.nixosModules.sops
+          ./services
+        ./stacks
+          sops-nix.nixosModules.sops
           inputs.disko.nixosModules.disko
         ];
       };

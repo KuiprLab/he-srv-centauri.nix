@@ -1,3 +1,4 @@
+name: komga
 services:
   komga:
     image: gotson/komga
