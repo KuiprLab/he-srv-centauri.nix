@@ -23,6 +23,11 @@ format:
     @nix fmt .
 
 
+[doc("Does a dry run of the config")]
+test:
+    @nix build .#nixosConfigurations.he-srv-centauri.config.system.build.toplevel --accept-flake-config --impure --extra-experimental-features flakes --extra-experimental-features nix-command --dry-run
+
+
 [doc("Edit the secrets.yaml")]
 edit:
     @nix run nixpkgs#sops -- ./secrets/secrets.yaml
