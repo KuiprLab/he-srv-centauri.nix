@@ -42,8 +42,13 @@
         specialArgs = {inherit self;};
         modules = [
           ./modules/configuration.nix
+<<<<<<< Updated upstream
           ./services
         ./stacks
+=======
+          ./modules/sops.nix
+          ./services
+>>>>>>> Stashed changes
           sops-nix.nixosModules.sops
           inputs.disko.nixosModules.disko
         ];

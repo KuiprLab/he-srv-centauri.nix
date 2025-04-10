@@ -9,6 +9,10 @@
     ./hardware-configuration.nix
     ./disko-config.nix
     ./sops.nix
+<<<<<<< Updated upstream
+=======
+    (import ./docker.nix {inherit pkgs lib config;})
+>>>>>>> Stashed changes
   ];
 
   virtualisation.podman = {
