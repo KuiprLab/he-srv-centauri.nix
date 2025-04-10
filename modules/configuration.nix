@@ -64,6 +64,7 @@
     wget
     htop
     dig
+    just
   ];
 
   # Enable SSH for remote access
