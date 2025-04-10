@@ -67,15 +67,15 @@
   ];
 
   # Enable SSH for remote access
-services.openssh = {
-  enable = true;
-  settings = {
-    PermitRootLogin = "no";
-    PasswordAuthentication = false;  # Disable password authentication
-    PermitEmptyPasswords = "no";     # Disable empty passwords
-    PubkeyAuthentication = true;     # Explicitly enable key authentication
+  services.openssh = {
+    enable = true;
+    settings = {
+      PermitRootLogin = "no";
+      PasswordAuthentication = false; # Disable password authentication
+      PermitEmptyPasswords = "no"; # Disable empty passwords
+      PubkeyAuthentication = true; # Explicitly enable key authentication
+    };
   };
-};
 
   # Security hardening
   security = {

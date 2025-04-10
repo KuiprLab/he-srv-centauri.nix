@@ -1,3 +1,7 @@
+alias d := deploy
+alias dl := deploy-local
+alias ul := upgrade-local
+
 [doc("Default Recipe")]
 default:
     just --list
@@ -12,10 +16,15 @@ deploy: format
 install: format test
     @nix run github:nix-community/nixos-anywhere -- --flake .#he-srv-centauri root@37.27.26.175 --build-on remote
 
-[doc("Deploy the config using deploy-rs")]
-deploy-dev: format
+[doc("Locally deploy the config using nh")]
+deploy-local host="$(hostname)": format
     @git add .
-    @nix run nixpkgs#deploy-rs -- --remote-build -s .#local-dev
+    @nix run nixpkgs#nh -- os switch -H {{host}}
+
+[doc("Locally update flake and deploy the config using nh")]
+upgrade-local: format
+    @git add .
+    @nix run nixpkgs#nh -- os switch --update
 
 
 [doc("Format all files")]
@@ -30,4 +39,5 @@ test:
 
 [doc("Edit the secrets.yaml")]
 edit:
-    @nix run nixpkgs#sops -- ./secrets/secrets.yaml
+    @eval $(op signin)
+    @export SOPS_AGE_KEY=$(op read "op://OpsVault/he-srv-centauri-sops-key/age"); nix run nixpkgs#sops -- ./secrets/secrets.yaml
