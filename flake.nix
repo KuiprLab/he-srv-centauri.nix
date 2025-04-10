@@ -10,6 +10,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nypkgs.url = "github:yunfachi/nypkgs";
+
     # For secrets management
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -39,11 +41,12 @@
     nixosConfigurations = {
       he-srv-centauri = nixpkgs.lib.nixosSystem {
         inherit system pkgs;
-        specialArgs = {inherit self;};
+        specialArgs = {
+          inherit self;
+          ylib = inputs.nypkgs.lib.aarch64-linux;
+        };
         modules = [
           ./modules/configuration.nix
-          ./services
-          ./stacks
           sops-nix.nixosModules.sops
           inputs.disko.nixosModules.disko
         ];

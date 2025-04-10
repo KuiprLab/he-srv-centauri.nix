@@ -74,11 +74,46 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1724597660,
+        "narHash": "sha256-+RaqYPFd5Ej58Q8YwXBI36ijAbgDva3RyFR48aNZLtw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9f28e30252b24045f327613fab963b8acd7001d8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nypkgs": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1744125335,
+        "narHash": "sha256-yH1bbLTB/Ozhg7ScAXiJKzW1GZ4Y4+VlS9HCmIZDyME=",
+        "owner": "yunfachi",
+        "repo": "nypkgs",
+        "rev": "e9a5d894690e9205e28839ef9289ee2baa3f017c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yunfachi",
+        "repo": "nypkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "deploy-rs": "deploy-rs",
         "disko": "disko",
         "nixpkgs": "nixpkgs",
+        "nypkgs": "nypkgs",
         "sops-nix": "sops-nix"
       }
     },
