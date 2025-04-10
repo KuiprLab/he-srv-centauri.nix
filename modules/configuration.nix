@@ -18,6 +18,8 @@
   i18n.defaultLocale = "en_US.UTF-8";
   console.keyMap = "us";
 
+    networking.hostName = "he-srv-centauri";
+
   boot.loader.grub = {
     enable = true;
     device = "nodev"; # For EFI systems
