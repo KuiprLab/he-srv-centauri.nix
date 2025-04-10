@@ -36,14 +36,6 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILaVcv9/0U1k4q08PiGE9lLd3QFxOyy3eqpne9y9CWQq"
       ];
     };
-
-    root = {
-      hashedPassword = "!";
-      extraGroups = ["wheel"];
-      openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILaVcv9/0U1k4q08PiGE9lLd3QFxOyy3eqpne9y9CWQq"
-      ];
-    };
   };
 
   programs.neovim = {
@@ -75,14 +67,15 @@
   ];
 
   # Enable SSH for remote access
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "no";
-      PasswordAuthentication = true;
-      PermitEmptyPasswords = "yes";
-    };
+services.openssh = {
+  enable = true;
+  settings = {
+    PermitRootLogin = "no";
+    PasswordAuthentication = false;  # Disable password authentication
+    PermitEmptyPasswords = "no";     # Disable empty passwords
+    PubkeyAuthentication = true;     # Explicitly enable key authentication
   };
+};
 
   # Security hardening
   security = {
