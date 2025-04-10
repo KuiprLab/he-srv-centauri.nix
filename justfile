@@ -9,7 +9,7 @@ deploy: format
 
 
 [doc("Install NixOS using nix-anywhere")]
-install: format
+install: format test
     @nix run github:nix-community/nixos-anywhere -- --flake .#he-srv-centauri root@37.27.26.175 --build-on remote
 
 [doc("Deploy the config using deploy-rs")]
