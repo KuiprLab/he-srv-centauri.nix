@@ -8,10 +8,10 @@
   # Import additional configuration files
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
-    # ./sops.nix
+    ./sops.nix
     ./hardware-configuration.nix
     ./disko-config.nix
-    # (import ./docker.nix {inherit pkgs lib config;})
+    (import ./docker.nix {inherit pkgs lib config;})
   ];
 
   time.timeZone = "Europe/London";
@@ -33,7 +33,7 @@
       home = "/home/ubuntu";
       initialHashedPassword = "$y$j9T$2DyEjQxPoIjTkt8zCoWl.0$3mHxH.fqkCgu53xa0vannyu4Cue3Q7xL4CrUhMxREKC"; # Password.123
       openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILaVcv9/0U1k4q08PiGE9lLd3QFxOyy3eqpne9y9CWQq"
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDOrOMsB4HsTcteuorxIiVk+CPOY/gIbfLkV0yLWmI9JS8zVii3ud5kgnzWbUik3M+b3h6FS/j9HqTEJ0jV9DhYp1smBr43dUN3AGeHPCR3MX2cTb+EB8UDwdoyMalMKK18oQ/8dRnv7n9FHuRrrplVb28PIU9Z7pi4AXXMQw7akZjcGomRhmWZ9IP2LSI3d+XJDp0B2TmG7MTeERIAWo1brY4TBp7Bgra66V33XO+o5PtoQqJ1H671OETrCM/4BgIIUoz3twvcGhmrMYqW0RmyodVIvJtvHvSoIeZAWJWz0dKtnhAlN7ZPn1WuOGABPlHUzdj1cPgs0RJC8es+OI+3U9H7Qh6bjLlPK0FtbEX9oCQwTTppuv6Gk78SuQCbAMfdzvNA74ziqjon1qvgy1k2A9d2y9XVIyL0lSJHBDED7OkjkgxKm8qikTSSL5+jQx7QfdTgRmP3k5ZbYM6rBeUgZxxRJAxRlpxZhweTYfSsUyU3luYFXoO6BYAxQ0nWgaiBFJnadwUgh+XRm8tK8x/2ipgnnHBS5fY4P8Lfc/Kegb6Q1GTr4klF5Q2aG5SZj934CZSq/lLM8K3ImQcola6M/LjPAkqCbSHe2gvPjO800JSrsL+47eyMpMHhUfqFno4EXV2mxbUQYu4xkxisSQw1BAdPRsurpMcrzHZg2YbVBQ=="
       ];
     };
   };
