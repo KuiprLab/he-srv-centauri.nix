@@ -8,10 +8,10 @@
   # Import additional configuration files
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
-    ./sops.nix
     ./hardware-configuration.nix
     ./disko-config.nix
-    (import ./docker.nix {inherit pkgs lib config;})
+        # ./sops.nix
+    # (import ./docker.nix {inherit pkgs lib config;})
   ];
 
   time.timeZone = "Europe/London";
@@ -86,6 +86,11 @@
   };
 
   nix = {
+
+    extraOptions = ''
+      experimental-features = nix-command flakes
+      warn-dirty = false
+    '';
     gc = {
       automatic = true;
       dates = "weekly";
