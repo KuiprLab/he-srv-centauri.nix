@@ -9,7 +9,7 @@ services:
       retries: 5
       timeout: 5s
     volumes:
-      - /home/ubuntu/authentik/data:/var/lib/postgresql/data
+      - /var/lib/authentik/postgresql:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${PG_PASS:?database password required}
       POSTGRES_USER: ${PG_USER:-authentik}
@@ -18,7 +18,7 @@ services:
       - proxy
       - default
     env_file:
-      - .env
+      - authentik/.env
   redis:
     image: docker.io/library/redis:alpine
     command: --save 60 1 --loglevel warning
@@ -46,9 +46,9 @@ services:
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
       AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
     volumes:
-      - /home/ubuntu/authentik/media:/media
-      - /home/ubuntu/authentik/media/custom.css:/web/dist/custom.css
-      - /home/ubuntu/authentik/templates:/templates
+      - /var/lib/authentik/media:/media
+      - /var/lib/authentik/media/custom.css:/web/dist/custom.css
+      - /var/lib/authentik/templates:/templates
     labels:
       - "traefik.enable=true"
       - "traefik.port=9000"
@@ -62,7 +62,7 @@ services:
       - proxy
       - default
     env_file:
-      - .env
+      - authentik/.env
     depends_on:
       postgresql:
         condition: service_healthy
@@ -90,11 +90,11 @@ services:
       - default
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /home/ubuntu/authentik/media:/media
-      - /home/ubuntu/authentik/certs:/certs
-      - /home/ubuntu/authentik/templates:/templates
+      - /var/lib/authentik/media:/media
+      - /var/lib/authentik/certs:/certs
+      - /var/lib/authentik/templates:/templates
     env_file:
-      - .env
+      - authentik/.env
     depends_on:
       postgresql:
         condition: service_healthy

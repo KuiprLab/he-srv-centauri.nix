@@ -3,7 +3,7 @@ services:
     image: "traefik:v3.3"
     container_name: "traefik"
     env_file:
-      - .env
+      - traefik/.env
     command:
       - "--api"
       - "--log.level=INFO"
@@ -31,10 +31,10 @@ services:
       - "8443:443"
       - "8181:8080"
     volumes:
-      - "/home/ubuntu/traefik/letsencrypt:/letsencrypt"
+      - "/var/lib/traefik/letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-      - "/home/ubuntu/traefik/logs:/logs"
-      - "/home/ubuntu/traefik/config:/config"
+      - "/var/lib/traefik/logs:/logs"
+      - "/var/lib/traefik/config:/config"
     networks:
       - proxy
     restart: always

@@ -17,10 +17,14 @@
     };
   };
 
-  # Create directory structure for docker-compose
+  # Create directory structure for docker-compose and services
   system.activationScripts.dockerCompose = ''
-    mkdir -p /etc/docker-compose/stacks
+    mkdir -p /etc/docker-compose/stacks/{traefik,authentik}
     mkdir -p /var/lib/docker-compose-secrets
+    mkdir -p /var/lib/traefik/{letsencrypt,logs,config}
+    mkdir -p /var/lib/authentik/{media,templates,certs,postgresql}
+    chown -R 1000:1000 /var/lib/authentik
+    chown -R root:root /var/lib/traefik
   '';
 
   # Service to run the main docker-compose file at startup
@@ -55,14 +59,16 @@
           --restart unless-stopped \
           -v /var/run/docker.sock:/var/run/docker.sock \
           -e WATCHTOWER_NOTIFICATIONS=shoutrrr \
-          -e WATCHTOWER_NOTIFICATION_URL="$DISCORD_WEBHOOK_TOKEN@" \
+          -e WATCHTOWER_NOTIFICATION_URL="$(cat ${config.sops.secrets.discord-webhook.path})@" \
           -e WATCHTOWER_NOTIFICATION_REPORT=true \
           -e WATCHTOWER_CLEANUP=true \
           -e WATCHTOWER_SCHEDULE="0 0 4 * * *" \
           containrrr/watchtower
       '';
       ExecStop = "${pkgs.docker}/bin/docker stop watchtower";
-      EnvironmentFile = config.sops.secrets.discord-webhook.path;
+    };
+    environment = {
+      DOCKER_HOST = "unix:///var/run/docker.sock";
     };
   };
 
@@ -120,7 +126,11 @@
 
         cd /etc/docker-compose/stacks
 
-        # Start key stacks first (e.g., traefik and authentik). Adjust as needed.
+        # Create environment files from sops secrets
+        cat ${config.sops.secrets.traefik-env.path} > traefik/.env
+        cat ${config.sops.secrets.authentik-env.path} > authentik/.env
+
+        # Start key stacks first (e.g., traefik and authentik)
         for file in traefik.yaml authentik.yaml; do
           if [ -f "$file" ]; then
             echo "Starting stack: $file"
@@ -128,14 +138,26 @@
           fi
         done
 
-        # Now start all other stacks found dynamically in the directory.
+        # Now start all other stacks found dynamically in the directory
         for file in *.yaml; do
           if [ "$file" != "traefik.yaml" ] && [ "$file" != "authentik.yaml" ]; then
+            # Get the stack name without .yaml extension
+            stack_name="$(basename "$file" .yaml)"
+            
+            # If a sops secret exists for this stack, create its .env file
+            if [ -f "${config.sops.secrets."$stack_name-env".path}" ]; then
+              mkdir -p "$stack_name"
+              cat "${config.sops.secrets."$stack_name-env".path}" > "$stack_name/.env"
+            fi
+
             echo "Starting stack: $file"
             ${pkgs.docker-compose}/bin/docker-compose -f "$file" up -d
           fi
         done
       '';
+    };
+    environment = {
+      DOCKER_HOST = "unix:///var/run/docker.sock";
     };
   };
 }
