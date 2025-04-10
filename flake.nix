@@ -10,7 +10,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nypkgs.url = "github:yunfachi/nypkgs";
 
     # For secrets management
     sops-nix = {
@@ -43,10 +42,11 @@
         inherit system pkgs;
         specialArgs = {
           inherit self;
-          ylib = inputs.nypkgs.lib.aarch64-linux;
         };
         modules = [
           ./modules/configuration.nix
+                        ./stacks
+                        ./services
           sops-nix.nixosModules.sops
           inputs.disko.nixosModules.disko
         ];

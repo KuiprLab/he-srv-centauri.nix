@@ -1,20 +1,15 @@
 {
   pkgs,
   modulesPath,
-  ylib,
   ...
 }: {
   # Import additional configuration files
-  imports =
-    ylib.umport {
-      paths = [../stacks ../services];
-      recursive = true;
-    }
-    ++ [
-      (modulesPath + "/profiles/qemu-guest.nix")
-      ./hardware-configuration.nix
-      ./disko-config.nix
-    ];
+  imports = [
+    (modulesPath + "/profiles/qemu-guest.nix")
+    ./hardware-configuration.nix
+    ./disko-config.nix
+  ];
+
 
   virtualisation.podman = {
     enable = true;
