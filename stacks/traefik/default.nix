@@ -8,10 +8,10 @@
 
 
     sops.secrets."traefik.env" = {
-        sopFile = ./traefik.env;
+        sopsFile = ./traefik.env;
         format = "dotenv";
         key = "";
-        restartUnits = "podman-traefik.service";
+        restartUnits = [ "podman-traefik.service" ];
     };
 
   myFolders = {
