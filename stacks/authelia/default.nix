@@ -47,7 +47,7 @@
     volumes = [
       "/home/ubuntu/authelia/config:/config:rw"
       "/home/ubuntu/authelia/data:/data:rw"
-      "/run/secrets/authelia-users.yaml:/config/users_database.yaml:ro"
+      "/run/secrets/authelia-users.yaml:/config/users_database.yaml:rw"
     ];
     ports = [
       "9091:9091/tcp"

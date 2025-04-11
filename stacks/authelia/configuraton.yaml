@@ -25,7 +25,7 @@ totp:
 # Authentication backend
 authentication_backend:
   file:
-    path: /config/users_database.yml
+    path: /config/users_database.yaml
     password:
       algorithm: argon2id
       iterations: 1
@@ -35,7 +35,7 @@ authentication_backend:
 
 # Access control configuration
 access_control:
-  default_policy: 'deny'
+  default_policy: one_factor
   rules:
     # Public domains that don't require authentication
     - domain: whoami.kuipr.de
@@ -47,10 +47,11 @@ access_control:
 
 # Session configuration
 session:
-  name: authelia_session
-  expiration: 3600  # 1 hour
-  inactivity: 300   # 5 minutes
-  domain: kuipr.de  # Domain to use for cookies
+  cookies:
+    - name: authelia_session
+      domain: kuipr.de
+      expiration: 3600
+      inactivity: 300
   redis:
     host: redis
     port: 6379
