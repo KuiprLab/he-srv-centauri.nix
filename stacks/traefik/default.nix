@@ -5,6 +5,7 @@
   config,
   ...
 }: {
+  imports = [../../utils/my-declared-folders.nix];
   # Runtime
   virtualisation.podman = {
     enable = true;
@@ -12,13 +13,27 @@
     dockerCompat = true;
   };
 
-  # Create necessary files
-  systemd.tmpfiles.rules = [
-    "d /home/ubuntu/kuma 0755 ubuntu ubuntu - -"
-    "d /home/ubuntu/traefik/config 0755 ubuntu ubuntu - -"
-    "d /home/ubuntu/traefik/letsencrypt 0755 ubuntu ubuntu - -"
-    "d /home/ubuntu/traefik/logs 0755 ubuntu ubunut - -"
-  ];
+  myFolders = {
+    config = {
+      path = "/home/ubuntu/traefik/config";
+      owner = "ubuntu";
+      group = "ubuntu";
+      mode = "0755";
+    };
+    letsencrypt = {
+      path = "/home/ubuntu/traefik/letsencrypt";
+      owner = "ubuntu";
+      group = "ubuntu";
+      mode = "0755";
+    };
+    logs = {
+      path = "/home/ubuntu/traefik/logs";
+      owner = "ubuntu";
+      group = "ubuntu";
+      mode = "0755";
+    };
+  };
+
   # Enable container name DNS for all Podman networks.
   networking.firewall.interfaces = let
     matchAll =

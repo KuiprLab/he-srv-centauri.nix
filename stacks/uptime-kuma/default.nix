@@ -5,6 +5,7 @@
   config,
   ...
 }: {
+  imports = [../../utils/my-declared-folders.nix];
   # Enable container name DNS for all Podman networks.
   networking.firewall.interfaces = let
     matchAll =
@@ -17,10 +18,14 @@
 
   virtualisation.oci-containers.backend = "podman";
 
-  # Create necessary files
-  systemd.tmpfiles.rules = [
-    "d /home/ubuntu/kuma 0755 ubuntu ubuntu - -"
-  ];
+  myFolders = {
+    kuma = {
+      path = "/home/ubuntu/kuma";
+      owner = "ubuntu";
+      group = "ubuntu";
+      mode = "0755";
+    };
+  };
 
   # Containers
   virtualisation.oci-containers.containers."uptime-kuma-uptime-kuma" = {
