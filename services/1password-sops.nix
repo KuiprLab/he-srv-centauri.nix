@@ -30,10 +30,10 @@
     };
 
     script = ''
+      eval $(op signin)
       # Create the sops directory
       mkdir -p /var/lib/sops
       chmod 700 /var/lib/sops
-
       # Check if 1Password CLI is configured
       if ! op user list &>/dev/null; then
         echo "1Password CLI is not configured. Please run 'op signin' first."
