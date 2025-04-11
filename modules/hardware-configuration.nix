@@ -16,5 +16,6 @@
   boot.extraModulePackages = [];
   swapDevices = [];
   networking.useDHCP = lib.mkDefault true;
+  networking.nftables.enable = true;
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 }
