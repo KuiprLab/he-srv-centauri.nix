@@ -11,15 +11,9 @@ services:
       timeout: 5s
     volumes:
       - /var/lib/authentik/postgresql:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: ${PG_PASS:?database password required}
-      POSTGRES_USER: ${PG_USER:-authentik}
-      POSTGRES_DB: ${PG_DB:-authentik}
     networks:
       - proxy
       - default
-    env_file:
-      - authentik/.env
   redis:
     image: docker.io/library/redis:alpine
     command: --save 60 1 --loglevel warning
@@ -40,12 +34,6 @@ services:
     restart: unless-stopped
     container_name: ak-server
     command: server
-    environment:
-      AUTHENTIK_REDIS__HOST: redis
-      AUTHENTIK_POSTGRESQL__HOST: postgresql
-      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
-      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
-      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
     volumes:
       - /var/lib/authentik/media:/media
       - /var/lib/authentik/media/custom.css:/web/dist/custom.css
@@ -62,8 +50,6 @@ services:
     networks:
       - proxy
       - default
-    env_file:
-      - authentik/.env
     depends_on:
       postgresql:
         condition: service_healthy
@@ -73,12 +59,6 @@ services:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:latest
     restart: unless-stopped
     command: worker
-    environment:
-      AUTHENTIK_REDIS__HOST: redis
-      AUTHENTIK_POSTGRESQL__HOST: postgresql
-      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
-      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
-      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
     # `user: root` and the docker socket volume are optional.
     # See more for the docker socket integration here:
     # https://goauthentik.io/docs/outposts/integrations/docker
@@ -94,8 +74,6 @@ services:
       - /var/lib/authentik/media:/media
       - /var/lib/authentik/certs:/certs
       - /var/lib/authentik/templates:/templates
-    env_file:
-      - authentik/.env
     depends_on:
       postgresql:
         condition: service_healthy
@@ -113,13 +91,6 @@ services:
     networks:
       - proxy
       - default
-    environment:
-      - "AUTHENTIK_HOST=http://ak-server:9000"
-      - "AUTHENTIK_INSECURE=true"
-      - "AUTHENTIK_HOST_BROWSER=https://auth.kuipr.de"
-      - "AUTHENTIK_TOKEN=2na2pCdzpXJf3Hmghc2u8CEhOatMIMadQHiP0PlGSfxSezuwBz6YniWvnV6J"
-      - "AUTHENTIK_DEBUG=true"
-
     labels:
         traefik.enable: true
         traefik.port: 9000
