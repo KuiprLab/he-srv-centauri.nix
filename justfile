@@ -43,5 +43,6 @@ edit:
     @export SOPS_AGE_KEY=$(op read "op://OpsVault/he-srv-centauri-sops-key/age"); nix run nixpkgs#sops -- ./secrets/secrets.yaml
 
 [doc("Convert docker-compose files to nix files using compose2nix")]
-convert input output:
-    @nix run github:aksiksi/compose2nix -- -inputs={{input}} -use_upheld_by=true -generate_unused_resources -output={{output}} -runtime=podman
+convert input output-name:
+    @mkdir -p ./stacks/{{output-name}}
+    @nix run github:aksiksi/compose2nix -- -inputs={{input}}  -generate_unused_resources -output=./stacks/{{output-name}}/default.nix -runtime=podman

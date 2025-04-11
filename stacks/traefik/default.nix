@@ -1,10 +1,7 @@
 # Auto-generated using compose2nix v0.3.2-pre.
+{ pkgs, lib, config, ... }:
+
 {
-  pkgs,
-  lib,
-  config,
-  ...
-}: {
   # Runtime
   virtualisation.podman = {
     enable = true;
@@ -14,115 +11,77 @@
 
   # Enable container name DNS for all Podman networks.
   networking.firewall.interfaces = let
-    matchAll =
-      if !config.networking.nftables.enable
-      then "podman+"
-      else "podman*";
+    matchAll = if !config.networking.nftables.enable then "podman+" else "podman*";
   in {
-    "${matchAll}".allowedUDPPorts = [53];
+    "${matchAll}".allowedUDPPorts = [ 53 ];
   };
 
   virtualisation.oci-containers.backend = "podman";
 
   # Containers
-  virtualisation.oci-containers.containers."simple-service" = {
-    image = "traefik/whoami";
-    labels = {
-      "traefik.enable" = "true";
-      "traefik.http.routers.whoami.entrypoints" = "websecure";
-      "traefik.http.routers.whoami.rule" = "Host(`whoami.kuipr.de`)";
-      "traefik.http.routers.whoami.tls.certresolver" = "myresolver";
-      "traefik.http.services.whoami.loadbalancer.server.port" = "80";
-    };
-    log-driver = "journald";
-    extraOptions = [
-      "--network-alias=whoami"
-      "--network=proxy"
-    ];
-  };
-  systemd.services."podman-simple-service" = {
-    serviceConfig = {
-      Restart = lib.mkOverride 90 "always";
-    };
-    after = [
-      "podman-network-proxy.service"
-    ];
-    requires = [
-      "podman-network-proxy.service"
-    ];
-    partOf = [
-      "podman-compose-traefik-root.target"
-    ];
-    upheldBy = [
-      "podman-network-proxy.service"
-    ];
-    wantedBy = [
-      "podman-compose-traefik-root.target"
-    ];
-  };
-  virtualisation.oci-containers.containers."traefik" = {
-    image = "traefik:v3.3";
+  virtualisation.oci-containers.containers."uptime-kuma-uptime-kuma" = {
+    image = "louislam/uptime-kuma:1";
     volumes = [
-      "/var/lib/traefik/config:/config:rw"
-      "/var/lib/traefik/letsencrypt:/letsencrypt:rw"
-      "/var/lib/traefik/logs:/logs:rw"
-      "/var/run/docker.sock:/var/run/docker.sock:ro"
+      "/home/ubuntu/kuma:/app/data:rw"
+      "/var/run/docker.sock:/var/run/docker.sock:rw"
     ];
-    ports = [
-      "8081:80/tcp"
-      "8443:443/tcp"
-      "8181:8080/tcp"
-    ];
-    cmd = ["--api" "--log.level=INFO" "--accesslog=true" "--accesslog.filepath=/logs/access.log" "--accesslog.bufferingsize=100" "--api.insecure=true" "--providers.docker=true" "--providers.file.directory=/config" "--providers.file.watch=true" "--providers.docker.exposedByDefault=false" "--providers.docker.network=proxy" "--entryPoints.web.address=:80" "--entryPoints.websecure.address=:443" "--certificatesresolvers.myresolver.acme.dnschallenge=true" "--certificatesresolvers.myresolver.acme.dnschallenge.provider=bunny" "--certificatesresolvers.myresolver.acme.email=daniel.inama02@gmail.com" "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json" "--serversTransport.insecureSkipVerify=true"];
+    labels = {
+      "traefik.docker.network" = "proxy";
+      "traefik.enable" = "true";
+      "traefik.http.routers.uptime-kuma.entrypoints" = "websecure";
+      "traefik.http.routers.uptime-kuma.middlewares" = "authentik@docker";
+      "traefik.http.routers.uptime-kuma.rule" = "Host(`uptime.kuipr.de`)";
+      "traefik.http.routers.uptime-kuma.tls.certresolver" = "myresolver";
+      "traefik.http.services.uptime-kuma.loadbalancer.server.port" = "3001";
+      "traefik.port" = "3001";
+    };
     log-driver = "journald";
     extraOptions = [
-      "--network-alias=traefik"
+      "--network-alias=uptime-kuma"
       "--network=proxy"
+      "--network=uptime-kuma_default"
     ];
   };
-  systemd.services."podman-traefik" = {
+  systemd.services."podman-uptime-kuma-uptime-kuma" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
     };
     after = [
-      "podman-network-proxy.service"
+      "podman-network-uptime-kuma_default.service"
     ];
     requires = [
-      "podman-network-proxy.service"
+      "podman-network-uptime-kuma_default.service"
     ];
     partOf = [
-      "podman-compose-traefik-root.target"
-    ];
-    upheldBy = [
-      "podman-network-proxy.service"
+      "podman-compose-uptime-kuma-root.target"
     ];
     wantedBy = [
-      "podman-compose-traefik-root.target"
+      "podman-compose-uptime-kuma-root.target"
     ];
   };
 
   # Networks
-  systemd.services."podman-network-proxy" = {
-    path = [pkgs.podman];
+  systemd.services."podman-network-uptime-kuma_default" = {
+    path = [ pkgs.podman ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStop = "podman network rm -f proxy";
+      ExecStop = "podman network rm -f uptime-kuma_default";
     };
     script = ''
-      podman network inspect proxy || podman network create proxy
+      podman network inspect uptime-kuma_default || podman network create uptime-kuma_default
     '';
-    partOf = ["podman-compose-traefik-root.target"];
-    wantedBy = ["podman-compose-traefik-root.target"];
+    partOf = [ "podman-compose-uptime-kuma-root.target" ];
+    wantedBy = [ "podman-compose-uptime-kuma-root.target" ];
   };
 
   # Root service
   # When started, this will automatically create all resources and start
   # the containers. When stopped, this will teardown all resources.
-  systemd.targets."podman-compose-traefik-root" = {
+  systemd.targets."podman-compose-uptime-kuma-root" = {
     unitConfig = {
       Description = "Root target generated by compose2nix.";
     };
-    wantedBy = ["multi-user.target"];
+    wantedBy = [ "multi-user.target" ];
   };
 }
