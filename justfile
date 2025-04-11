@@ -45,4 +45,4 @@ edit:
 [doc("Convert docker-compose files to nix files using compose2nix")]
 convert input output-name:
     @mkdir -p ./stacks/{{output-name}}
-    @nix run github:aksiksi/compose2nix -- -inputs={{input}}  -generate_unused_resources -output=./stacks/{{output-name}}/default.nix -runtime=podman
+    @nix run github:aksiksi/compose2nix -- -inputs={{input}}  -generate_unused_resources -output=./stacks/{{output-name}}/default.nix
