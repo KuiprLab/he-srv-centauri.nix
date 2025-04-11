@@ -35,7 +35,7 @@ authentication_backend:
 
 # Access control configuration
 access_control:
-  default_policy: deny
+  default_policy: 'deny'
   rules:
     # Public domains that don't require authentication
     - domain: whoami.kuipr.de

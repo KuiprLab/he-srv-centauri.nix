@@ -14,7 +14,7 @@
     restartUnits = ["podman-authelia.service"];
   };
 
-  sops.secrets."authelia-users.yml" = {
+  sops.secrets."authelia-users.yaml" = {
     sopsFile = ./users.yaml;
     key = "";
     restartUnits = ["podman-authelia.service"];
@@ -47,7 +47,7 @@
     volumes = [
       "/home/ubuntu/authelia/config:/config:rw"
       "/home/ubuntu/authelia/data:/data:rw"
-      "/run/secrets/authelia-users.yml:/config/users_database.yml:ro"
+      "/run/secrets/authelia-users.yaml:/config/users_database.yaml:ro"
     ];
     ports = [
       "9091:9091/tcp"
