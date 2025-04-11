@@ -35,14 +35,14 @@
       chmod 700 /var/lib/sops
 
       # Check if 1Password CLI is configured
-      if ! ${pkgs._1password-cli}/bin/op user list &>/dev/null; then
+      if ! op user list &>/dev/null; then
         echo "1Password CLI is not configured. Please run 'op signin' first."
         exit 1
       fi
 
       # Get age key from 1Password, assuming it's stored as a secure note
       # Replace "Age Key" with the actual item name and "private_key" with the field name
-      AGE_KEY=$(${pkgs._1password-cli}/bin/op item get "Age Key" --field "private_key")
+      AGE_KEY=$(op item get "Age Key" --field "private_key")
 
       if [ -z "$AGE_KEY" ]; then
         echo "Failed to retrieve age key from 1Password"
