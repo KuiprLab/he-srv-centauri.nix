@@ -10,7 +10,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-
     # For secrets management
     sops-nix = {
       url = "github:Mic92/sops-nix";

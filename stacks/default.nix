@@ -1,8 +1,6 @@
-_:{
-
-    imports = [
-        ./traefik
-        ./uptime-kuma
-    ];
-
+_: {
+  imports = [
+    ./traefik
+    ./uptime-kuma
+  ];
 }
