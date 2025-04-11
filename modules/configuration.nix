@@ -93,6 +93,7 @@
   };
 
   nix = {
+allowUnfree = true;
     extraOptions = ''
       experimental-features = nix-command flakes
       warn-dirty = false
