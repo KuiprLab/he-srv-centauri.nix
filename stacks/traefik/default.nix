@@ -17,19 +17,19 @@
     config = {
       path = "/home/ubuntu/traefik/config";
       owner = "ubuntu";
-      group = "ubuntu";
+      group = "users";
       mode = "0755";
     };
     letsencrypt = {
       path = "/home/ubuntu/traefik/letsencrypt";
       owner = "ubuntu";
-      group = "ubuntu";
+      group = "users";
       mode = "0755";
     };
     logs = {
       path = "/home/ubuntu/traefik/logs";
       owner = "ubuntu";
-      group = "ubuntu";
+      group = "users";
       mode = "0755";
     };
   };

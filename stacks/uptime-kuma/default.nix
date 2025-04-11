@@ -22,7 +22,7 @@
     kuma = {
       path = "/home/ubuntu/kuma";
       owner = "ubuntu";
-      group = "ubuntu";
+      group = "users";
       mode = "0755";
     };
   };
