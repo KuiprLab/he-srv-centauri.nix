@@ -130,7 +130,7 @@
   virtualisation.oci-containers.containers."authentik-postgresql" = {
     image = "docker.io/library/postgres:16-alpine";
     volumes = [
-      "/var/lib/authentik/postgresql:/var/lib/postgresql/data:rw"
+      "/home/ubuntu/authentik/postgresql:/var/lib/postgresql/data:rw"
     ];
     log-driver = "journald";
     environmentFiles = [
@@ -207,10 +207,10 @@
   virtualisation.oci-containers.containers."authentik-worker" = {
     image = "ghcr.io/goauthentik/server:latest";
     volumes = [
-      "/var/lib/authentik/certs:/certs:rw"
-      "/var/lib/authentik/media:/media:rw"
-      "/var/lib/authentik/templates:/templates:rw"
-      "/var/run/docker.sock:/var/run/docker.sock:rw"
+      "/home/ubuntu/authentik/certs:/certs:rw"
+      "/home/ubuntu/authentik/media:/media:rw"
+      "/home/ubuntu/authentik/templates:/templates:rw"
+      "/home/ubuntu/docker.sock:/var/run/docker.sock:rw"
     ];
     environmentFiles = [
       "/run/secrets/authentik.env"
