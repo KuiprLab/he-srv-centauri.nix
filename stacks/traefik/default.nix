@@ -1,4 +1,3 @@
-# Auto-generated using compose2nix v0.3.2-pre.
 {
   pkgs,
   lib,
@@ -6,12 +5,14 @@
   ...
 }: {
   imports = [../../utils/my-declared-folders.nix];
-  # Runtime
-  virtualisation.podman = {
-    enable = true;
-    autoPrune.enable = true;
-    dockerCompat = true;
-  };
+
+
+    sops.secrets."traefik.env" = {
+        sopFile = ./traefik.env;
+        format = "dotenv";
+        key = "";
+        restartUnits = "podman-traefik.service";
+    };
 
   myFolders = {
     config = {
@@ -57,6 +58,9 @@
       "traefik.http.services.whoami.loadbalancer.server.port" = "80";
     };
     log-driver = "journald";
+    environmentFiles = [
+      "/run/secrets/traefik.env"
+    ];
     extraOptions = [
       "--network-alias=whoami"
       "--network=proxy"
