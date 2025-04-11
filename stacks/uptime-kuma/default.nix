@@ -1,4 +1,4 @@
-# Auto-generated using compose2nix v0.3.2-pre.
+# Auto-generated using compose2nix v0.3.2-pre with updates for Authelia
 {
   pkgs,
   lib,
@@ -38,7 +38,7 @@
       "traefik.docker.network" = "proxy";
       "traefik.enable" = "true";
       "traefik.http.routers.uptime-kuma.entrypoints" = "websecure";
-      "traefik.http.routers.uptime-kuma.middlewares" = "authentik@docker";
+      "traefik.http.routers.uptime-kuma.middlewares" = "authelia@docker"; # Updated to use Authelia
       "traefik.http.routers.uptime-kuma.rule" = "Host(`uptime.kuipr.de`)";
       "traefik.http.routers.uptime-kuma.tls.certresolver" = "myresolver";
       "traefik.http.services.uptime-kuma.loadbalancer.server.port" = "3001";
