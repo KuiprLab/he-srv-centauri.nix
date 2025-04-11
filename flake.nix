@@ -45,7 +45,7 @@
         modules = [
           ./modules/configuration.nix
           ./stacks
-          # ./services
+          ./services
           sops-nix.nixosModules.sops
           inputs.disko.nixosModules.disko
         ];
