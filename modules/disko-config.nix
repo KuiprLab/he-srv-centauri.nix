@@ -24,9 +24,22 @@
             root = {
               size = "100%";
               content = {
-                type = "filesystem";
-                format = "ext4";
-                mountpoint = "/";
+                type = "btrfs";
+                extraArgs = ["-f"]; # Force formatting
+                subvolumes = {
+                  # Subvolume for root
+                  "@" = {
+                    mountpoint = "/";
+                  };
+                  # Subvolume for home
+                  "@home" = {
+                    mountpoint = "/home";
+                  };
+                  # Subvolume for snapshots
+                  "@snapshots" = {
+                    mountpoint = "/snapshots";
+                  };
+                };
               };
             };
           };

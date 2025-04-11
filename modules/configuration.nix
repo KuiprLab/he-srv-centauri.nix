@@ -21,9 +21,9 @@
     };
   };
 
- sops = {
-    age.keyFile = "/var/lib/sops/age-key.txt";  # Point to your actual key location
-    age.generateKey = false;  # Don't generate a new key
+  sops = {
+    age.keyFile = "/var/lib/sops/age-key.txt"; # Point to your actual key location
+    age.generateKey = false; # Don't generate a new key
   };
 
   time.timeZone = "Europe/London";
@@ -79,6 +79,8 @@
     htop
     dig
     just
+    btrbk
+    cifs-utils # For SMB/CIFS shares
   ];
 
   # Enable SSH for remote access
@@ -129,4 +131,54 @@
       ];
     };
   };
+
+  fileSystems."/mnt/media" = {
+    device = "//u397529.your-storagebox.de/backup";
+    fsType = "cifs";
+    options = let
+      # this line prevents hanging on network split
+      # TODO: pull credentials from 1password
+      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+    in ["${automount_opts},credentials=/etc/nixos/smb-secrets,uid=1000,gid=100"];
+  };
+
+  # Configure automatic snapshots using btrbk
+  # services.btrbk = {
+  #   enabled = true;
+  #   settings = {
+  #     timestamp_format = "long";
+  #     preserve_day_of_week = "monday";
+  #     preserve_hour_of_day = "0";
+  #
+  #     volume = {
+  #       "/btrfs_pool" = {
+  #         subvolume = {
+  #           "@home" = {
+  #             snapshot_dir = "/snapshots/home";
+  #             snapshot_preserve = "48h 7d 4w 6m";
+  #             snapshot_create = "always";
+  #           };
+  #         };
+  #       };
+  #     };
+  #   };
+  # };
+
+  # Setup systemd timer to run btrbk
+  # systemd.services.btrbk-snapshot = {
+  #   description = "BTRBK Snapshot Service";
+  #   serviceConfig = {
+  #     Type = "oneshot";
+  #     ExecStart = "${pkgs.btrbk}/bin/btrbk run";
+  #   };
+  # };
+  #
+  # systemd.timers.btrbk-snapshot = {
+  #   description = "BTRBK Snapshot Timer";
+  #   wantedBy = ["timers.target"];
+  #   timerConfig = {
+  #     OnCalendar = "hourly"; # Run every hour, adjust as needed
+  #     Persistent = true;
+  #   };
+  # };
 }

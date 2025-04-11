@@ -1,7 +1,10 @@
 # Auto-generated for Authelia migration
-{ pkgs, lib, config, ... }:
-
 {
+  pkgs,
+  lib,
+  config,
+  ...
+}: {
   imports = [../../utils/my-declared-folders.nix];
 
   sops.secrets."authelia.env" = {
@@ -12,7 +15,7 @@
   };
 
   sops.secrets."authelia-users.yml" = {
-    sopsFile = ./users.yml;
+    sopsFile = ./users.yaml;
     key = "";
     restartUnits = ["podman-authelia.service"];
   };
@@ -28,9 +31,12 @@
 
   # Enable container name DNS for all Podman networks.
   networking.firewall.interfaces = let
-    matchAll = if !config.networking.nftables.enable then "podman+" else "podman*";
+    matchAll =
+      if !config.networking.nftables.enable
+      then "podman+"
+      else "podman*";
   in {
-    "${matchAll}".allowedUDPPorts = [ 53 ];
+    "${matchAll}".allowedUDPPorts = [53];
   };
 
   virtualisation.oci-containers.backend = "podman";
@@ -55,7 +61,7 @@
       "traefik.http.routers.authelia.rule" = "Host(`auth.kuipr.de`)";
       "traefik.http.routers.authelia.tls.certresolver" = "myresolver";
       "traefik.http.services.authelia.loadbalancer.server.port" = "9091";
-      
+
       # Middleware for Traefik
       "traefik.http.middlewares.authelia.forwardauth.address" = "http://authelia:9091/api/verify?rd=https://auth.kuipr.de";
       "traefik.http.middlewares.authelia.forwardauth.trustForwardHeader" = "true";
@@ -88,7 +94,7 @@
 
   # Networks
   systemd.services."podman-network-authelia_default" = {
-    path = [ pkgs.podman ];
+    path = [pkgs.podman];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
@@ -97,8 +103,8 @@
     script = ''
       podman network inspect authelia_default || podman network create authelia_default
     '';
-    partOf = [ "podman-compose-authelia-root.target" ];
-    wantedBy = [ "podman-compose-authelia-root.target" ];
+    partOf = ["podman-compose-authelia-root.target"];
+    wantedBy = ["podman-compose-authelia-root.target"];
   };
 
   # Root service
@@ -108,6 +114,6 @@
     unitConfig = {
       Description = "Root target generated for Authelia.";
     };
-    wantedBy = [ "multi-user.target" ];
+    wantedBy = ["multi-user.target"];
   };
 }
