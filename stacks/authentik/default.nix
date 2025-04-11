@@ -8,7 +8,7 @@
     sopsFile = ./authentik.env;
     format = "dotenv";
     key = "";
-    restartUnits = ["podman-ak-serverservice"];
+    restartUnits = ["podman-ak-server.service"];
   };
 
 
