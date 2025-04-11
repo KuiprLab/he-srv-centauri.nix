@@ -18,12 +18,10 @@ install: format test
 
 [doc("Locally deploy the config using nh")]
 deploy-local host="he-srv-centauri": format
-    @git add .
     @nix run nixpkgs#nh -- os switch -H {{host}} .
 
 [doc("Locally update flake and deploy the config using nh")]
 upgrade-local host="he-srv-centauri": format
-    @git add .
     @nix run nixpkgs#nh -- os switch --hostname {{host}} --update .
 
 
