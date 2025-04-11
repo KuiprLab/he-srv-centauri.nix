@@ -1,7 +1,9 @@
 keys:
   - &key age1207u8skz74quhs0xtunrrp2xwj0dtmffllfk7fw93q5eywd7w37qslc9yh
+  - &server age1cdr7yexx2vc54q46tkmzw0udh2hynm4dvytjnvzapc64x6rsh59qmemc6g
 creation_rules:
   - path_regex: .*\.(yaml|json|env|ini|sops)$
     key_groups:
       - age:
           - *key
+          - *server
