@@ -21,6 +21,11 @@
     };
   };
 
+ sops = {
+    age.keyFile = "/var/lib/sops/age-key.txt";  # Point to your actual key location
+    age.generateKey = false;  # Don't generate a new key
+  };
+
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_US.UTF-8";
   console.keyMap = "us";
