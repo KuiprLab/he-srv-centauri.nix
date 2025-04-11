@@ -37,8 +37,11 @@ test:
 
 [doc("Edit the secrets.yaml")]
 encrypt file:
-    @eval $(op signin)
     @export SOPS_AGE_KEY=$(op read "op://OpsVault/he-srv-centauri-sops-key/age"); nix run nixpkgs#sops -- -e -i {{file}}
+
+edit file:
+    @export SOPS_AGE_KEY=$(op read "op://OpsVault/he-srv-centauri-sops-key/age"); nix run nixpkgs#sops -- edit {{file}}
+
 
 [doc("Convert docker-compose files to nix files using compose2nix")]
 convert input output-name:

@@ -57,9 +57,6 @@
       "traefik.http.services.whoami.loadbalancer.server.port" = "80";
     };
     log-driver = "journald";
-    environmentFiles = [
-      "/run/secrets/traefik.env"
-    ];
     extraOptions = [
       "--network-alias=whoami"
       "--network=proxy"
@@ -89,6 +86,9 @@
       "/home/ubuntu/traefik/letsencrypt:/letsencrypt:rw"
       "/home/ubuntu/traefik/logs:/logs:rw"
       "/run/podman/podman.sock:/var/run/docker.sock:ro"
+    ];
+    environmentFiles = [
+      "/run/secrets/traefik.env"
     ];
     ports = [
       "8081:80/tcp"
