@@ -37,11 +37,8 @@ authentication_backend:
 access_control:
   default_policy: one_factor
   rules:
-    # Public domains that don't require authentication
     - domain: whoami.kuipr.de
       policy: bypass
-    
-    # Protected domains that require authentication
     - domain: "*.kuipr.de"
       policy: one_factor
 
@@ -50,8 +47,8 @@ session:
   cookies:
     - name: authelia_session
       domain: kuipr.de
-      expiration: 3600
-      inactivity: 300
+      expiration: 3600  # seconds
+      inactivity: 300   # seconds
   redis:
     host: redis
     port: 6379
