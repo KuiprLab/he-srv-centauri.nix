@@ -14,7 +14,7 @@
 
     myFolders = {
         authentik = {
-            path = "/home/ubuntu/authentik";
+            path = "/home/ubuntu/authentik/{media,templates,postgresql,certs}";
             owner = "ubuntu";
             group = "users";
             mode = "0755";
@@ -210,7 +210,7 @@
       "/home/ubuntu/authentik/certs:/certs:rw"
       "/home/ubuntu/authentik/media:/media:rw"
       "/home/ubuntu/authentik/templates:/templates:rw"
-      "/home/ubuntu/docker.sock:/var/run/docker.sock:rw"
+      "/run/podman/podman.sock:/var/run/docker.sock:rw"
     ];
     environmentFiles = [
       "/run/secrets/authentik.env"
