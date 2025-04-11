@@ -46,7 +46,7 @@
     image = "authelia/authelia:latest";
     volumes = [
       "/home/ubuntu/authelia/config:/config:rw"
-    "/home/ubuntu/he-srv-centauri.nix/stacks/authelia/configuraton.yaml:/home/ubuntu/authelia/config/configuration.yaml"
+      "/home/ubuntu/he-srv-centauri.nix/stacks/authelia/configuraton.yaml:/config/configuration.yaml:ro"
       "/home/ubuntu/authelia/data:/data:rw"
       "/run/secrets/authelia-users.yaml:/config/users_database.yaml:rw"
 
