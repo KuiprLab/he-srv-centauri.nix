@@ -34,7 +34,18 @@
     ...
   } @ inputs: let
     system = "aarch64-linux";
-    pkgs = import nixpkgs {inherit system;};
+
+    # Settings for Package management
+    nixpkgsConfig = {
+      allowUnfree = true;
+      allowUnsupportedSystem = false;
+      allowBroken = true;
+      allowInsecure = true; # Fixed typo here
+    };
+    pkgs = import inputs.nixpkgs {
+      inherit system;
+      config = nixpkgsConfig;
+    };
   in {
     # NixOS configuration
     nixosConfigurations = {

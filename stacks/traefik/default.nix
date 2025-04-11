@@ -6,13 +6,12 @@
 }: {
   imports = [../../utils/my-declared-folders.nix];
 
-
-    sops.secrets."traefik.env" = {
-        sopsFile = ./traefik.env;
-        format = "dotenv";
-        key = "";
-        restartUnits = [ "podman-traefik.service" ];
-    };
+  sops.secrets."traefik.env" = {
+    sopsFile = ./traefik.env;
+    format = "dotenv";
+    key = "";
+    restartUnits = ["podman-traefik.service"];
+  };
 
   myFolders = {
     config = {
