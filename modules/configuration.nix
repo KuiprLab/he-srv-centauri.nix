@@ -42,13 +42,6 @@
         mode = "0600";
         path = "/var/lib/opnix/sops-age";
       };
-      cifs-password = {
-        source = "{{ op://OpsVault/Hetzner Storage Box/password }}";
-        user = "ubuntu";
-        group = "users";
-        mode = "0600";
-        path = "/var/lib/opnix/cifs-password";
-      };
     };
   };
 
@@ -156,20 +149,24 @@
     };
   };
 
-systemd.mounts = [{
-  what = "//u397529.your-storagebox.de/backup";
-  where = "/mnt/media";
-  type = "cifs";
-  options = "credentials=${config.opnix.secrets.cifs-password.path},uid=1000,gid=100";
-  wantedBy = [ "multi-user.target" ];
-}];
-
-systemd.automounts = [{
-  where = "/mnt/media";
-  automountConfig = {
-    TimeoutIdleSec = "60";
+  sops.secrets."cifs-creds.txt" = {
+    sopsFile = ./cifs.txt;
   };
-  wantedBy = [ "multi-user.target" ];
-}];
+
+# Modify your mount configuration
+fileSystems."/mnt/media" = {
+  device = "//u397529.your-storagebox.de/backup";
+  fsType = "cifs";
+  options = [
+    "credentials=/run/secrets/cifs-creds.txt"
+    "uid=1000"
+    "gid=100"
+    "x-systemd.automount"
+    "noauto"
+    "x-systemd.idle-timeout=60"
+    "x-systemd.device-timeout=5s"
+    "x-systemd.mount-timeout=5s"
+  ];
+};
 
 }
