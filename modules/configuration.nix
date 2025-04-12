@@ -25,7 +25,7 @@
     enable = true;
     users = ["ubuntu"]; # Users that need secret access
     tokenFile = "/etc/opnix-token"; # Default location
-    configFile = "../opnix-secrets.json";
+    configFile = "/home/ubuntu/he-srv-centauri/opnix-secrets.json";
     outputDir = "/var/lib/opnix/secrets"; # Optional, this is the default
   };
 
