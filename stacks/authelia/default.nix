@@ -49,7 +49,6 @@
       "/home/ubuntu/he-srv-centauri.nix/stacks/authelia/configuration.yml:/config/configuration.yml:ro"
       "/home/ubuntu/authelia/data:/data:rw"
       "/run/secrets/authelia-users.yaml:/config/users_database.yaml:rw"
-
     ];
     ports = [
       "9091:9091/tcp"
@@ -94,36 +93,36 @@
     ];
   };
 
-virtualisation.oci-containers.containers."redis" = {
-  image = "redis:alpine";
-  volumes = [
-    "/home/ubuntu/authelia/data/redis:/data:rw"
-  ];
-  labels = {};
-  log-driver = "journald";
-  extraOptions = [
-    "--network-alias=redis"
-    "--network=authelia_default"
-  ];
-};
-
-systemd.services."podman-authelia-redis" = {
-  serviceConfig = {
-    Restart = lib.mkOverride 90 "always";
+  virtualisation.oci-containers.containers."redis" = {
+    image = "redis:alpine";
+    volumes = [
+      "/home/ubuntu/authelia/data/redis:/data:rw"
+    ];
+    labels = {};
+    log-driver = "journald";
+    extraOptions = [
+      "--network-alias=redis"
+      "--network=authelia_default"
+    ];
   };
-  after = [
-    "podman-network-authelia_default.service"
-  ];
-  requires = [
-    "podman-network-authelia_default.service"
-  ];
-  partOf = [
-    "podman-compose-authelia-root.target"
-  ];
-  wantedBy = [
-    "podman-compose-authelia-root.target"
-  ];
-};
+
+  systemd.services."podman-authelia-redis" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "always";
+    };
+    after = [
+      "podman-network-authelia_default.service"
+    ];
+    requires = [
+      "podman-network-authelia_default.service"
+    ];
+    partOf = [
+      "podman-compose-authelia-root.target"
+    ];
+    wantedBy = [
+      "podman-compose-authelia-root.target"
+    ];
+  };
 
   # Networks
   systemd.services."podman-network-authelia_default" = {
