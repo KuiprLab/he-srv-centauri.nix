@@ -9,6 +9,7 @@
     (modulesPath + "/profiles/qemu-guest.nix")
     ./hardware-configuration.nix
     ./disko-config.nix
+    ../utils/my-declared-folders.nix
   ];
 
   virtualisation.podman = {
@@ -19,6 +20,15 @@
       enable = true;
       dates = "weekly";
       flags = ["--all"];
+    };
+  };
+
+  myFolders = {
+    opnix = {
+      path = "/var/lib/opnix/";
+      owner = "ubuntu";
+      group = "users";
+      mode = "0755";
     };
   };
 
@@ -39,14 +49,14 @@
         user = "ubuntu";
         group = "users";
         mode = "0600";
-        path = "/home/ubuntu";
+        path = "/var/lib/opnix/sops-age";
       };
       cifs-password = {
         source = "{{ op://OpsVault/Hetzner Storage Box/password }}";
         user = "ubuntu";
         group = "users";
         mode = "0600";
-        path = "/home/ubuntu";
+        path = "/var/lib/opnix/cifs-password";
       };
     };
   };
