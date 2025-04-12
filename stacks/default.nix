@@ -6,5 +6,6 @@ _: {
     ./jellyfin
     ./obsidian-share-notes
     ./komga
+        ./qbittorrent
   ];
 }
