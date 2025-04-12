@@ -42,6 +42,7 @@
     volumes = [
       "/home/ubuntu/gatus/config:/config:rw"
       "/run/secrets/gatus.yaml:/config/config.yaml:ro"
+  "/home/ubuntu/he-srv-centauri.nix/stacks/gatus/custom.css:/config/custom.css:ro"
       "/home/ubuntu/gatus/data:/data:rw"
     ];
     labels = {
