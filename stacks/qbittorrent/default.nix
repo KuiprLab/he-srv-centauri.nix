@@ -141,7 +141,7 @@
   systemd.services."podman-flaresolverr_comics" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
-      TimeoutStartSec = 120;
+      # TimeoutStartSec = 120;
     };
     after = ["podman-gluetun.service"];
     requires = ["podman-gluetun.service"];
