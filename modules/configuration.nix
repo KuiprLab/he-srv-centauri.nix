@@ -156,7 +156,7 @@
   };
 
 # Modify your mount configuration
-fileSystems."/mnt/media" = {
+fileSystems."/mnt/data" = {
   device = "//u397529.your-storagebox.de/backup";
   fsType = "cifs";
   options = [
