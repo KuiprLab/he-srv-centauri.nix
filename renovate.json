@@ -1,0 +1,61 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "enabledManagers": [
+    "nix",
+    "github-actions",
+    "regex"
+  ],
+  "nix": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true
+    },
+    {
+      "matchDatasources": ["docker"],
+      "automerge": true,
+      "schedule": ["after 1am and before 5am every weekend"]
+    },
+    {
+      "matchManagers": ["nix"],
+      "addLabels": ["nix-update"]
+    },
+    {
+      "matchManagers": ["regex"],
+      "matchDatasources": ["docker"],
+      "addLabels": ["container-update"]
+    }
+  ],
+  "regexManagers": [
+    {
+      "fileMatch": ["stacks/.+/default\\.nix$"],
+      "matchStrings": [
+        "image\\s*=\\s*[\"']?(?<depName>[^\\s\"']+?/[^\\s\"']+?):?(?<currentValue>[^\\s\"']+?)?[\"']?\\s*;"
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker"
+    }
+  ],
+  "git-submodules": {
+    "enabled": true
+  },
+  "dependencyDashboard": true,
+  "prHourlyLimit": 0,
+  "prConcurrentLimit": 5,
+  "labels": ["dependencies"],
+  "schedule": [
+    "after 1am and before 5am every weekend"
+  ],
+  "semanticCommits": "enabled",
+  "commitMessagePrefix": "chore(deps):",
+  "rangeStrategy": "bump",
+  "separateMajorMinor": true,
+  "separateMinorPatch": false,
+  "rebaseWhen": "behind-base-branch"
+}
