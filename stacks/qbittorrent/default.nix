@@ -5,7 +5,6 @@
   config,
   ...
 }: {
-
   sops.secrets."qbittorrent.env" = {
     sopsFile = ./qbittorrent.env;
     format = "dotenv";
@@ -14,13 +13,12 @@
     restartUnits = [];
   };
 
-
   sops.secrets."gluetun.env" = {
     sopsFile = ./gluetun.env;
     format = "dotenv";
     key = "";
     # Simplify service restarts to reduce activation issues
-    restartUnits = [ "podman-gluetun.service"];
+    restartUnits = ["podman-gluetun.service"];
   };
 
   myFolders = {
@@ -127,7 +125,7 @@
     };
     after = [
       "podman-network-qbittorrent_default.service"
-      "sops-nix.service"  # Make sure secrets are available
+      "sops-nix.service" # Make sure secrets are available
     ];
     requires = [
       "podman-network-qbittorrent_default.service"

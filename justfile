@@ -39,6 +39,7 @@ test:
 encrypt file:
     @export SOPS_AGE_KEY=$(op read "op://OpsVault/he-srv-centauri-sops-key/age"); nix run nixpkgs#sops -- -e -i {{file}}
 
+[doc("Edit a sops encrypted file")]
 edit file:
     @export SOPS_AGE_KEY=$(op read "op://OpsVault/he-srv-centauri-sops-key/age"); nix run nixpkgs#sops -- edit {{file}}
 
@@ -49,5 +50,6 @@ convert input output-name:
     @nix run github:aksiksi/compose2nix -- -inputs={{input}}  -generate_unused_resources -output=./stacks/{{output-name}}/default.nix
 
 
+[doc("Create a password hash for authelia")]
 generate-pw-hash password:
     @docker run --rm authelia/authelia:latest authelia crypto hash generate argon2 --password {{password}}
