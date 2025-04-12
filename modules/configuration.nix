@@ -30,19 +30,17 @@
       group = "users";
       mode = "0755";
     };
+
+    media = {
+      path = "/mnt/media";
+      owner = "ubuntu";
+      group = "users";
+      mode = "0755";
+    };
   };
 
   opnix = {
-    # This is where you put your Service Account token in .env file format, e.g.
-    # OP_SERVICE_ACCOUNT_TOKEN="{your token here}"
-    # See: https://developer.1password.com/docs/service-accounts/use-with-1password-cli/#get-started
-    # This file should have permissions 400 (file owner read only) or 600 (file owner read-write)
-    # The systemd script will print a warning for you if it's not
     environmentFile = "/etc/opnix.env";
-    # Set the systemd services that will use 1Password secrets; this makes them wait until
-    # secrets are deployed before attempting to start the service.
-    # systemdWantedBy = [ "my-systemd-service" "homepage-dashboard" ];
-    # Specify the secrets you need
     secrets = {
       sops-age = {
         source = "{{ op://OpsVault/he-srv-centauri-sops-key/age }}";
@@ -62,8 +60,8 @@
   };
 
   sops = {
-    age.keyFile = config.opnix.secrets.sops-age.path; # Point to your actual key location
-    age.generateKey = false; # Don't generate a new key
+    age.keyFile = config.opnix.secrets.sops-age.path;
+    age.generateKey = false;
   };
 
   time.timeZone = "Europe/London";
