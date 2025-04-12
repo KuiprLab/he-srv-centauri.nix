@@ -114,7 +114,6 @@
   systemd.services."podman-gluetun" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
-      TimeoutStartSec = 300;  # Increase timeout to 5 minutes
     };
     after = [
       "podman-network-qbittorrent_default.service"
@@ -141,7 +140,6 @@
   systemd.services."podman-flaresolverr_comics" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
-      # TimeoutStartSec = 120;
     };
     after = ["podman-gluetun.service"];
     requires = ["podman-gluetun.service"];
@@ -164,7 +162,6 @@
   systemd.services."podman-kapowarr" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
-      TimeoutStartSec = 120;
     };
     after = ["podman-gluetun.service"];
     requires = ["podman-gluetun.service"];
@@ -190,7 +187,6 @@
   systemd.services."podman-qbittorrent" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
-      TimeoutStartSec = 120;
     };
     after = ["podman-gluetun.service"];
     requires = ["podman-gluetun.service"];
