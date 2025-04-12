@@ -47,3 +47,7 @@ edit file:
 convert input output-name:
     @mkdir -p ./stacks/{{output-name}}
     @nix run github:aksiksi/compose2nix -- -inputs={{input}}  -generate_unused_resources -output=./stacks/{{output-name}}/default.nix
+
+
+generate-pw-hash password:
+    @docker run --rm authelia/authelia:latest authelia crypto hash generate argon2 --password {{password}}
