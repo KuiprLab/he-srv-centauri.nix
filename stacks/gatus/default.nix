@@ -37,8 +37,6 @@
       "/ubuntu/gatus/config:/config:rw"
       "/run/secrets/gatus.yaml:/config/config.yaml:ro"
       "/ubuntu/gatus/data:/data:rw"
-      "/etc/localtime:/etc/localtime:ro"
-      "/etc/timezone:/etc/timezone:ro"
     ];
     labels = {
       "traefik.docker.network" = "proxy";
