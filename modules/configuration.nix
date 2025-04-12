@@ -30,13 +30,6 @@
       group = "users";
       mode = "0755";
     };
-
-    media = {
-      path = "/mnt/media";
-      owner = "ubuntu";
-      group = "users";
-      mode = "0755";
-    };
   };
 
   opnix = {
@@ -90,11 +83,6 @@
     };
   };
 
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-  };
-
   system.stateVersion = "24.11";
 
   networking.firewall = {
@@ -103,8 +91,8 @@
       22 # SSH
       80 # HTTP
       443 # HTTPS
-      8081 # Traefik HTTP
-      8443 # Traefik HTTPS
+      # 8081 # Traefik HTTP
+      # 8443 # Traefik HTTPS
     ];
   };
 
@@ -114,10 +102,8 @@
     vim
     curl
     wget
-    htop
     dig
     just
-    btrbk
     cifs-utils # For SMB/CIFS shares
   ];
 
@@ -175,48 +161,8 @@
     fsType = "cifs";
     options = let
       # this line prevents hanging on network split
-      # TODO: pull credentials from 1password
       automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
     in ["${automount_opts},credentials=${config.opnix.secrets.cifs-password.path},uid=1000,gid=100"];
   };
 
-  # Configure automatic snapshots using btrbk
-  # services.btrbk = {
-  #   enabled = true;
-  #   settings = {
-  #     timestamp_format = "long";
-  #     preserve_day_of_week = "monday";
-  #     preserve_hour_of_day = "0";
-  #
-  #     volume = {
-  #       "/btrfs_pool" = {
-  #         subvolume = {
-  #           "@home" = {
-  #             snapshot_dir = "/snapshots/home";
-  #             snapshot_preserve = "48h 7d 4w 6m";
-  #             snapshot_create = "always";
-  #           };
-  #         };
-  #       };
-  #     };
-  #   };
-  # };
-
-  # Setup systemd timer to run btrbk
-  # systemd.services.btrbk-snapshot = {
-  #   description = "BTRBK Snapshot Service";
-  #   serviceConfig = {
-  #     Type = "oneshot";
-  #     ExecStart = "${pkgs.btrbk}/bin/btrbk run";
-  #   };
-  # };
-  #
-  # systemd.timers.btrbk-snapshot = {
-  #   description = "BTRBK Snapshot Timer";
-  #   wantedBy = ["timers.target"];
-  #   timerConfig = {
-  #     OnCalendar = "hourly"; # Run every hour, adjust as needed
-  #     Persistent = true;
-  #   };
-  # };
 }
