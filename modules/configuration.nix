@@ -156,21 +156,20 @@
     };
   };
 
-fileSystems."/mnt/media" = {
-  device = "//u397529.your-storagebox.de/backup";
-  fsType = "cifs";
-  options = [
-    "credentials=${config.opnix.secrets.cifs-password.path}"
-    "uid=1000"
-    "gid=100"
-    "noauto"
-  ];
-  # Separate the automount options from the mount options
-  automount = true;
-  # These timeouts are applied to the automount unit
+systemd.mounts = [{
+  what = "//u397529.your-storagebox.de/backup";
+  where = "/mnt/media";
+  type = "cifs";
+  options = "credentials=${config.opnix.secrets.cifs-password.path},uid=1000,gid=100";
+  wantedBy = [ "multi-user.target" ];
+}];
+
+systemd.automounts = [{
+  where = "/mnt/media";
   automountConfig = {
     TimeoutIdleSec = "60";
   };
-};
+  wantedBy = [ "multi-user.target" ];
+}];
 
 }
