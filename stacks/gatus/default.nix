@@ -57,12 +57,15 @@
     # ports = [
     #   "8080:8080/tcp"
     # ];
+    cmd = ["/bin/sh" "-c" "ls -la /gatus && chmod +x /gatus && exec /gatus"];
     log-driver = "journald";
     extraOptions = [
     "--network-alias=gatus"
     "--network=gatus_default"
     "--cap-add=CAP_SYS_ADMIN"  # Add necessary capabilities
     "--security-opt=seccomp=unconfined"  # Reduce security constraints
+    "--security-opt=label=disable"  # Disable SELinux/AppArmor confinement
+    "--privileged"                  # Grant privileged access (careful with this in production)
     ];
   };
   systemd.services."podman-gatus-gatus" = {
