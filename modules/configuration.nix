@@ -1,6 +1,7 @@
 {
   pkgs,
   modulesPath,
+config,
   ...
 }: {
   # Import additional configuration files
@@ -21,16 +22,34 @@
     };
   };
 
-  services.onepassword-secrets = {
-    enable = true;
-    users = ["ubuntu"]; # Users that need secret access
-    tokenFile = "/etc/opnix-token"; # Default location
-    configFile = "/home/ubuntu/he-srv-centauri/secrets.json";
-    outputDir = "/var/lib/opnix/secrets"; # Optional, this is the default
+ opnix = {
+    # This is where you put your Service Account token in .env file format, e.g.
+    # OP_SERVICE_ACCOUNT_TOKEN="{your token here}"
+    # See: https://developer.1password.com/docs/service-accounts/use-with-1password-cli/#get-started
+    # This file should have permissions 400 (file owner read only) or 600 (file owner read-write)
+    # The systemd script will print a warning for you if it's not
+    environmentFile = "/etc/opnix.env";
+    # Set the systemd services that will use 1Password secrets; this makes them wait until
+    # secrets are deployed before attempting to start the service.
+    # systemdWantedBy = [ "my-systemd-service" "homepage-dashboard" ];
+    # Specify the secrets you need
+    secrets = {
+      # The 1Password Secret Reference in here (the `op://` URI)
+      # will get replaced with the actual secret at runtime
+      sops-age.source = ''
+        [ConfigRoot]
+        sops-age="{{ op://OpsVault/he-srv-centauri-sops-key/age }}"
+      '';
+
+      cifs-password.source = ''
+        [ConfigRoot]
+        cifs-password={{ op://OpsVault/Hetzner Storage Box/password }}"
+      '';
+    };
   };
 
   sops = {
-    age.keyFile = "/var/lib/sops/age-key.txt"; # Point to your actual key location
+    age.keyFile = config.opnix.secrets.sops-age.path; # Point to your actual key location
     age.generateKey = false; # Don't generate a new key
   };
 
@@ -147,7 +166,7 @@
       # this line prevents hanging on network split
       # TODO: pull credentials from 1password
       automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-    in ["${automount_opts},credentials=/etc/nixos/smb-secrets,uid=1000,gid=100"];
+    in ["${automount_opts},credentials=${config.opnix.secrets.cifs-password.path},uid=1000,gid=100"];
   };
 
   # Configure automatic snapshots using btrbk
