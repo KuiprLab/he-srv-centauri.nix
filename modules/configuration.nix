@@ -34,7 +34,6 @@
 
   opnix = {
     environmentFile = "/etc/opnix.env";
-    systemdWantedBy = ["sysinit-reactivation.target"];
     secrets = {
       sops-age = {
         source = "{{ op://OpsVault/he-srv-centauri-sops-key/age }}";
@@ -42,6 +41,13 @@
         group = "users";
         mode = "0600";
         path = "/var/lib/opnix/sops-age";
+      };
+      cifs-password = {
+        source = "{{ op://OpsVault/Hetzner Storage Box/password }}";
+        user = "ubuntu";
+        group = "users";
+        mode = "0600";
+        path = "/var/lib/opnix/cifs-password";
       };
     };
   };
@@ -150,31 +156,21 @@
     };
   };
 
-# Add this to create the directory
-systemd.tmpfiles.rules = [
-  "d /mnt/media 0755 ubuntu users - -"
-];
-
-
-  sops.secrets."cifs-password.txt" = {
-    sopsFile = ./cifs.txt;
-    key = "";
-  };
-
-# Modify your mount configuration
 fileSystems."/mnt/media" = {
   device = "//u397529.your-storagebox.de/backup";
   fsType = "cifs";
   options = [
-    "credentials=/run/secrets/cifs-password.txt"
+    "credentials=${config.opnix.secrets.cifs-password.path}"
     "uid=1000"
     "gid=100"
-    "x-systemd.automount"
     "noauto"
-    "x-systemd.idle-timeout=60"
-    "x-systemd.device-timeout=5s"
-    "x-systemd.mount-timeout=5s"
   ];
+  # Separate the automount options from the mount options
+  automount = true;
+  # These timeouts are applied to the automount unit
+  automountConfig = {
+    TimeoutIdleSec = "60";
+  };
 };
 
 }
