@@ -149,8 +149,10 @@
     };
   };
 
-  sops.secrets."cifs-creds.txt" = {
+  sops.secrets."cifs-creds" = {
     sopsFile = ./cifs.txt;
+    key = "";
+    restartUnits = [];
   };
 
 # Modify your mount configuration
@@ -158,7 +160,7 @@ fileSystems."/mnt/media" = {
   device = "//u397529.your-storagebox.de/backup";
   fsType = "cifs";
   options = [
-    "credentials=/run/secrets/cifs-creds.txt"
+    "credentials=/run/secrets/cifs-creds"
     "uid=1000"
     "gid=100"
     "x-systemd.automount"
