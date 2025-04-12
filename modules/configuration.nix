@@ -156,13 +156,25 @@
     };
   };
 
-  fileSystems."/mnt/media" = {
-    device = "//u397529.your-storagebox.de/backup";
-    fsType = "cifs";
-    options = let
-      # this line prevents hanging on network split
-      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-    in ["${automount_opts},credentials=${config.opnix.secrets.cifs-password.path},uid=1000,gid=100"];
-  };
+# Add this to create the directory
+systemd.tmpfiles.rules = [
+  "d /mnt/media 0755 ubuntu users - -"
+];
+
+# Modify your mount configuration
+fileSystems."/mnt/media" = {
+  device = "//u397529.your-storagebox.de/backup";
+  fsType = "cifs";
+  options = [
+    "credentials=${config.opnix.secrets.cifs-password.path}"
+    "uid=1000"
+    "gid=100"
+    "x-systemd.automount"
+    "noauto"
+    "x-systemd.idle-timeout=60"
+    "x-systemd.device-timeout=5s"
+    "x-systemd.mount-timeout=5s"
+  ];
+};
 
 }

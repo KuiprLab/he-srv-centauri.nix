@@ -3,5 +3,7 @@ _: {
     ./traefik
     ./gatus
     ./authelia
+        ./jellyfin
+        ./obsidian-share-notes
   ];
 }
