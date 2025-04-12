@@ -107,7 +107,7 @@ virtualisation.oci-containers.containers."redis" = {
   ];
 };
 
-systemd.services."podman-redis" = {
+systemd.services."podman-authelia-redis" = {
   serviceConfig = {
     Restart = lib.mkOverride 90 "always";
   };
