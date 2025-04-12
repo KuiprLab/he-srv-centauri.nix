@@ -5,12 +5,22 @@
   config,
   ...
 }: {
+
   sops.secrets."qbittorrent.env" = {
     sopsFile = ./qbittorrent.env;
     format = "dotenv";
     key = "";
     # Simplify service restarts to reduce activation issues
     restartUnits = [];
+  };
+
+
+  sops.secrets."gluetun.env" = {
+    sopsFile = ./gluetun.env;
+    format = "dotenv";
+    key = "";
+    # Simplify service restarts to reduce activation issues
+    restartUnits = [ "podman-gluetun.service"];
   };
 
   myFolders = {
@@ -67,7 +77,7 @@
   virtualisation.oci-containers.containers."gluetun" = {
     image = "qmcgaw/gluetun";
     environmentFiles = [
-      "/run/secrets/qbittorrent.env"
+      "/run/secrets/gluetun.env"
     ];
     volumes = [
       "/home/ubuntu/gluetun:/gluetun:rw"
