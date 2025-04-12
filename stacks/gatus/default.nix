@@ -3,7 +3,7 @@
 
 {
   myFolders = {
-    authelia = {
+    gatus = {
       path = "/home/ubuntu/gatus/{config,data}";
       owner = "ubuntu";
       group = "users";
