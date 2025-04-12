@@ -94,7 +94,7 @@
       "traefik.docker.network" = "proxy";
       "traefik.enable" = "true";
       "traefik.http.routers.kapowarr.entrypoints" = "websecure";
-      "traefik.http.routers.kapowarr.middlewares" = "authentik@docker";
+      "traefik.http.routers.kapowarr.middlewares" = "authelia@docker";
       "traefik.http.routers.kapowarr.rule" = "Host(`kapowarr.kuipr.de`)";
       "traefik.http.routers.kapowarr.service" = "kapowarr";
       "traefik.http.routers.kapowarr.tls.certresolver" = "myresolver";
