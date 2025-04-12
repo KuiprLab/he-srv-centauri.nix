@@ -35,14 +35,14 @@
   # Containers
   virtualisation.oci-containers.containers."gatus-gatus" = {
     image = "twinproduction/gatus:latest";
-    user = "0:0";  # Run as root user
+    user = "0:0"; # Run as root user
     environment = {
       "TZ" = "Europe/Rome";
     };
     volumes = [
       "/home/ubuntu/gatus/config:/config:rw"
       "/run/secrets/gatus.yaml:/config/config.yaml:ro"
-  "/home/ubuntu/he-srv-centauri.nix/stacks/gatus/custom.css:/config/custom.css:ro"
+      "/home/ubuntu/he-srv-centauri.nix/stacks/gatus/custom.css:/config/custom.css:ro"
       "/home/ubuntu/gatus/data:/data:rw"
     ];
     labels = {
@@ -61,12 +61,12 @@
     cmd = ["/bin/sh" "-c" "ls -la /gatus && chmod +x /gatus && exec /gatus"];
     log-driver = "journald";
     extraOptions = [
-    "--network-alias=gatus"
-    "--network=gatus_default"
-    "--cap-add=CAP_SYS_ADMIN"  # Add necessary capabilities
-    "--security-opt=seccomp=unconfined"  # Reduce security constraints
-    "--security-opt=label=disable"  # Disable SELinux/AppArmor confinement
-    "--privileged"                  # Grant privileged access (careful with this in production)
+      "--network-alias=gatus"
+      "--network=gatus_default"
+      "--cap-add=CAP_SYS_ADMIN" # Add necessary capabilities
+      "--security-opt=seccomp=unconfined" # Reduce security constraints
+      "--security-opt=label=disable" # Disable SELinux/AppArmor confinement
+      "--privileged" # Grant privileged access (careful with this in production)
     ];
   };
   systemd.services."podman-gatus-gatus" = {
