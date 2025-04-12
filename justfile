@@ -17,11 +17,11 @@ install: format test
     @nix run github:nix-community/nixos-anywhere -- --flake .#he-srv-centauri root@37.27.26.175 --build-on remote
 
 [doc("Locally deploy the config using nh")]
-deploy-local host="he-srv-centauri": format
+deploy-local host="he-srv-centauri":
     @nix run nixpkgs#nh -- os switch -H {{host}} .
 
 [doc("Locally update flake and deploy the config using nh")]
-upgrade-local host="he-srv-centauri": format
+upgrade-local host="he-srv-centauri":
     @nix run nixpkgs#nh -- os switch --hostname {{host}} --update .
 
 
