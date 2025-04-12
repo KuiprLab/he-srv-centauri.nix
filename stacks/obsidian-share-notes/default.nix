@@ -21,8 +21,6 @@
     };
   };
 
-
-
   # Enable container name DNS for all Podman networks.
   networking.firewall.interfaces = let
     matchAll =

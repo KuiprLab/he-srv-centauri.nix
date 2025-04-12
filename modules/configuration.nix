@@ -155,20 +155,19 @@
     restartUnits = [];
   };
 
-# Modify your mount configuration
-fileSystems."/mnt/data" = {
-  device = "//u397529.your-storagebox.de/backup";
-  fsType = "cifs";
-  options = [
-    "credentials=/run/secrets/cifs-creds"
-    "uid=1000"
-    "gid=100"
-    "x-systemd.automount"
-    "noauto"
-    "x-systemd.idle-timeout=60"
-    "x-systemd.device-timeout=5s"
-    "x-systemd.mount-timeout=5s"
-  ];
-};
-
+  # Modify your mount configuration
+  fileSystems."/mnt/data" = {
+    device = "//u397529.your-storagebox.de/backup";
+    fsType = "cifs";
+    options = [
+      "credentials=/run/secrets/cifs-creds"
+      "uid=1000"
+      "gid=100"
+      "x-systemd.automount"
+      "noauto"
+      "x-systemd.idle-timeout=60"
+      "x-systemd.device-timeout=5s"
+      "x-systemd.mount-timeout=5s"
+    ];
+  };
 }

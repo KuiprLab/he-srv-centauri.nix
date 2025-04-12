@@ -3,7 +3,8 @@ _: {
     ./traefik
     ./gatus
     ./authelia
-        ./jellyfin
-        ./obsidian-share-notes
+    ./jellyfin
+    ./obsidian-share-notes
+    ./komga
   ];
 }
