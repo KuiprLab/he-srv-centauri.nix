@@ -16,7 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
- opnix = {
+    opnix = {
       url = "github:mrjones2014/opnix";
       inputs.nixpkgs.follows = "nixpkgs";
     };

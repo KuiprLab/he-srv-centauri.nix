@@ -1,7 +1,7 @@
 {
   pkgs,
   modulesPath,
-config,
+  config,
   ...
 }: {
   # Import additional configuration files
@@ -22,7 +22,7 @@ config,
     };
   };
 
- opnix = {
+  opnix = {
     # This is where you put your Service Account token in .env file format, e.g.
     # OP_SERVICE_ACCOUNT_TOKEN="{your token here}"
     # See: https://developer.1password.com/docs/service-accounts/use-with-1password-cli/#get-started
@@ -34,17 +34,18 @@ config,
     # systemdWantedBy = [ "my-systemd-service" "homepage-dashboard" ];
     # Specify the secrets you need
     secrets = {
-      # The 1Password Secret Reference in here (the `op://` URI)
-      # will get replaced with the actual secret at runtime
-      sops-age.source = ''
-        [ConfigRoot]
-        sops-age="{{ op://OpsVault/he-srv-centauri-sops-key/age }}"
-      '';
-
-      cifs-password.source = ''
-        [ConfigRoot]
-        cifs-password={{ op://OpsVault/Hetzner Storage Box/password }}"
-      '';
+      sops-age = {
+        source = "{{ op://OpsVault/he-srv-centauri-sops-key/age }}";
+        user = "ubuntu";
+        group = "users";
+        mode = "0600";
+      };
+      cifs-password = {
+        source = "{{ op://OpsVault/Hetzner Storage Box/password }}";
+        user = "ubuntu";
+        group = "users";
+        mode = "0600";
+      };
     };
   };
 
