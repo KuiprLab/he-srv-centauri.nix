@@ -8,10 +8,6 @@ server:
   host: 0.0.0.0
   port: 9091
 
-# URL base configuration (replaces server_url)
-url:
-  base: https://auth.kuipr.de
-
 # Default redirection URL
 default_redirection_url: https://kuipr.de
 
@@ -44,20 +40,9 @@ access_control:
 # Session configuration
 session:
   name: authelia_session
-  domain: kuipr.de
-  same_site: lax
   expiration: 3600  # seconds
   inactivity: 300   # seconds
-  remember_me: 1y
-  cookies:
-    - name: authelia_session
-      domain: kuipr.de
-      expiration: 3600  # seconds
-      inactivity: 300   # seconds
-      authelia_url: https://auth.kuipr.de
-      default_redirection_url: https://kuipr.de
-      same_site: lax
-      remember_me: 1y
+  domain: kuipr.de
   redis:
     host: redis
     port: 6379
@@ -68,8 +53,7 @@ storage:
   local:
     path: /data/db.sqlite3
 
-# Notification settings - using file output in development
-# In production, use SMTP configuration
+# Notification settings
 notifier:
   filesystem:
     filename: /data/notification.txt
