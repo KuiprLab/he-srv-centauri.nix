@@ -1,7 +1,7 @@
 _: {
   imports = [
     ./traefik
-    ./uptime-kuma
+    ./gatus
     ./authelia
   ];
 }
