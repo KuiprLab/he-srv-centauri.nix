@@ -12,6 +12,15 @@
     dockerCompat = true;
   };
 
+  myFolders = {
+    jellyfin = {
+      path = "/home/ubuntu/jellyfin/{cache,config}";
+      owner = "ubuntu";
+      group = "users";
+      mode = "0755";
+    };
+  };
+
   # Enable container name DNS for all Podman networks.
   networking.firewall.interfaces = let
     matchAll =
@@ -32,8 +41,8 @@
     };
     volumes = [
       "/mnt/data/media:/media:rw"
-      "/path/to/cache:/cache:rw"
-      "/path/to/config:/config:rw"
+      "/home/ubuntu/jellyfin/cache:/cache:rw"
+      "/home/ubuntu/jellyfin/config:/config:rw"
     ];
     labels = {
       "traefik.enable" = "true";

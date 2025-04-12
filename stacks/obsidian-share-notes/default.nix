@@ -12,6 +12,17 @@
     restartUnits = ["podman-notesx-server.service"];
   };
 
+  myFolders = {
+    obs = {
+      path = "/home/ubuntu/sharex/{db,userfiles}";
+      owner = "ubuntu";
+      group = "users";
+      mode = "0755";
+    };
+  };
+
+
+
   # Enable container name DNS for all Podman networks.
   networking.firewall.interfaces = let
     matchAll =
@@ -31,8 +42,8 @@
       "/run/secrets/share-notes.env"
     ];
     volumes = [
-      "./db:/notesx/db:rw,Z"
-      "./userfiles:/notesx/userfiles:rw,Z"
+      "/home/ubuntu/sharex/db:/notesx/db:rw,Z"
+      "/home/ubuntu/sharex/userfiles:/notesx/userfiles:rw,Z"
     ];
     labels = {
       "traefik.enable" = "true";
