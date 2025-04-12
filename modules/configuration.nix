@@ -43,13 +43,6 @@
         mode = "0600";
         path = "/var/lib/opnix/sops-age";
       };
-      cifs-password = {
-        source = "{{ op://OpsVault/Hetzner Storage Box/password }}";
-        user = "ubuntu";
-        group = "users";
-        mode = "0600";
-        path = "/var/lib/opnix/cifs-password";
-      };
     };
   };
 
@@ -162,12 +155,18 @@ systemd.tmpfiles.rules = [
   "d /mnt/media 0755 ubuntu users - -"
 ];
 
+
+  sops.secrets."cifs-password.txt" = {
+    sopsFile = ./cifs.txt;
+    key = "";
+  };
+
 # Modify your mount configuration
 fileSystems."/mnt/media" = {
   device = "//u397529.your-storagebox.de/backup";
   fsType = "cifs";
   options = [
-    "credentials=${config.opnix.secrets.cifs-password.path}"
+    "credentials=/run/secrets/cifs-password.txt"
     "uid=1000"
     "gid=100"
     "x-systemd.automount"
