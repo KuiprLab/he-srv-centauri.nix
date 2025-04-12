@@ -39,12 +39,14 @@
         user = "ubuntu";
         group = "users";
         mode = "0600";
+        path = "/home/ubuntu";
       };
       cifs-password = {
         source = "{{ op://OpsVault/Hetzner Storage Box/password }}";
         user = "ubuntu";
         group = "users";
         mode = "0600";
+        path = "/home/ubuntu";
       };
     };
   };
