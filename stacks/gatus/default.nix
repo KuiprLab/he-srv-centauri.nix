@@ -34,9 +34,9 @@
       "TZ" = "Europe/Rome";
     };
     volumes = [
-      "/ubuntu/gatus/config:/config:rw"
+      "/home/ubuntu/gatus/config:/config:rw"
       "/run/secrets/gatus.yaml:/config/config.yaml:ro"
-      "/ubuntu/gatus/data:/data:rw"
+      "/home/ubuntu/gatus/data:/data:rw"
     ];
     labels = {
       "traefik.docker.network" = "proxy";
