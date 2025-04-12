@@ -1,40 +1,60 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
   "enabledManagers": [
     "nix",
     "github-actions",
-    "regex"
+    "custom.regex"
   ],
   "nix": {
     "enabled": true
   },
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
       "matchCurrentVersion": "!/^0/",
       "automerge": true
     },
     {
-      "matchDatasources": ["docker"],
+      "matchDatasources": [
+        "docker"
+      ],
       "automerge": true,
-      "schedule": ["after 1am and before 5am every weekend"]
+      "schedule": [
+        "after 1am and before 5am every weekend"
+      ]
     },
     {
-      "matchManagers": ["nix"],
-      "addLabels": ["nix-update"]
+      "matchManagers": [
+        "nix"
+      ],
+      "addLabels": [
+        "nix-update"
+      ]
     },
     {
-      "matchManagers": ["regex"],
-      "matchDatasources": ["docker"],
-      "addLabels": ["container-update"]
+      "matchManagers": [
+        "custom.regex"
+      ],
+      "matchDatasources": [
+        "docker"
+      ],
+      "addLabels": [
+        "container-update"
+      ]
     }
   ],
-  "regexManagers": [
+  "customManagers": [
     {
-      "fileMatch": ["stacks/.+/default\\.nix$"],
+      "customType": "regex",
+      "fileMatch": [
+        "stacks/.+/default\\.nix$"
+      ],
       "matchStrings": [
         "image\\s*=\\s*[\"']?(?<depName>[^\\s\"']+?/[^\\s\"']+?):?(?<currentValue>[^\\s\"']+?)?[\"']?\\s*;"
       ],
@@ -48,7 +68,9 @@
   "dependencyDashboard": true,
   "prHourlyLimit": 0,
   "prConcurrentLimit": 5,
-  "labels": ["dependencies"],
+  "labels": [
+    "dependencies"
+  ],
   "schedule": [
     "after 1am and before 5am every weekend"
   ],
