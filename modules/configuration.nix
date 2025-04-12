@@ -73,7 +73,7 @@
   users.users = {
     ubuntu = {
       isNormalUser = true;
-      extraGroups = ["wheel"];
+      extraGroups = ["wheel" "root"];
       createHome = true;
       home = "/home/ubuntu";
       initialHashedPassword = "$2y$10$xv/YjFKBVf4quQl.jCdGrO.i1lHX2a.IJC2dQFVzAeCngyD.pP/hC";
