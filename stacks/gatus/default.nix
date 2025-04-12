@@ -35,6 +35,7 @@
   # Containers
   virtualisation.oci-containers.containers."gatus-gatus" = {
     image = "twinproduction/gatus:latest";
+    user = "0:0";  # Run as root user
     environment = {
       "TZ" = "Europe/Rome";
     };
@@ -46,11 +47,11 @@
     labels = {
       "traefik.docker.network" = "proxy";
       "traefik.enable" = "true";
-      "traefik.http.routers.uptime-kuma.entrypoints" = "websecure";
-      "traefik.http.routers.uptime-kuma.middlewares" = "authelia@docker";
-      "traefik.http.routers.uptime-kuma.rule" = "Host(`uptime.kuipr.de`)";
-      "traefik.http.routers.uptime-kuma.tls.certresolver" = "myresolver";
-      "traefik.http.services.uptime-kuma.loadbalancer.server.port" = "8080";
+      "traefik.http.routers.gatus.entrypoints" = "websecure";
+      "traefik.http.routers.gatus.middlewares" = "authelia@docker";
+      "traefik.http.routers.gatus.rule" = "Host(`uptime.kuipr.de`)";
+      "traefik.http.routers.gatus.tls.certresolver" = "myresolver";
+      "traefik.http.services.gatus.loadbalancer.server.port" = "8080";
       "traefik.port" = "8080";
     };
     # ports = [
@@ -58,8 +59,10 @@
     # ];
     log-driver = "journald";
     extraOptions = [
-      "--network-alias=gatus"
-      "--network=gatus_default"
+    "--network-alias=gatus"
+    "--network=gatus_default"
+    "--cap-add=CAP_SYS_ADMIN"  # Add necessary capabilities
+    "--security-opt=seccomp=unconfined"  # Reduce security constraints
     ];
   };
   systemd.services."podman-gatus-gatus" = {
