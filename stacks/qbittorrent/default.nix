@@ -9,7 +9,6 @@
     sopsFile = ./qbittorrent.env;
     format = "dotenv";
     key = "";
-    # Simplify service restarts to reduce activation issues
     restartUnits = ["podman-qbittorrent.service"];
   };
 
@@ -17,7 +16,6 @@
     sopsFile = ./gluetun.env;
     format = "dotenv";
     key = "";
-    # Simplify service restarts to reduce activation issues
     restartUnits = ["podman-gluetun.service"];
   };
 
@@ -119,7 +117,6 @@
     log-driver = "journald";
     extraOptions = [
       "--cap-add=NET_ADMIN"
-      "--cap-add=NET_RAW" # Added capability
       "--device=/dev/net/tun:/dev/net/tun:rwm"
       "--health-cmd=[\"wget\", \"-qO-\", \"https://ipinfo.io/ip\"]"
       "--health-interval=30s"
@@ -129,7 +126,7 @@
       "--network-alias=gluetun"
       "--network=proxy"
       "--network=qbittorrent_default"
-      "--sysctl=net.ipv4.conf.all.src_valid_mark=1" # Added sysctl
+      "--sysctl=net.ipv4.conf.all.src_valid_mark=1"
     ];
   };
 
@@ -137,11 +134,10 @@
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
       RestartSec = lib.mkOverride 90 "10s";
-      TimeoutStartSec = lib.mkOverride 90 "120s"; # Longer timeout for VPN connection
+      TimeoutStartSec = lib.mkOverride 90 "120s";
     };
     after = [
       "podman-network-qbittorrent_default.service"
-      "sops-nix.service" # Make sure secrets are available
     ];
     requires = [
       "podman-network-qbittorrent_default.service"
@@ -170,6 +166,7 @@
       Restart = lib.mkOverride 90 "always";
       RestartSec = lib.mkOverride 90 "10s";
       TimeoutStartSec = lib.mkOverride 90 "120s";
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 30";
     };
     after = ["podman-gluetun.service"];
     requires = ["podman-gluetun.service"];
