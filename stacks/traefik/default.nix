@@ -87,11 +87,11 @@
       "/home/ubuntu/traefik/logs:/logs:rw"
       "/run/podman/podman.sock:/var/run/docker.sock:ro"
     ];
-        labels = [
-  "traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9091/api/verify"
-  "traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true"
-  "traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email,Authorization"
-        ];
+    labels = {
+      "traefik.http.middlewares.authelia.forwardauth.address" = "http://authelia:9091/api/verify";
+      "traefik.http.middlewares.authelia.forwardauth.trustForwardHeader" = "true";
+      "traefik.http.middlewares.authelia.forwardauth.authResponseHeaders" = "Remote-User,Remote-Groups,Remote-Name,Remote-Email,Authorization";
+    };
     environmentFiles = [
       "/run/secrets/traefik.env"
     ];

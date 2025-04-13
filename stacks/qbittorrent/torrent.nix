@@ -1,16 +1,16 @@
-{ homelab, lib, ... }:
-
 {
-
+  homelab,
+  lib,
+  ...
+}: {
   sops.secrets."torrent.env" = {
     sopsFile = ./qbittorrent.env;
     format = "dotenv";
     key = "";
-    restartUnits = [ "podman-qbittorrent.service" ];
+    restartUnits = ["podman-qbittorrent.service"];
   };
 
   myFolders = {
-
     qbittorrent = {
       path = "/home/ubuntu/qbittorrent";
       owner = "ubuntu";
@@ -55,5 +55,4 @@
       "podman-compose-seedbox-root.target"
     ];
   };
-
 }

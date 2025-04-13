@@ -1,11 +1,9 @@
-{ lib, ... }:
-{
-
+{lib, ...}: {
   sops.secrets."gluetun.env" = {
     sopsFile = ./gluetun.env;
     format = "dotenv";
     key = "";
-    restartUnits = [ "podman-gluetun.service" ];
+    restartUnits = ["podman-gluetun.service"];
   };
 
   virtualisation.oci-containers.containers."gluetun" = {
@@ -47,7 +45,6 @@
       "47594/tcp"
       "47594/udp"
     ];
-
   };
   systemd.services."podman-gluetun" = {
     serviceConfig = {
@@ -66,5 +63,4 @@
       "podman-compose-seedbox-root.target"
     ];
   };
-
 }

@@ -7,6 +7,6 @@ _: {
     ./obsidian-share-notes
     ./komga
     ./qbittorrent
-        ./starr
+    ./starr
   ];
 }
