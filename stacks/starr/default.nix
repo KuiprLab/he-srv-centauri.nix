@@ -73,15 +73,15 @@
       "--network=proxy"
       "--network=starr_default"
     ];
+    environmentFiles = [
+      "/run/secrets/decluttarr.env"
+    ];
   };
 
   systemd.services."podman-decluttarr" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
     };
-    environmentFiles = [
-      "/run/secrets/decluttarr.env"
-    ];
     after = [
       "podman-network-starr_default.service"
     ];
