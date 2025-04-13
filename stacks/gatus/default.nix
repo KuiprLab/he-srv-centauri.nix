@@ -66,6 +66,7 @@
       "--security-opt=seccomp=unconfined" # Reduce security constraints
       "--security-opt=label=disable" # Disable SELinux/AppArmor confinement
       "--privileged" # Grant privileged access (careful with this in production)
+      "--network=proxy"
     ];
   };
   systemd.services."podman-gatus-gatus" = {
