@@ -68,6 +68,19 @@ regulation:
 log:
   level: debug
 
+identity_providers:
+  oidc:
+    forward_auth:
+      authz:
+        copy_basic_auth_headers: true
+webauthn:
+  display_name: Kuipr
+  attestation_conveyance_preference: indirect
+  user_verification: preferred
+  timeout: 60s
+  disable: false
+  default_user_verification: preferred
+
 # Telemetry
 telemetry:
   metrics:
