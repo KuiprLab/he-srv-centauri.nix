@@ -52,6 +52,16 @@
       else "podman*";
   in {
     "${matchAll}".allowedUDPPorts = [53];
+    "${matchAll}".allowedTCPPorts = [
+      8888
+      8388
+      8388
+      6881
+      6881
+      8585
+      5656
+        ];
+            
   };
 
   virtualisation.oci-containers.backend = "podman";
