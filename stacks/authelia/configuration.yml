@@ -11,11 +11,67 @@ server:
 # Default redirection URL
 default_redirection_url: https://kuipr.de
 
+# HTTP header settings for proxies
+server:
+  host: 0.0.0.0
+  port: 9091
+  path: ""
+  tls:
+    key: ""
+    certificate: ""
+  headers:
+    csp: ""
+  buffers:
+    read: 4096
+    write: 4096
+  timeouts:
+    read: 6s
+    write: 6s
+    idle: 30s
+
+# Add HTTP forwarding settings
+log_level: debug
+log_format: text
+log_file_path: ""
+
+# Trusted proxies that can send X-Forwarded headers
+trusted_proxies:
+  - 10.0.0.0/8
+  - 172.16.0.0/12
+  - 192.168.0.0/16
+  - 103.21.244.0/22
+  - 103.22.200.0/22
+  - 103.31.4.0/22
+  - 104.16.0.0/12
+  - 108.162.192.0/18
+  - 127.0.0.0/8
+  - 131.0.72.0/22
+  - 141.101.64.0/18
+  - 162.158.0.0/15
+  - 172.64.0.0/13
+  - 173.245.48.0/20
+  - 188.114.96.0/20
+  - 190.93.240.0/20
+  - 197.234.240.0/22
+  - 198.41.128.0/17
+  - fd00::/8
+  - ::1/128
+
 # TOTP settings
 totp:
   issuer: kuipr.de
   period: 30
   skew: 1
+
+# WebAuthn settings
+webauthn:
+  disable: false
+  display_name: kuipr.de
+  attestation_conveyance_preference: indirect
+  user_verification: preferred
+  timeout: 60s
+  republican_attestation: supported
+  conveyance_preference: indirect
 
 # Authentication backend
 authentication_backend:
@@ -27,6 +83,13 @@ authentication_backend:
       salt_length: 16
       parallelism: 8
       memory: 64
+  
+  # Enable WebAuthn
+  webauthn:
+    display_name: kuipr.de
+    attestation_conveyance_preference: indirect
+    user_verification: preferred
+    timeout: 60s
 
 # Access control configuration
 access_control:
@@ -68,21 +131,10 @@ regulation:
 log:
   level: debug
 
-identity_providers:
-  oidc:
-    forward_auth:
-      authz:
-        copy_basic_auth_headers: true
-
-webauthn:
-  display_name: Kuipr
-  attestation_conveyance_preference: indirect
-  user_verification: preferred
-  timeout: 60s
-  disable: false
-  default_user_verification: preferred
-
 # Telemetry
 telemetry:
   metrics:
     enabled: false
+
+# Theme
+theme: light
