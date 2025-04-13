@@ -47,7 +47,7 @@
   virtualisation.oci-containers.backend = "podman";
 
   # Containers
-  virtualisation.oci-containers.containers."simple-service" = {
+  virtualisation.oci-containers.containers."whoami" = {
     image = "traefik/whoami";
     labels = {
       "traefik.enable" = "true";
