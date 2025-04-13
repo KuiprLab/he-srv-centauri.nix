@@ -74,7 +74,6 @@
   # VPN container first
   virtualisation.oci-containers.containers."gluetun" = {
     image = "qmcgaw/gluetun";
-    container_name = "gluetun";
     environmentFiles = [
       "/run/secrets/gluetun.env"
     ];
