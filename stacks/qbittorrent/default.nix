@@ -10,7 +10,7 @@
     format = "dotenv";
     key = "";
     # Simplify service restarts to reduce activation issues
-    restartUnits = [];
+    restartUnits = ["podman-qbittorrent.service"];
   };
 
   sops.secrets."gluetun.env" = {
@@ -149,26 +149,54 @@
     wantedBy = ["multi-user.target"];
   };
 
-  # Other containers
-  virtualisation.oci-containers.containers."flaresolverr_comics" = {
-    image = "ghcr.io/flaresolverr/flaresolverr:latest";
+
+  virtualisation.oci-containers.containers."qbittorrent" = {
+    image = "lscr.io/linuxserver/qbittorrent:latest";
     environmentFiles = [
       "/run/secrets/qbittorrent.env"
     ];
+    volumes = [
+      "/home/ubuntu/qbittorrent:/config:rw"
+      "/mnt/data/torrents:/downloads:rw"
+    ];
+    user = "0:0";
     log-driver = "journald";
     extraOptions = [
       "--network=container:gluetun"
     ];
   };
 
-  systemd.services."podman-flaresolverr_comics" = {
+  systemd.services."podman-qbittorrent" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
+      RestartSec = lib.mkOverride 90 "10s";
+      TimeoutStartSec = lib.mkOverride 90 "120s";
     };
     after = ["podman-gluetun.service"];
     requires = ["podman-gluetun.service"];
     wantedBy = ["multi-user.target"];
   };
+
+  # Other containers
+  # virtualisation.oci-containers.containers."flaresolverr_comics" = {
+  #   image = "ghcr.io/flaresolverr/flaresolverr:latest";
+  #   environmentFiles = [
+  #     "/run/secrets/qbittorrent.env"
+  #   ];
+  #   log-driver = "journald";
+  #   extraOptions = [
+  #     "--network=container:gluetun"
+  #   ];
+  # };
+  #
+  # systemd.services."podman-flaresolverr_comics" = {
+  #   serviceConfig = {
+  #     Restart = lib.mkOverride 90 "always";
+  #   };
+  #   after = ["podman-gluetun.service"];
+  #   requires = ["podman-gluetun.service"];
+  #   wantedBy = ["multi-user.target"];
+  # };
 
   # virtualisation.oci-containers.containers."kapowarr" = {
   #   image = "mrcas/kapowarr-alpha:latest";
@@ -191,32 +219,4 @@
   #   requires = ["podman-gluetun.service"];
   #   wantedBy = ["multi-user.target"];
   # };
-
-  virtualisation.oci-containers.containers."qbittorrent" = {
-    image = "lscr.io/linuxserver/qbittorrent:latest";
-    environmentFiles = [
-      "/run/secrets/qbittorrent.env"
-    ];
-    volumes = [
-      "/home/ubuntu/qbittorrent:/config:rw"
-      "/mnt/data/torrents:/downloads:rw"
-    ];
-    user = "0:0";
-    log-driver = "journald";
-    extraOptions = [
-      "--network=container:gluetun"
-    ];
-  };
-
-  systemd.services."podman-qbittorrent" = {
-    serviceConfig = {
-      Restart = lib.mkOverride 90 "always";
-    };
-    after = ["podman-gluetun.service"];
-    requires = ["podman-gluetun.service"];
-    wantedBy = ["multi-user.target"];
-  };
-
-  # Remove the target-based approach to simplify service management
-  # Each service now has wantedBy = ["multi-user.target"] instead
 }
