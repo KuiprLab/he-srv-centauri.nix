@@ -136,6 +136,8 @@
   systemd.services."podman-gluetun" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
+      RestartSec = lib.mkOverride 90 "10s";
+      TimeoutStartSec = lib.mkOverride 90 "120s"; # Longer timeout for VPN connection
     };
     after = [
       "podman-network-qbittorrent_default.service"
