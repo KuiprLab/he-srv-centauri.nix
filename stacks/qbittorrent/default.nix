@@ -51,8 +51,9 @@
       then "podman+"
       else "podman*";
   in {
-    "${matchAll}".allowedUDPPorts = [53];
-    "${matchAll}".allowedTCPPorts = [
+    "${matchAll}" = {
+            allowedUDPPorts = [53];
+    allowedTCPPorts = [
       8888
       8388
       8388
@@ -61,6 +62,8 @@
       8585
       5656
         ];
+
+        };
             
   };
 
