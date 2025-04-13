@@ -135,7 +135,7 @@
     labels = {
       "traefik.enable" = "true";
       "traefik.http.routers.prowlarr.entrypoints" = "websecure";
-      "traefik.http.routers.prowlarr.middlewares" = "authentik@docker";
+      "traefik.http.routers.prowlarr.middlewares" = "authelia@docker";
       "traefik.http.routers.prowlarr.rule" = "Host(`prowlarr.kuipr.de`)";
       "traefik.http.routers.prowlarr.tls.certresolver" = "myresolver";
       "traefik.http.services.prowlarr.loadbalancer.server.port" = "9696";
@@ -180,7 +180,7 @@
     labels = {
       "traefik.enable" = "true";
       "traefik.http.routers.radarr.entrypoints" = "websecure";
-      "traefik.http.routers.radarr.middlewares" = "authentik@docker";
+      "traefik.http.routers.radarr.middlewares" = "authelia@docker";
       "traefik.http.routers.radarr.rule" = "Host(`radarr.kuipr.de`)";
       "traefik.http.routers.radarr.tls.certresolver" = "myresolver";
       "traefik.http.services.radarr.loadbalancer.server.port" = "7878";
@@ -220,7 +220,7 @@
       "traefik.docker.network" = "proxy";
       "traefik.enable" = "true";
       "traefik.http.routers.sonarr.entrypoints" = "websecure";
-      "traefik.http.routers.sonarr.middlewares" = "authentik@docker";
+      "traefik.http.routers.sonarr.middlewares" = "authelia@docker";
       "traefik.http.routers.sonarr.rule" = "Host(`sonarr.kuipr.de`)";
       "traefik.http.routers.sonarr.tls.certresolver" = "myresolver";
       "traefik.http.services.sonarr.loadbalancer.server.port" = "8989";
