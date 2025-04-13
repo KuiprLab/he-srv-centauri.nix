@@ -30,7 +30,7 @@
       "/home/ubuntu/qbittorrent:/config:rw"
     ];
     dependsOn = [
-      "seedbox-gluetun"
+      "gluetun"
     ];
     extraOptions = [
       "--network=container:gluetun"
