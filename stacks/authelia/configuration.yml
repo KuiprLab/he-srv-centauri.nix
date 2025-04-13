@@ -17,13 +17,6 @@ totp:
   period: 30
   skew: 1
 
-# WebAuthn settings (outside of authentication_backend)
-webauthn:
-  display_name: kuipr.de
-  attestation_conveyance_preference: indirect
-  user_verification: preferred
-  timeout: 60s
-
 # Authentication backend
 authentication_backend:
   file:
@@ -54,18 +47,6 @@ session:
     host: redis
     port: 6379
     database_index: 0
-  
-# HTTP header settings
-# Commenting out Duo API as it's not required
-# duo_api:
-#   hostname: api-123456789.duosecurity.com
-#   integration_key: ABCDEF
-#   secret_key: 1234567890abcdefghijklmnopqrstuvwxyz
-
-# Enable proxying of headers
-server:
-  use_forwarded_headers: true
-  forwarded_headers_version: 2  # RFC7239 standard format
 
 # Storage configuration
 storage:
@@ -91,20 +72,3 @@ log:
 telemetry:
   metrics:
     enabled: false
-
-# HTTP header forwarding configuration
-# Proxy headers configuration
-server:
-  address: tcp://0.0.0.0:9091
-  tls:
-    certificate: ""
-    key: ""
-  headers:
-    read_header_timeout: 5s
-    write_timeout: 10s
-    idle_timeout: 120s
-  enable_pprof: false
-  enable_expvars: false
-
-# Theme (optional)
-theme: light
