@@ -52,19 +52,18 @@
       else "podman*";
   in {
     "${matchAll}" = {
-            allowedUDPPorts = [53];
-    allowedTCPPorts = [
-      8888
-      8388
-      8388
-      6881
-      6881
-      8585
-      5656
-        ];
-
-        };
-            
+      allowedUDPPorts = [
+        53
+        6881
+      ];
+      allowedTCPPorts = [
+        8888
+        8388
+        8388
+        6881
+        5656
+      ];
+    };
   };
 
   virtualisation.oci-containers.backend = "podman";
@@ -169,27 +168,27 @@
     wantedBy = ["multi-user.target"];
   };
 
-  virtualisation.oci-containers.containers."kapowarr" = {
-    image = "mrcas/kapowarr-alpha:latest";
-    volumes = [
-      "/home/ubuntu/kapowarr:/app/db:rw"
-      "/mnt/data/downloads:/app/temp_downloads:rw"
-      "/mnt/data/media/comics:/comics-1:rw"
-    ];
-    log-driver = "journald";
-    extraOptions = [
-      "--network=container:gluetun"
-    ];
-  };
-
-  systemd.services."podman-kapowarr" = {
-    serviceConfig = {
-      Restart = lib.mkOverride 90 "always";
-    };
-    after = ["podman-gluetun.service"];
-    requires = ["podman-gluetun.service"];
-    wantedBy = ["multi-user.target"];
-  };
+  # virtualisation.oci-containers.containers."kapowarr" = {
+  #   image = "mrcas/kapowarr-alpha:latest";
+  #   volumes = [
+  #     "/home/ubuntu/kapowarr:/app/db:rw"
+  #     "/mnt/data/downloads:/app/temp_downloads:rw"
+  #     "/mnt/data/media/comics:/comics-1:rw"
+  #   ];
+  #   log-driver = "journald";
+  #   extraOptions = [
+  #     "--network=container:gluetun"
+  #   ];
+  # };
+  #
+  # systemd.services."podman-kapowarr" = {
+  #   serviceConfig = {
+  #     Restart = lib.mkOverride 90 "always";
+  #   };
+  #   after = ["podman-gluetun.service"];
+  #   requires = ["podman-gluetun.service"];
+  #   wantedBy = ["multi-user.target"];
+  # };
 
   virtualisation.oci-containers.containers."qbittorrent" = {
     image = "lscr.io/linuxserver/qbittorrent:latest";
