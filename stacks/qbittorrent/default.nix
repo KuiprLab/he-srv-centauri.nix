@@ -55,10 +55,10 @@
       allowedUDPPorts = [
         53
         6881
+        8388
       ];
       allowedTCPPorts = [
         8888
-        8388
         8388
         6881
         5656
@@ -95,11 +95,11 @@
     ports = [
       "8888:8888/tcp"
       "8388:8388/tcp"
-      "8388:8388/udp"
       "6881:6881/tcp"
-      "6881:6881/udp"
       "8585:8585/tcp"
       "5656:5656/tcp"
+      "8388:8388/udp"
+      "6881:6881/udp"
     ];
     labels = {
       "traefik.docker.network" = "proxy";

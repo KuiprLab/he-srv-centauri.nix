@@ -87,13 +87,13 @@
       # Gluetun ports
       8888
       8388
-      8388
       6881
       8585
       5656
     ];
     allowedUDPPorts = [
       6881
+8388
     ];
   };
 
