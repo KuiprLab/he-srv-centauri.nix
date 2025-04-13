@@ -27,73 +27,6 @@ authentication_backend:
       salt_length: 16
       parallelism: 8
       memory: 64
-  ldap:
-    address: 'ldap://127.0.0.1'
-    implementation: 'custom'
-    timeout: '5s'
-    start_tls: false
-    tls:
-      server_name: 'ldap.kuipr.de'
-      skip_verify: true
-      minimum_version: 'TLS1.2'
-      maximum_version: 'TLS1.3'
-      # certificate_chain: |
-      #   -----BEGIN CERTIFICATE-----
-      #   ...
-      #   -----END CERTIFICATE-----
-      #   -----BEGIN CERTIFICATE-----
-      #   ...
-      #   -----END CERTIFICATE-----
-      # private_key: |
-      #   -----BEGIN RSA PRIVATE KEY-----
-      #   ...
-      #   -----END RSA PRIVATE KEY-----
-    pooling:
-      enable: false
-      count: 5
-      retries: 2
-      timeout: '10 seconds'
-    base_dn: 'DC=kuipr,DC=de'
-    additional_users_dn: 'OU=users'
-    users_filter: '(&({username_attribute}={input})(objectClass=person))'
-    additional_groups_dn: 'OU=groups'
-    groups_filter: '(&(member={dn})(objectClass=groupOfNames))'
-    group_search_mode: 'filter'
-    permit_referrals: false
-    permit_unauthenticated_bind: false
-    permit_feature_detection_failure: false
-    user: 'CN=admin,DC=kuipr,DC=de'
-    password: 'password'
-    attributes:
-      distinguished_name: 'distinguishedName'
-      username: 'uid'
-      display_name: 'displayName'
-      family_name: 'sn'
-      given_name: 'givenName'
-      middle_name: 'middleName'
-      nickname: ''
-      gender: ''
-      birthdate: ''
-      website: 'wWWHomePage'
-      profile: ''
-      picture: ''
-      zoneinfo: ''
-      locale: ''
-      phone_number: 'telephoneNumber'
-      phone_extension: ''
-      street_address: 'streetAddress'
-      locality: 'l'
-      region: 'st'
-      postal_code: 'postalCode'
-      country: 'c'
-      mail: 'mail'
-      member_of: 'memberOf'
-      group_name: 'cn'
-      extra:
-        extra_example:
-          name: ''
-          multi_valued: false
-          value_type: 'string'
 
 # Access control configuration
 access_control:
@@ -173,3 +106,24 @@ webauthn:
       - 'USER_KEY_REMOTE_COMPROMISE'
       - 'USER_VERIFICATION_BYPASS'
       - 'ATTESTATION_KEY_COMPROMISE'
+
+identity_providers:
+  oidc:
+    ## The other portions of the mandatory OpenID Connect 1.0 configuration go here.
+    ## See: https://www.authelia.com/c/oidc
+    clients:
+      - client_id: 'jellyfin'
+        client_name: 'Jellyfin'
+        client_secret: '$pbkdf2-sha512$310000$c8p78n7pUMln0jzvd4aK4Q$JNRBzwAo0ek5qKn50cFzzvE9RXV88h1wJn5KGiHrD0YKtZaR/nCb2CJPOsKaPK0hjf.9yHxzQGZziziccp6Yng'  # The digest of 'insecure_secret'.
+        public: false
+        authorization_policy: 'two_factor'
+        require_pkce: true
+        pkce_challenge_method: 'S256'
+        redirect_uris:
+          - 'https://jelly.kuipr.de/sso/OID/redirect/authelia'
+        scopes:
+          - 'openid'
+          - 'profile'
+          - 'groups'
+        userinfo_signed_response_alg: 'none'
+        token_endpoint_auth_method: 'client_secret_post'
