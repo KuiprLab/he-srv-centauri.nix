@@ -149,7 +149,6 @@
     wantedBy = ["multi-user.target"];
   };
 
-
   virtualisation.oci-containers.containers."qbittorrent" = {
     image = "lscr.io/linuxserver/qbittorrent:latest";
     environmentFiles = [

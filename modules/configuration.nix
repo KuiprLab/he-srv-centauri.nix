@@ -90,10 +90,12 @@
       6881
       8585
       5656
+      8081 # Traefik HTTP
+      8443 # Traefik HTTPS
     ];
     allowedUDPPorts = [
       6881
-8388
+      8388
     ];
   };
 
