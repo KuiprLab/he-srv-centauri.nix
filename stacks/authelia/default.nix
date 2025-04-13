@@ -17,7 +17,7 @@
 
   sops.secrets."configuration.yml" = {
     sopsFile = ./configuration.yml;
-    format = "dotenv";
+    format = "yaml";
     key = "";
     restartUnits = ["podman-authelia.service"];
   };
