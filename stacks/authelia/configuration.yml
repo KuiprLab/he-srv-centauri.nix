@@ -27,6 +27,73 @@ authentication_backend:
       salt_length: 16
       parallelism: 8
       memory: 64
+  ldap:
+    address: 'ldap://127.0.0.1'
+    implementation: 'custom'
+    timeout: '5s'
+    start_tls: false
+    tls:
+      server_name: 'ldap.kuipr.de'
+      skip_verify: true
+      minimum_version: 'TLS1.2'
+      maximum_version: 'TLS1.3'
+      # certificate_chain: |
+      #   -----BEGIN CERTIFICATE-----
+      #   ...
+      #   -----END CERTIFICATE-----
+      #   -----BEGIN CERTIFICATE-----
+      #   ...
+      #   -----END CERTIFICATE-----
+      # private_key: |
+      #   -----BEGIN RSA PRIVATE KEY-----
+      #   ...
+      #   -----END RSA PRIVATE KEY-----
+    pooling:
+      enable: false
+      count: 5
+      retries: 2
+      timeout: '10 seconds'
+    base_dn: 'DC=kuipr,DC=de'
+    additional_users_dn: 'OU=users'
+    users_filter: '(&({username_attribute}={input})(objectClass=person))'
+    additional_groups_dn: 'OU=groups'
+    groups_filter: '(&(member={dn})(objectClass=groupOfNames))'
+    group_search_mode: 'filter'
+    permit_referrals: false
+    permit_unauthenticated_bind: false
+    permit_feature_detection_failure: false
+    user: 'CN=admin,DC=kuipr,DC=de'
+    password: 'password'
+    attributes:
+      distinguished_name: 'distinguishedName'
+      username: 'uid'
+      display_name: 'displayName'
+      family_name: 'sn'
+      given_name: 'givenName'
+      middle_name: 'middleName'
+      nickname: ''
+      gender: ''
+      birthdate: ''
+      website: 'wWWHomePage'
+      profile: ''
+      picture: ''
+      zoneinfo: ''
+      locale: ''
+      phone_number: 'telephoneNumber'
+      phone_extension: ''
+      street_address: 'streetAddress'
+      locality: 'l'
+      region: 'st'
+      postal_code: 'postalCode'
+      country: 'c'
+      mail: 'mail'
+      member_of: 'memberOf'
+      group_name: 'cn'
+      extra:
+        extra_example:
+          name: ''
+          multi_valued: false
+          value_type: 'string'
 
 # Access control configuration
 access_control:
@@ -78,3 +145,31 @@ log:
 telemetry:
   metrics:
     enabled: false
+
+webauthn:
+  disable: false
+  enable_passkey_login: true
+  display_name: 'Authelia'
+  attestation_conveyance_preference: 'indirect'
+  timeout: '60 seconds'
+  filtering:
+    permitted_aaguids: []
+    prohibited_aaguids: []
+    prohibit_backup_eligibility: false
+  selection_criteria:
+    attachment: ''
+    discoverability: 'preferred'
+    user_verification: 'preferred'
+  metadata:
+    enabled: false
+    validate_trust_anchor: true
+    validate_entry: true
+    validate_entry_permit_zero_aaguid: false
+    validate_status: true
+    validate_status_permitted: []
+    validate_status_prohibited:
+      - 'REVOKED'
+      - 'USER_KEY_PHYSICAL_COMPROMISE'
+      - 'USER_KEY_REMOTE_COMPROMISE'
+      - 'USER_VERIFICATION_BYPASS'
+      - 'ATTESTATION_KEY_COMPROMISE'
