@@ -14,6 +14,14 @@
     restartUnits = ["podman-authelia.service"];
   };
 
+
+  sops.secrets."configuration.yml" = {
+    sopsFile = ./configuration.yml;
+    format = "dotenv";
+    key = "";
+    restartUnits = ["podman-authelia.service"];
+  };
+
   sops.secrets."authelia-users.yaml" = {
     sopsFile = ./users.yaml;
     key = "";
@@ -46,7 +54,7 @@
     image = "authelia/authelia:latest";
     volumes = [
       "/home/ubuntu/authelia/config:/config:rw"
-      "/home/ubuntu/he-srv-centauri.nix/stacks/authelia/configuration.yml:/config/configuration.yml:ro"
+      "/run/secrets/configuration.yml:/config/configuration.yml:ro"
       "/home/ubuntu/authelia/data:/data:rw"
       "/run/secrets/authelia-users.yaml:/config/users_database.yaml:rw"
     ];
