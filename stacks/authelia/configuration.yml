@@ -32,9 +32,13 @@ authentication_backend:
 access_control:
   default_policy: one_factor
   rules:
-    - domain: "sonarr.kuipr.de/api"
+    - domain: "sonarr.kuipr.de"
+      resources:
+        - "^/api/.*$"
       policy: bypass
-    - domain: "radarr.kuipr.de/api"
+    - domain: "radarr.kuipr.de"
+      resources:
+        - "^/api/.*$"
       policy: bypass
     - domain: "*.kuipr.de"
       policy: one_factor
