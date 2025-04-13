@@ -84,8 +84,14 @@
       22 # SSH
       80 # HTTP
       443 # HTTPS
-      # 8081 # Traefik HTTP
-      # 8443 # Traefik HTTPS
+      # Gluetun ports
+      8888
+      8388
+      8388
+      6881
+      6881
+      8585
+      5656
     ];
   };
 
