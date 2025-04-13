@@ -32,8 +32,8 @@ authentication_backend:
 access_control:
   default_policy: one_factor
   rules:
-    # - domain: whoami.kuipr.de
-    #   policy: bypass
+    - domain: "*.kuipr.de/api"
+      policy: bypass
     - domain: "*.kuipr.de"
       policy: one_factor
 
