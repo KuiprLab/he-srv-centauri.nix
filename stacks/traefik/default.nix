@@ -53,7 +53,6 @@
       "traefik.enable" = "true";
       "traefik.http.routers.whoami.entrypoints" = "websecure";
       "traefik.http.routers.whoami.rule" = "Host(`whoami.kuipr.de`)";
-      "traefik.http.routers.prowlarr.middlewares" = "authelia@docker";
       "traefik.http.routers.whoami.tls.certresolver" = "myresolver";
       "traefik.http.services.whoami.loadbalancer.server.port" = "80";
     };
@@ -88,6 +87,11 @@
       "/home/ubuntu/traefik/logs:/logs:rw"
       "/run/podman/podman.sock:/var/run/docker.sock:ro"
     ];
+        labels = [
+  "traefik.http.middlewares.authelia.forwardauth.address=http://authelia:9091/api/verify"
+  "traefik.http.middlewares.authelia.forwardauth.trustForwardHeader=true"
+  "traefik.http.middlewares.authelia.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email,Authorization"
+        ];
     environmentFiles = [
       "/run/secrets/traefik.env"
     ];

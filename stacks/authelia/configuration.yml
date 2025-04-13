@@ -73,6 +73,7 @@ identity_providers:
     forward_auth:
       authz:
         copy_basic_auth_headers: true
+
 webauthn:
   display_name: Kuipr
   attestation_conveyance_preference: indirect
