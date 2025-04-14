@@ -41,7 +41,7 @@
     };
     volumes = [
       "/home/ubuntu/komga:/config:rw"
-      "/run/secrets/komga.yaml:/config/application.yaml:ro"
+      "/run/secrets/komga.yaml:/config/application.yaml:rw"
       "/mnt/data/media/comics:/data:rw"
     ];
     labels = {
