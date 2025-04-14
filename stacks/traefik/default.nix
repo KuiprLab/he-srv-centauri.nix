@@ -89,9 +89,13 @@
       "/run/podman/podman.sock:/var/run/docker.sock:ro"
     ];
     labels = {
-      "traefik.http.middlewares.authelia.forwardauth.address" = "http://authelia:9091/api/verify";
-      "traefik.http.middlewares.authelia.forwardauth.trustForwardHeader" = "true";
-      "traefik.http.middlewares.authelia.forwardauth.authResponseHeaders" = "Remote-User,Remote-Groups,Remote-Name,Remote-Email,Authorization";
+      "traefik.enable" = "true";
+      "traefik.http.routers.api.rule" = "Host(`traefik.kuipr.de`)";
+      "traefik.http.routers.api.entrypoints" = "https";
+      "traefik.http.routers.api.service" = "api@internal";
+      "traefik.http.routers.api.tls" = "true";
+      "traefik.http.routers.api.tls.options" = "default";
+      "traefik.http.routers.api.middlewares" = "authelia@docker";
     };
     environmentFiles = [
       "/run/secrets/traefik.env"
@@ -101,7 +105,29 @@
       "8443:443/tcp"
       "8181:8080/tcp"
     ];
-    cmd = ["--api" "--log.level=INFO" "--accesslog=true" "--accesslog.filepath=/logs/access.log" "--accesslog.bufferingsize=100" "--api.insecure=true" "--providers.docker=true" "--providers.file.directory=/config" "--providers.file.watch=true" "--providers.docker.exposedByDefault=false" "--providers.docker.network=proxy" "--entryPoints.web.address=:80" "--entryPoints.websecure.address=:443" "--certificatesresolvers.myresolver.acme.dnschallenge=true" "--certificatesresolvers.myresolver.acme.dnschallenge.provider=bunny" "--certificatesresolvers.myresolver.acme.email=daniel.inama02@gmail.com" "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json" "--serversTransport.insecureSkipVerify=true"];
+    cmd = [
+            "--api" 
+            "--log.level=INFO" 
+            "--accesslog=true" 
+            "--accesslog.filepath=/logs/access.log" 
+            "--accesslog.bufferingsize=100" 
+            "--api.insecure=true" 
+            "--providers.docker=true" 
+            "--providers.file.directory=/config" 
+            "--providers.file.watch=true" 
+            "--providers.docker.exposedByDefault=false" 
+            "--providers.docker.network=proxy" 
+            "--entryPoints.web.address=:80" 
+            "--entrypoints.http.http.redirections.entrypoint.to=https"
+            "--entrypoints.http.http.redirections.entrypoint.scheme=https"
+            "--entrypoints.https=true"
+            "--entryPoints.websecure.address=:443" 
+            "--certificatesresolvers.myresolver.acme.dnschallenge=true" 
+            "--certificatesresolvers.myresolver.acme.dnschallenge.provider=bunny" 
+            "--certificatesresolvers.myresolver.acme.email=daniel.inama02@gmail.com" 
+            "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json" 
+            "--serversTransport.insecureSkipVerify=true"
+        ];
     log-driver = "journald";
     extraOptions = [
       "--network-alias=traefik"
