@@ -1,4 +1,4 @@
-# central-europe-allowlist.nix
+# country-allowlist.nix
 { config, pkgs, lib, ... }:
 
 let
@@ -19,57 +19,68 @@ let
   # Join country codes for IPTables rule
   allowedCountriesStr = lib.concatStringsSep "," allowedCountries;
 
-  # Use customized xtables-addons package
-  customXtablesAddons = pkgs.xtables-addons.override {
-    kernel = config.boot.kernelPackages.kernel;
-  };
-
   # Create script to download and build GeoIP database
   updateGeoIPScript = pkgs.writeScriptBin "update-geoip-db" ''
     #!${pkgs.runtimeShell}
     set -e
 
     # Create GeoIP directory if it doesn't exist
-    GEOIP_DIR="/usr/share/xt_geoip/"
+    GEOIP_DIR="/var/lib/ip-geoblock"
     mkdir -p $GEOIP_DIR
     
+    echo "Downloading GeoIP database..."
     # Get current date for database filename
     DATE=$(date +'%Y-%m')
     GEOIP_URL="https://download.db-ip.com/free/dbip-country-lite-$DATE.csv.gz"
     GEOIP_CSV_GZ_FILE="$GEOIP_DIR/dbip-country-lite-$DATE.csv.gz"
     GEOIP_CSV_FILE="$GEOIP_DIR/dbip-country-lite-$DATE.csv"
     
-    echo "Downloading GeoIP database..."
     ${pkgs.curl}/bin/curl -L "$GEOIP_URL" -o "$GEOIP_CSV_GZ_FILE"
     
     echo "Extracting GeoIP CSV file..."
     cd $GEOIP_DIR
     ${pkgs.gzip}/bin/gunzip -f "$GEOIP_CSV_GZ_FILE"
-    
-    echo "Building the GeoIP database with xtables-addons..."
-    mv "$GEOIP_CSV_FILE" "$GEOIP_DIR/dbip-country-lite.csv"
-    
-    # Find the xt_geoip_build script
-    GEOIP_BUILD="${customXtablesAddons}/libexec/xtables-addons/xt_geoip_build"
-    
-    # Build the database
-    "$GEOIP_BUILD" -D "$GEOIP_DIR" "$GEOIP_DIR"/*.csv
-    
-    # Clean up
-    rm -f "$GEOIP_DIR"/*.csv
+
+    # Convert the DB-IP CSV to the ipset format
+    # The format is: IP-Range,CountryCode
+    echo "Converting database to ipset format..."
+    for country in ${allowedCountriesStr}; do
+      ${pkgs.gnugrep}/bin/grep ",$country$" "$GEOIP_CSV_FILE" | ${pkgs.gawk}/bin/awk -F, '{print $1}' > "$GEOIP_DIR/allowed_$country.txt"
+      echo "Processed $country"
+    done
     
     echo "GeoIP database update completed"
   '';
 
-  # Create script to setup IPTables rules for Central Europe
-  setupIPTablesScript = pkgs.writeScriptBin "setup-central-europe-allowlist" ''
+  # Create script to setup IPTables rules for allowed countries
+  setupIPTablesScript = pkgs.writeScriptBin "setup-country-allowlist" ''
     #!${pkgs.runtimeShell}
     set -e
     
-    # Ensure xt_geoip module is loaded
-    ${pkgs.kmod}/bin/modprobe xt_geoip
+    GEOIP_DIR="/var/lib/ip-geoblock"
+
+    # Flush existing ipset rules
+    if ${pkgs.ipset}/bin/ipset list | grep -q "allowed_countries"; then
+      ${pkgs.ipset}/bin/ipset destroy allowed_countries
+    fi
     
-    # Clear existing rules and set default policies
+    # Create a new ipset
+    ${pkgs.ipset}/bin/ipset create allowed_countries hash:net family inet hashsize 16384 maxelem 500000
+    
+    # Add allowed country IP ranges to the ipset
+    for country in ${allowedCountriesStr}; do
+      if [ -f "$GEOIP_DIR/allowed_$country.txt" ]; then
+        while IFS= read -r ip_range; do
+          ${pkgs.ipset}/bin/ipset add allowed_countries "$ip_range"
+        done < "$GEOIP_DIR/allowed_$country.txt"
+        echo "Added IPs for $country to the ipset"
+      else
+        echo "Warning: No IP data found for $country"
+      fi
+    done
+    
+    # Set up iptables rules
+    # Clear existing rules
     ${pkgs.iptables}/bin/iptables -F
     ${pkgs.iptables}/bin/iptables -X
     
@@ -79,11 +90,13 @@ let
     # Allow loopback
     ${pkgs.iptables}/bin/iptables -A INPUT -i lo -j ACCEPT
     
-    # Allow specified countries and block all others
-    ${pkgs.iptables}/bin/iptables -A INPUT -m geoip --src-cc ${allowedCountriesStr} -j ACCEPT
-    ${pkgs.iptables}/bin/iptables -A INPUT -m geoip ! --src-cc ${allowedCountriesStr} -j DROP
+    # Allow connections from allowed countries using the ipset
+    ${pkgs.iptables}/bin/iptables -A INPUT -m set --match-set allowed_countries src -j ACCEPT
     
-    echo "IPTables rules set to allow only Central European countries"
+    # Block everything else
+    ${pkgs.iptables}/bin/iptables -A INPUT -j DROP
+    
+    echo "IPTables rules set to allow only specified countries"
   '';
 
 in {
@@ -92,27 +105,19 @@ in {
     # Basic tools
     curl
     gzip
-    perl
-    unzip
-    
-    # Required perl modules
-    perlPackages.TextCSV
-    perlPackages.MooseXTypesNetAddr
+    gnugrep
+    gawk
+    ipset
+    iptables
     
     # Custom scripts
     updateGeoIPScript
     setupIPTablesScript
-    
-    # Include our custom xtables-addons package
-    customXtablesAddons
   ];
   
+  # Ensure ipset kernel module is loaded
   boot = {
-    # Enable required kernel modules
-    kernelModules = [ "xt_geoip" ];
-    
-    # Automatically load modules at boot
-    extraModulePackages = [ customXtablesAddons ];
+    kernelModules = [ "ip_set" "ip_set_hash_net" ];
     
     # Use latest kernel for better compatibility
     kernelPackages = pkgs.linuxPackages_latest;
@@ -120,13 +125,13 @@ in {
 
   # Create directory for GeoIP database
   system.activationScripts.geoip = ''
-    mkdir -p /usr/share/xt_geoip
+    mkdir -p /var/lib/ip-geoblock
   '';
   
   # Periodically update GeoIP database (monthly)
   systemd.services.update-geoip = {
     description = "Update GeoIP Database";
-    path = with pkgs; [ curl gzip perl ];
+    path = with pkgs; [ curl gzip gnugrep gawk ];
     script = "${updateGeoIPScript}/bin/update-geoip-db";
     serviceConfig = {
       Type = "oneshot";
@@ -150,8 +155,8 @@ in {
     after = [ "network.target" "update-geoip.service" ];
     wants = [ "update-geoip.service" ];
     wantedBy = [ "multi-user.target" ];
-    path = with pkgs; [ iptables kmod ];
-    script = "${setupIPTablesScript}/bin/setup-central-europe-allowlist";
+    path = with pkgs; [ iptables ipset ];
+    script = "${setupIPTablesScript}/bin/setup-country-allowlist";
     serviceConfig = {
       Type = "oneshot";
       User = "root";
@@ -164,14 +169,14 @@ in {
   # Create a simple service to check if the setup is working
   systemd.services.geoip-status = {
     description = "Check GeoIP and IPTables status";
-    path = with pkgs; [ iptables kmod ];
+    path = with pkgs; [ iptables ipset ];
     script = ''
       #!/bin/sh
-      echo "GeoIP Module Status:"
-      ${pkgs.kmod}/bin/lsmod | grep xt_geoip || echo "xt_geoip module not loaded!"
+      echo "IPSet Status:"
+      ${pkgs.ipset}/bin/ipset list allowed_countries || echo "allowed_countries ipset not found!"
       
-      echo "IPTables GeoIP Rules:"
-      ${pkgs.iptables}/bin/iptables -L INPUT | grep geoip
+      echo "IPTables Rules:"
+      ${pkgs.iptables}/bin/iptables -L INPUT
     '';
     serviceConfig = {
       Type = "oneshot";
