@@ -1,7 +1,8 @@
+# central-europe-allowlist.nix
 { config, pkgs, lib, ... }:
 
 let
-  # Define country codes (ISO 3166-1 alpha-2)
+  # Define allowed country codes (ISO 3166-1 alpha-2)
   allowedCountries = [
     "AT" # Austria
     "CH" # Switzerland
@@ -16,7 +17,12 @@ let
   ];
 
   # Join country codes for IPTables rule
-  countriesStr = lib.concatStringsSep "," allowedCountries;
+  allowedCountriesStr = lib.concatStringsSep "," allowedCountries;
+
+  # Use customized xtables-addons package
+  customXtablesAddons = pkgs.xtables-addons.override {
+    kernel = config.boot.kernelPackages.kernel;
+  };
 
   # Create script to download and build GeoIP database
   updateGeoIPScript = pkgs.writeScriptBin "update-geoip-db" ''
@@ -44,7 +50,7 @@ let
     mv "$GEOIP_CSV_FILE" "$GEOIP_DIR/dbip-country-lite.csv"
     
     # Find the xt_geoip_build script
-    GEOIP_BUILD="${pkgs.xtables-addons}/libexec/xtables-addons/xt_geoip_build"
+    GEOIP_BUILD="${customXtablesAddons}/libexec/xtables-addons/xt_geoip_build"
     
     # Build the database
     "$GEOIP_BUILD" -D "$GEOIP_DIR" "$GEOIP_DIR"/*.csv
@@ -55,7 +61,7 @@ let
     echo "GeoIP database update completed"
   '';
 
-  # Create script to setup IPTables rules
+  # Create script to setup IPTables rules for Central Europe
   setupIPTablesScript = pkgs.writeScriptBin "setup-central-europe-allowlist" ''
     #!${pkgs.runtimeShell}
     set -e
@@ -73,9 +79,9 @@ let
     # Allow loopback
     ${pkgs.iptables}/bin/iptables -A INPUT -i lo -j ACCEPT
     
-    # Allow countries from Central Europe and block all others
-    ${pkgs.iptables}/bin/iptables -A INPUT -m geoip --src-cc ${countriesStr} -j ACCEPT
-    ${pkgs.iptables}/bin/iptables -A INPUT -m geoip ! --src-cc ${countriesStr} -j DROP
+    # Allow specified countries and block all others
+    ${pkgs.iptables}/bin/iptables -A INPUT -m geoip --src-cc ${allowedCountriesStr} -j ACCEPT
+    ${pkgs.iptables}/bin/iptables -A INPUT -m geoip ! --src-cc ${allowedCountriesStr} -j DROP
     
     echo "IPTables rules set to allow only Central European countries"
   '';
@@ -96,21 +102,20 @@ in {
     # Custom scripts
     updateGeoIPScript
     setupIPTablesScript
+    
+    # Include our custom xtables-addons package
+    customXtablesAddons
   ];
-
-  # Install xtables-addons
-  nixpkgs.config.packageOverrides = pkgs: {
-    xtables-addons = pkgs.xtables-addons.override {
-      kernel = config.boot.kernelPackages.kernel;
-    };
-  };
   
   boot = {
     # Enable required kernel modules
     kernelModules = [ "xt_geoip" ];
     
     # Automatically load modules at boot
-    extraModulePackages = [ config.boot.kernelPackages.xtables-addons ];
+    extraModulePackages = [ customXtablesAddons ];
+    
+    # Use latest kernel for better compatibility
+    kernelPackages = pkgs.linuxPackages_latest;
   };
 
   # Create directory for GeoIP database
@@ -140,8 +145,8 @@ in {
   };
   
   # Set up IPTables rules on startup
-  systemd.services.setup-central-europe-iptables = {
-    description = "Set up Central Europe IPTables allowlist";
+  systemd.services.setup-country-allowlist = {
+    description = "Set up country-based IPTables allowlist";
     after = [ "network.target" "update-geoip.service" ];
     wants = [ "update-geoip.service" ];
     wantedBy = [ "multi-user.target" ];
@@ -154,10 +159,7 @@ in {
   };
   
   # Ensure dependencies are met
-  # networking.firewall.enable = lib.mkForce false;  # Disable default firewall to use our custom IPTables rules
-  
-  # Mark kernel modules as required 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  networking.firewall.enable = lib.mkForce false;  # Disable default firewall to use our custom IPTables rules
   
   # Create a simple service to check if the setup is working
   systemd.services.geoip-status = {
