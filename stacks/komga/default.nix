@@ -15,6 +15,7 @@
 
   sops.secrets."komga.yaml" = {
     sopsFile = ./application.yaml;
+        owner = "ubuntu";
     format = "yaml";
     key = "";
     restartUnits = ["podman-komga.service"];
