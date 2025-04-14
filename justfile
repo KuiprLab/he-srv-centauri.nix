@@ -54,3 +54,6 @@ convert input output-name:
 [doc("Create a password hash for authelia")]
 generate-pw-hash password:
     @docker run --rm authelia/authelia:latest authelia crypto hash generate argon2 --password {{password}}
+
+generate-secret:
+    @tr -dc A-Za-z0-9 </dev/urandom | head -c 64; echo
