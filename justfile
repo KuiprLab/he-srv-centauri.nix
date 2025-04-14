@@ -52,8 +52,13 @@ convert input output-name:
 
 
 [doc("Create a password hash for authelia")]
-generate-pw-hash password:
+generate-user-pw-hash password:
     @docker run --rm authelia/authelia:latest authelia crypto hash generate argon2 --password {{password}}
 
-generate-secret:
+[doc("Generate a random 64 bit long secret")]
+generate-generic-secret:
     @tr -dc A-Za-z0-9 </dev/urandom | head -c 64; echo
+
+[doc("Generate a random pbkdf2 secret for use in authelia")]
+generate-client-secret:
+    @docker run --rm authelia/authelia:latest authelia crypto hash generate pbkdf2 --variant sha512 --random --random.length 72 --random.charset rfc3986
