@@ -164,7 +164,7 @@ in {
   };
   
   # Ensure dependencies are met
-  # networking.firewall.enable = lib.mkForce false;  # Disable default firewall to use our custom IPTables rules
+  networking.firewall.enable = lib.mkForce false;  # Disable default firewall to use our custom IPTables rules
   
   # Create a simple service to check if the setup is working
   systemd.services.geoip-status = {
