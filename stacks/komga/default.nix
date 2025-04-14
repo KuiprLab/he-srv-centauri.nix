@@ -13,6 +13,12 @@
     };
   };
 
+  sops.secrets."komga.yaml" = {
+    sopsFile = ./application.yaml;
+    format = "yaml";
+    key = "";
+    restartUnits = ["podman-komga.service"];
+  };
   # Enable container name DNS for all Podman networks.
   networking.firewall.interfaces = let
     matchAll =
@@ -35,7 +41,7 @@
     };
     volumes = [
       "/home/ubuntu/komga:/config:rw"
-      "${./application.yaml}:/config/application.yaml:rw"
+      "/run/secrets/komga.yaml:/config/application.yaml:ro"
       "/mnt/data/media/comics:/data:rw"
     ];
     labels = {
