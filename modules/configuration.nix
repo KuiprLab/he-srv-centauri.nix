@@ -10,7 +10,7 @@
     ./hardware-configuration.nix
     ./disko-config.nix
     ../utils/my-declared-folders.nix
-        ./geoblock.nix
+        # ./geoblock.nix
   ];
 
   virtualisation.podman = {
@@ -79,26 +79,26 @@
 
   system.stateVersion = "24.11";
 
-  # networking.firewall = {
-  #   enable = true;
-  #   allowedTCPPorts = [
-  #     22 # SSH
-  #     80 # HTTP
-  #     443 # HTTPS
-  #     # Gluetun ports
-  #     8888
-  #     8388
-  #     6881
-  #     8585
-  #     5656
-  #     8081 # Traefik HTTP
-  #     8443 # Traefik HTTPS
-  #   ];
-  #   allowedUDPPorts = [
-  #     6881
-  #     8388
-  #   ];
-  # };
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [
+      22 # SSH
+      80 # HTTP
+      443 # HTTPS
+      # Gluetun ports
+      8888
+      8388
+      6881
+      8585
+      5656
+      8081 # Traefik HTTP
+      8443 # Traefik HTTPS
+    ];
+    allowedUDPPorts = [
+      6881
+      8388
+    ];
+  };
 
   # Base system packages
   environment.systemPackages = with pkgs; [
