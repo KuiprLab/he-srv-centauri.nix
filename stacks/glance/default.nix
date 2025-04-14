@@ -42,6 +42,7 @@
     extraOptions = [
       "--network-alias=glance"
       "--network=glance_default"
+      "--network=proxy"
     ];
   };
   systemd.services."podman-glance" = {

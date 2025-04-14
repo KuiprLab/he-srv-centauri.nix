@@ -8,5 +8,6 @@ _: {
     ./komga
     ./qbittorrent
     ./starr
+        ./glance
   ];
 }
