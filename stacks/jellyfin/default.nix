@@ -5,13 +5,6 @@
   config,
   ...
 }: {
-  # Runtime
-  virtualisation.podman = {
-    enable = true;
-    autoPrune.enable = true;
-    dockerCompat = true;
-  };
-
   myFolders = {
     jellyfin = {
       path = "/home/ubuntu/jellyfin/{cache,config}";
