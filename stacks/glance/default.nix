@@ -25,6 +25,8 @@
     volumes = [
       "/home/ubuntu/glance:/app/config:rw"
       "${./glance.yml}:/app/config/glance.yml:rw"
+      "${./homelab.yml}:/app/config/homelab.yml:rw"
+      "${./feed.yml}:/app/config/feed.yml:rw"
     ];
     # ports = [
     #   "8080:8080/tcp"
