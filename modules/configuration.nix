@@ -10,6 +10,7 @@
     ./hardware-configuration.nix
     ./disko-config.nix
     ../utils/my-declared-folders.nix
+        ./geoblock.nix
   ];
 
   virtualisation.podman = {
