@@ -38,7 +38,7 @@ config,
         set -o pipefail
 
         if ! cscli bouncers list | grep -q "my-bouncer"; then
-          cscli bouncers add "my-bouncer" --key $(cat ${config.sops.secrets."crowdsec-api-key".path}
+          cscli bouncers add "my-bouncer" --key $(cat ${config.sops.secrets."crowdsec-api-key".path})
         fi
       '';
     in ["${script}/bin/register-bouncer"];
