@@ -9,7 +9,7 @@
     ./hardware-configuration.nix
     ./disko-config.nix
     ../utils/my-declared-folders.nix
-        ./crowdsec.nix
+    ./crowdsec
     # ./geoblock.nix
   ];
 
@@ -36,7 +36,6 @@
       };
     };
   };
-
 
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_US.UTF-8";

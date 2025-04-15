@@ -66,6 +66,7 @@
           sops-nix.nixosModules.sops
           inputs.disko.nixosModules.disko
           inputs.crowdsec.nixosModules.crowdsec
+          inputs.crowdsec.nixosModules.crowdsec-firewall-bouncer
         ];
       };
     };
