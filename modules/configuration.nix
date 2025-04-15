@@ -35,6 +35,7 @@
 
   opnix = {
     environmentFile = "/etc/opnix.env";
+        systemdWantedBy = ["sops-nix"];
     secrets = {
       sops-age = {
         source = "{{ op://OpsVault/he-srv-centauri-sops-key/age }}";
@@ -166,25 +167,6 @@
     restartUnits = [];
   };
 
-
-systemd.services.sops = {
-  description = "SOPS Service";
-  after = [ "opnix.service" ]; # if opnix is also managed as a systemd unit
-  wants = [ "opnix.service" ];
-
-  serviceConfig = {
-    # Wait until the age-key file exists
-    ExecStartPre = ''
-      while [ ! -f /var/lib/opnix/sops-age ]; do
-        echo "Waiting for opnix to place the age-key file..."
-        sleep 1
-      done
-    '';
-    ExecStart = "/run/current-system/sw/bin/sops [your-options-here]";
-  };
-
-  restart = "on-failure";
-};
 
   # Modify your mount configuration
   fileSystems."/mnt/data" = {
