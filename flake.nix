@@ -16,6 +16,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    crowdsec = {
+      url = "git+https://codeberg.org/kampka/nix-flake-crowdsec.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     disko = {
       url = "github:nix-community/disko";
       inputs = {
@@ -60,6 +65,7 @@
           ./services
           sops-nix.nixosModules.sops
           inputs.disko.nixosModules.disko
+          inputs.crowdsec.nixosModules.crowdsec
         ];
       };
     };

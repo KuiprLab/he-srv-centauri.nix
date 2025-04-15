@@ -14,7 +14,6 @@
     restartUnits = ["podman-authelia.service"];
   };
 
-
   sops.secrets."configuration.yml" = {
     sopsFile = ./configuration.yml;
     format = "yaml";

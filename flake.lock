@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "crowdsec": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1742920128,
+        "narHash": "sha256-VPjnjtAksihLezhc+ZmnqGu18mHr4QVKa1kSZQ8rJL4=",
+        "ref": "refs/heads/main",
+        "rev": "40e937689d318ee85b1d9763189a65e6f0b4028d",
+        "revCount": 40,
+        "type": "git",
+        "url": "https://codeberg.org/kampka/nix-flake-crowdsec.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://codeberg.org/kampka/nix-flake-crowdsec.git"
+      }
+    },
     "deploy-rs": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -60,20 +81,19 @@
     },
     "flake-utils": {
       "inputs": {
-        "systems": "systems_2"
+        "systems": "systems"
       },
       "locked": {
-        "lastModified": 1710146030,
-        "narHash": "sha256-SZ5L6eA7HJ/nmkzGG7/ISclqe6oZdOZTNoesiInkXPQ=",
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "b1d9ab70662946ef0850d488da1c9019f3a9752a",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
         "type": "github"
       },
       "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
+        "id": "flake-utils",
+        "type": "indirect"
       }
     },
     "nixpkgs": {
@@ -92,33 +112,12 @@
         "type": "github"
       }
     },
-    "opnix": {
-      "inputs": {
-        "flake-utils": "flake-utils",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1739208844,
-        "narHash": "sha256-p+WUaWqGIFM+3oUv5vI6RuHe/02v8G5a6JQVkVtVVhs=",
-        "owner": "mrjones2014",
-        "repo": "opnix",
-        "rev": "9330a9cebbd31491d9ff94846fd85cba582e84dc",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mrjones2014",
-        "repo": "opnix",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
+        "crowdsec": "crowdsec",
         "deploy-rs": "deploy-rs",
         "disko": "disko",
         "nixpkgs": "nixpkgs",
-        "opnix": "opnix",
         "sops-nix": "sops-nix"
       }
     },
@@ -174,7 +173,7 @@
     },
     "utils": {
       "inputs": {
-        "systems": "systems"
+        "systems": "systems_2"
       },
       "locked": {
         "lastModified": 1701680307,

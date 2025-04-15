@@ -10,7 +10,7 @@
     ./hardware-configuration.nix
     ./disko-config.nix
     ../utils/my-declared-folders.nix
-        # ./geoblock.nix
+    # ./geoblock.nix
   ];
 
   virtualisation.podman = {
@@ -27,6 +27,28 @@
   sops = {
     age.keyFile = "/var/lib/sops/age-key.txt";
     age.generateKey = false;
+    secrets = {
+      "cifs-creds" = {
+        sopsFile = ./cifs.txt;
+        key = "";
+        restartUnits = [];
+      };
+      "enroll-key" = {
+        sopsFile = ./enroll-key.txt;
+        key = "";
+        restartUnits = [];
+      };
+    };
+  };
+
+  services.crowdsec = {
+    enable = true;
+    enrollKeyFile = "/run/secrets/enroll-key";
+    settings = {
+      api.server = {
+        listen_uri = "127.0.0.1:8080";
+      };
+    };
   };
 
   time.timeZone = "Europe/London";
@@ -137,13 +159,6 @@
       ];
     };
   };
-
-  sops.secrets."cifs-creds" = {
-    sopsFile = ./cifs.txt;
-    key = "";
-    restartUnits = [];
-  };
-
 
   # Modify your mount configuration
   fileSystems."/mnt/data" = {
