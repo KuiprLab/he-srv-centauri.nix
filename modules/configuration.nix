@@ -9,13 +9,9 @@
     ./hardware-configuration.nix
     ./disko-config.nix
     ../utils/my-declared-folders.nix
-    # ./geoblock.nix
+        ./fail2ban.nix
   ];
 
-  services.fail2ban = {
-    enable = true;
-    bantime = "60m";
-  };
 
   virtualisation.podman = {
     enable = true;
@@ -99,6 +95,7 @@
     dig
     just
     cifs-utils # For SMB/CIFS shares
+    geoip
   ];
 
   # Enable SSH for remote access
