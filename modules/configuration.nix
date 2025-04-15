@@ -9,14 +9,13 @@
     ./hardware-configuration.nix
     ./disko-config.nix
     ../utils/my-declared-folders.nix
-    ./fail2ban
     # ./geoblock.nix
   ];
 
-    services.fail2ban = {
-        enable = true;
-        bantime = "60m";
-    };
+  services.fail2ban = {
+    enable = true;
+    bantime = "60m";
+  };
 
   virtualisation.podman = {
     enable = true;
