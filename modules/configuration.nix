@@ -31,11 +31,15 @@
       "cifs-creds" = {
         sopsFile = ./cifs.txt;
         key = "";
+                format = "binary";
+
         restartUnits = [];
       };
       "enroll-key" = {
         sopsFile = ./enroll-key.txt;
         key = "";
+                format = "binary";
+
         restartUnits = [];
       };
     };
