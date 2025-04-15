@@ -65,6 +65,7 @@ daemon_list = ALL
   services.fail2ban = {
     enable = true;
     bantime = "24h"; # Ban IPs for one day on the first ban
+    banaction = "geohostdeny";
     bantime-increment = {
       enable = true; # Enable increment of bantime after each violation
       formula = "ban.Time * math.exp(float(ban.Count+1)*banFactor)/math.exp(1*banFactor)";
@@ -84,13 +85,6 @@ daemon_list = ALL
         bantime = 600;
         maxretry = 5;
       };
-        geohostsdeny.settings = {
-          enabled = true;
-          action = "geohostsdeny";
-          backend = "auto"; # Do not forget to specify this if your jail uses a log file
-          maxretry = 5;
-          findtime = 600;
-        };
     };
   };
 
