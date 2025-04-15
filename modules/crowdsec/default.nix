@@ -4,7 +4,6 @@
 config,
   ...
 }: {
-  nixpkgs.overlays = [inputs.crowdsec.overlays.default];
   sops.secrets = {
     "enroll-key" = {
       sopsFile = ./enroll-key.txt;

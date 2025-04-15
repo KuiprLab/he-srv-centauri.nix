@@ -67,6 +67,10 @@
           inputs.disko.nixosModules.disko
           inputs.crowdsec.nixosModules.crowdsec
           inputs.crowdsec.nixosModules.crowdsec-firewall-bouncer
+                        {
+
+  nixpkgs.overlays = [inputs.crowdsec.overlays.default];
+                        }
         ];
       };
     };
