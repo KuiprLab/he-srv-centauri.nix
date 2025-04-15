@@ -47,7 +47,7 @@ actionunban = IP=<ip> && sed -i.old /ALL:\ $IP/d <file>
 # Notes.:  List of exempted countries separated by pipe "|"
 # Values:  STR  Default:  
 #
-country_list = PH|Philippines
+country_list = CN|RU|IR|KP|NG|PK|VT|US
 
 # Option:  file
 # Notes.:  hosts.deny file path.
