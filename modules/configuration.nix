@@ -24,31 +24,8 @@
     };
   };
 
-  myFolders = {
-    opnix = {
-      path = "/var/lib/opnix/";
-      owner = "ubuntu";
-      group = "users";
-      mode = "0755";
-    };
-  };
-
-  opnix = {
-    environmentFile = "/etc/opnix.env";
-        systemdWantedBy = ["unit-sops-nix.service"];
-    secrets = {
-      sops-age = {
-        source = "{{ op://OpsVault/he-srv-centauri-sops-key/age }}";
-        user = "ubuntu";
-        group = "users";
-        mode = "0600";
-        path = "/var/lib/opnix/sops-age";
-      };
-    };
-  };
-
   sops = {
-    age.keyFile = config.opnix.secrets.sops-age.path;
+    age.keyFile = "/var/lib/sops/age-key.txt";
     age.generateKey = false;
   };
 

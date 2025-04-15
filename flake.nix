@@ -16,11 +16,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    opnix = {
-      url = "github:mrjones2014/opnix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     disko = {
       url = "github:nix-community/disko";
       inputs = {
@@ -65,7 +60,6 @@
           ./services
           sops-nix.nixosModules.sops
           inputs.disko.nixosModules.disko
-          inputs.opnix.nixosModules.default
         ];
       };
     };
