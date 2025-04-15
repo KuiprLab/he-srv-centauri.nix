@@ -2,7 +2,7 @@
 
 
  environment.etc."fail2ban/action.d/geohostsdeny.conf".text = ''
-   [Definition]
+[Definition]
 
 # Option:  actionstart
 # Notes.:  command executed once at the start of Fail2Ban.
@@ -30,7 +30,7 @@ actioncheck =
 # Values:  CMD
 #
 actionban = IP=<ip> &&
-            COUNTRY=$(geoiplookup $IP | egrep "<country_list>") && [ "$COUNTRY" ] || 
+            geoiplookup $IP | egrep "<country_list>" || 
             (printf %%b "<daemon_list>: $IP\n" >> <file>)
 
 # Option:  actionunban
@@ -44,10 +44,10 @@ actionunban = IP=<ip> && sed -i.old /ALL:\ $IP/d <file>
 [Init]
 
 # Option:  country_list
-# Notes.:  List of exempted countries separated by pipe "|"
+# Notes.:  List of banned countries separated by pipe "|"
 # Values:  STR  Default:  
 #
-country_list = CN|RU|IR|KP|NG|PK|VT|US
+country_list = PH|Philippines
 
 # Option:  file
 # Notes.:  hosts.deny file path.
