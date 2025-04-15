@@ -31,16 +31,15 @@
       "cifs-creds" = {
         sopsFile = ./cifs.txt;
         key = "";
-                format = "binary";
-
+        format = "binary";
         restartUnits = [];
       };
       "enroll-key" = {
         sopsFile = ./enroll-key.txt;
         key = "";
-                format = "binary";
-
-        restartUnits = [];
+        format = "binary";
+        owner = "ubuntu";
+        restartUnits = ["crowdsec.service"];
       };
     };
   };
