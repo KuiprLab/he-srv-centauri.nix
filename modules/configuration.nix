@@ -51,6 +51,11 @@
     age.generateKey = false;
   };
 
+systemd.services.sops-nix = {
+  after = [ "opnix.service" ];
+  requires = [ "opnix.service" ];
+};
+
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_US.UTF-8";
   console.keyMap = "us";
