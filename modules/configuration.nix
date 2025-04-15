@@ -1,7 +1,6 @@
 {
   pkgs,
   modulesPath,
-  config,
   ...
 }: {
   # Import additional configuration files
@@ -10,6 +9,7 @@
     ./hardware-configuration.nix
     ./disko-config.nix
     ../utils/my-declared-folders.nix
+        ./crowdsec.nix
     # ./geoblock.nix
   ];
 
@@ -34,25 +34,9 @@
         format = "binary";
         restartUnits = [];
       };
-      "enroll-key" = {
-        sopsFile = ./enroll-key.txt;
-        key = "";
-        format = "binary";
-        owner = "ubuntu";
-        restartUnits = ["crowdsec.service"];
-      };
     };
   };
 
-  services.crowdsec = {
-    enable = true;
-    enrollKeyFile = "/run/secrets/enroll-key";
-    settings = {
-      api.server = {
-        listen_uri = "127.0.0.1:8080";
-      };
-    };
-  };
 
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_US.UTF-8";
