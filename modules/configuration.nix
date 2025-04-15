@@ -51,11 +51,6 @@
     age.generateKey = false;
   };
 
-systemd.services.sops-nix = {
-  after = [ "opnix.service" ];
-  requires = [ "opnix.service" ];
-};
-
   time.timeZone = "Europe/London";
   i18n.defaultLocale = "en_US.UTF-8";
   console.keyMap = "us";
@@ -170,6 +165,26 @@ systemd.services.sops-nix = {
     key = "";
     restartUnits = [];
   };
+
+
+systemd.services.sops = {
+  description = "SOPS Service";
+  after = [ "opnix.service" ]; # if opnix is also managed as a systemd unit
+  wants = [ "opnix.service" ];
+
+  serviceConfig = {
+    # Wait until the age-key file exists
+    ExecStartPre = ''
+      while [ ! -f /var/lib/opnix/sops-age ]; do
+        echo "Waiting for opnix to place the age-key file..."
+        sleep 1
+      done
+    '';
+    ExecStart = "/run/current-system/sw/bin/sops [your-options-here]";
+  };
+
+  restart = "on-failure";
+};
 
   # Modify your mount configuration
   fileSystems."/mnt/data" = {
