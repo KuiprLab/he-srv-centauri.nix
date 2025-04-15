@@ -35,7 +35,7 @@
 
   opnix = {
     environmentFile = "/etc/opnix.env";
-        systemdWantedBy = ["sops-nix"];
+        systemdWantedBy = ["unit-sops-nix.service"];
     secrets = {
       sops-age = {
         source = "{{ op://OpsVault/he-srv-centauri-sops-key/age }}";
