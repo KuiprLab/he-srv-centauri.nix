@@ -17,10 +17,17 @@
       group = "users";
       mode = "0755";
     };
+
+    flood = {
+      path = "/home/ubuntu/flood";
+      owner = "ubuntu";
+      group = "users";
+      mode = "0755";
+    };
   };
   # Container
   virtualisation.oci-containers.containers."qbittorrent" = {
-    image = "lscr.io/linuxserver/qbittorrent:latest";
+    image = "ghcr.io/hotio/qbittorrent:latest";
     log-driver = "journald";
     environmentFiles = [
       "/run/secrets/torrent.env"
@@ -36,6 +43,7 @@
       "--network=container:gluetun"
     ];
   };
+
 
   # Service
   systemd.services."podman-qbittorrent" = {
