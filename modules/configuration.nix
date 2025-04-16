@@ -9,7 +9,7 @@
     ./hardware-configuration.nix
     ./disko-config.nix
     ../utils/my-declared-folders.nix
-        ./fail2ban.nix
+    ./fail2ban.nix
   ];
 
 

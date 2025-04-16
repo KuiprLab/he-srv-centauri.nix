@@ -13,8 +13,8 @@ deploy: format
 
 
 [doc("Install NixOS using nix-anywhere")]
-install: format test
-    @nix run github:nix-community/nixos-anywhere -- --flake .#he-srv-centauri root@37.27.26.175 --build-on remote
+install ip="37.27.26.175": format test
+    @nix run github:nix-community/nixos-anywhere -- --flake .#he-srv-centauri root@{{ip}} --build-on remote
 
 [doc("Locally deploy the config using nh")]
 deploy-local host="he-srv-centauri":
