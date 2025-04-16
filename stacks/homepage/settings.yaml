@@ -14,11 +14,18 @@ quicklaunch:
   hideVisitURL: true
   provider: duckduckgo # google, duckduckgo, bing, baidu, brave or custom
 layout:
-  - Auto-Discovered1:
-  - Configured1:
-  - Configured2:
-  - Auto-Discovered2:
-  - Configured3:
+  - Infrastructure:
       style: row
       columns: 4
-
+  - Networking:
+      style: row
+      columns: 4
+  - Media:
+      style: row
+      columns: 4
+  - Downloads:
+      style: row
+      columns: 4
+  - Storage & Documentation:
+      style: row
+      columns: 4
