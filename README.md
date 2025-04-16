@@ -3,7 +3,7 @@
     <h1 align="center"><code>he-srv-centauri.nix</code></h1>
     <div style="display: grid;" align="center">
     </div>
-    <img src="https://uptime.kuipr.de/api/v1/endpoints/infrastructure_he-srv-centauri/uptimes/30d/badge.svg" height=20/>
+    <img align="center" src="https://uptime.kuipr.de/api/v1/endpoints/infrastructure_he-srv-centauri/uptimes/30d/badge.svg"/>
 </p>
 This flake contains the configuration for my Hetzner VPS running various services.
 
