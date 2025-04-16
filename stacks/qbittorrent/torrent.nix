@@ -17,7 +17,6 @@
       group = "users";
       mode = "0755";
     };
-
   };
   # Container
   virtualisation.oci-containers.containers."qbittorrent" = {
@@ -37,7 +36,6 @@
       "--network=container:gluetun"
     ];
   };
-
 
   # Service
   systemd.services."podman-qbittorrent" = {

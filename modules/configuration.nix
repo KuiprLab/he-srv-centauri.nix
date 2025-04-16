@@ -12,7 +12,6 @@
     ./fail2ban.nix
   ];
 
-
   virtualisation.podman = {
     enable = true;
     dockerCompat = true;

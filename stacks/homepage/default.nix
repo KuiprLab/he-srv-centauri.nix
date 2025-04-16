@@ -35,12 +35,9 @@
       "${./docker.yaml}:/app/config/docker.yaml:ro"
       "/run/podman/podman.sock:/var/run/docker.sock"
     ];
-    # ports = [
-    #   "8080:8080/tcp"
-    # ];
-        environment = {
-"HOMEPAGE_ALLOWED_HOSTS" = "kuipr.de";
-        };
+    environment = {
+      "HOMEPAGE_ALLOWED_HOSTS" = "kuipr.de";
+    };
 
     labels = {
       "traefik.enable" = "true";
@@ -48,7 +45,7 @@
       "traefik.http.routers.homepage.rule" = "Host(`dash.kuipr.de`)";
       "traefik.http.routers.homepage.middlewares" = "authelia@docker";
       "traefik.http.routers.homepage.tls.certresolver" = "myresolver";
-      "traefik.http.services.homepage.loadbalancer.server.port" = "8080";
+      "traefik.http.services.homepage.loadbalancer.server.port" = "3000";
     };
     log-driver = "journald";
     extraOptions = [
