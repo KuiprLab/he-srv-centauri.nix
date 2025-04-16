@@ -1,13 +1,13 @@
 _: {
   imports = [
-    ./traefik
-    ./gatus
     ./authelia
+    ./gatus
+    ./homepage
     ./jellyfin
-    ./obsidian-share-notes
     ./komga
+    ./obsidian-share-notes
     ./qbittorrent
     ./starr
-    ./glance
+    ./traefik
   ];
 }
