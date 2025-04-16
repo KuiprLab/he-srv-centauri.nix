@@ -36,7 +36,7 @@
       "/run/podman/podman.sock:/var/run/docker.sock"
     ];
     environment = {
-      "HOMEPAGE_ALLOWED_HOSTS" = "kuipr.de";
+      "HOMEPAGE_ALLOWED_HOSTS" = "dash.kuipr.de";
     };
 
     labels = {
