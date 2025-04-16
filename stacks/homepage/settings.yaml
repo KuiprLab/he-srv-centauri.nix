@@ -1,0 +1,24 @@
+title: NixOS Homelab Dashboard
+description: My Homelab Dashboard
+favicon: https://www.google.com/favicon.ico
+color: slate
+theme: dark # or light
+headerStyle: clean
+language: en
+hideVersion: true
+disableUpdateCheck: true
+quicklaunch:
+  searchDescriptions: true
+  hideInternetSearch: true
+  showSearchSuggestions: true
+  hideVisitURL: true
+  provider: duckduckgo # google, duckduckgo, bing, baidu, brave or custom
+layout:
+  - Auto-Discovered1:
+  - Configured1:
+  - Configured2:
+  - Auto-Discovered2:
+  - Configured3:
+      style: row
+      columns: 4
+
