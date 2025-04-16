@@ -13,6 +13,16 @@
       mode = "0755";
     };
   };
+
+
+  sops.secrets."hp-services" = {
+    sopsFile = ./services.yaml;
+    key = "";
+    owner = "ubuntu"; # optional
+    format = "yaml"; # optional but recommended
+    restartUnits = ["podman-homepage.service"]; # optional
+  };
+
   # Enable container name DNS for all Podman networks.
   networking.firewall.interfaces = let
     matchAll =
@@ -31,7 +41,7 @@
     volumes = [
       "/home/ubuntu/homepage:/app/config:rw"
       "${./settings.yaml}:/app/config/settings.yaml:ro"
-      "${./services.yaml}:/app/config/services.yaml:ro"
+      "${config.sops.secrets."hp-services".path}:/app/config/services.yaml:ro"
       "${./docker.yaml}:/app/config/docker.yaml:ro"
       "/run/podman/podman.sock:/var/run/docker.sock"
     ];
