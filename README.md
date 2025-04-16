@@ -3,11 +3,8 @@
     <h1 align="center"><code>he-srv-centauri.nix</code></h1>
     <div style="display: grid;" align="center">
     </div>
+    <img src="https://uptime.kuipr.de/api/v1/endpoints/infrastructure_he-srv-centauri/uptimes/30d/badge.svg" height=20/>
 </p>
-<p><code>Authelia: <img src="https://uptime.kuipr.de/api/v1/endpoints/services_authelia/uptimes/30d/badge.svg" height=20/></code></p>
-<p><code>Jellyfin: <img src="https://uptime.kuipr.de/api/v1/endpoints/media_jellyfin/uptimes/30d/badge.svg" height=20/></code></p>
-<p><code>Komga: <img src="https://uptime.kuipr.de/api/v1/endpoints/media_comics/uptimes/30d/badge.svg" height=20/></code></p>
-
 This flake contains the configuration for my Hetzner VPS running various services.
 
 ## Getting started
