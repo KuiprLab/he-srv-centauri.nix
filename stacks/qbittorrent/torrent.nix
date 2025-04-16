@@ -18,12 +18,6 @@
       mode = "0755";
     };
 
-    flood = {
-      path = "/home/ubuntu/flood";
-      owner = "ubuntu";
-      group = "users";
-      mode = "0755";
-    };
   };
   # Container
   virtualisation.oci-containers.containers."qbittorrent" = {
