@@ -15,11 +15,12 @@
   };
 
 
+# services.yaml is just an array without key so sops gets angry if we define it as a yaml file
   sops.secrets."hp-services" = {
-    sopsFile = ./services.yaml;
+    sopsFile = ./services.txt;
     key = "";
     owner = "ubuntu"; # optional
-    format = "yaml"; # optional but recommended
+    format = "binary"; # optional but recommended
     restartUnits = ["podman-homepage.service"]; # optional
   };
 
