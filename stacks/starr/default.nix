@@ -6,6 +6,10 @@
   ...
 }: {
 
+    imports = [
+        ./kapowarr.nix
+    ];
+
   sops.secrets."decluttarr.env" = {
     sopsFile = ./declutarr.env;
     format = "dotenv";
