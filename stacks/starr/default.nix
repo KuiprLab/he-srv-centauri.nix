@@ -5,9 +5,7 @@
   config,
   ...
 }: {
-  imports = [
-    ./lidarr
-  ];
+
   sops.secrets."decluttarr.env" = {
     sopsFile = ./declutarr.env;
     format = "dotenv";
