@@ -5,11 +5,15 @@
   config,
   ...
 }: {
-  # Runtime
-  virtualisation.podman = {
-    enable = true;
-    autoPrune.enable = true;
-    dockerCompat = true;
+
+
+  myFolders = {
+    lidarr = {
+      path = "/home/ubuntu/{lidarr,soularr,slskd}";
+      owner = "ubuntu";
+      group = "users";
+      mode = "0755";
+    };
   };
 
   # Enable container name DNS for all Podman networks.
