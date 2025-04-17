@@ -88,14 +88,10 @@
       "/home/ubuntu/traefik/logs:/logs:rw"
       "/run/podman/podman.sock:/var/run/docker.sock:ro"
     ];
+    # Removed external labels for the API - we'll only access it internally
     labels = {
       "traefik.enable" = "true";
-      "traefik.http.routers.api.rule" = "Host(`traefik.kuipr.de`)";
-      "traefik.http.routers.api.entrypoints" = "websecure";
-      "traefik.http.routers.api.service" = "api@internal";
-      "traefik.http.routers.api.tls" = "true";
-      "traefik.http.routers.api.tls.options" = "default";
-      "traefik.http.routers.api.middlewares" = "authelia@docker";
+      # Dashboard/API labels removed since we'll access it internally
     };
     environmentFiles = [
       "/run/secrets/traefik.env"
@@ -103,11 +99,12 @@
     ports = [
       "8081:80/tcp"
       "8443:443/tcp"
-      # "8181:8080/tcp"
+      # Internal port for API is not exposed to host
     ];
     cmd = [
       "--api=true"
       "--api.dashboard=true"
+      "--api.insecure=true" 
       "--log.level=INFO"
       "--accesslog=true"
       "--accesslog.filepath=/logs/access.log"
@@ -119,6 +116,7 @@
       "--providers.docker.network=proxy"
       "--entryPoints.web.address=:80"
       "--entryPoints.websecure.address=:443"
+      "--entryPoints.traefik.address=:8080"
       "--entrypoints.web.http.redirections.entrypoint.to=websecure"
       "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       "--certificatesresolvers.myresolver.acme.dnschallenge=true"
