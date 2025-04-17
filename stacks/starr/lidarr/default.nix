@@ -14,8 +14,14 @@
       group = "users";
       mode = "0755";
     };
+    
+    music = {
+      path = "/mnt/data/music_download";
+      owner = "ubuntu";
+      group = "users";
+      mode = "0755";
+    };
   };
-
   # Enable container name DNS for all Podman networks.
   networking.firewall.interfaces = let
     matchAll =
