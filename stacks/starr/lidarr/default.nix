@@ -89,6 +89,7 @@
     };
     volumes = [
       "/home/ubuntu/slskd:/app:rw"
+      "${./slskd.yml}:/app/slskd.yml:ro"
       "/mnt/data/media/music:/data:rw"
       "/mnt/data/music_download:/downloads:rw"
     ];
