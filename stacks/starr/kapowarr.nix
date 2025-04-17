@@ -23,10 +23,10 @@
 
 
   virtualisation.oci-containers.containers."flaresolverr-gluetun" = {
-    image = "ghcr.io/flaresolverr-gluetun/flaresolverr-gluetun:latest";
-    ports = [
-      "8191:8191/tcp"
-    ];
+    image = "ghcr.io/flaresolverr/flaresolverr:latest";
+    # ports = [
+    #   "8191:8191/tcp"
+    # ];
     log-driver = "journald";
     extraOptions = [
       "--network=container:gluetun"
