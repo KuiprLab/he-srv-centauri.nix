@@ -80,70 +80,57 @@
       "podman-compose-traefik-root.target"
     ];
   };
-virtualisation.oci-containers.containers."traefik" = {
-  image = "traefik:v3.3";
-  volumes = [
-    "/home/ubuntu/traefik/config:/config:rw"
-    "${./middleware.yml}:/config/middleware.yml:rw"
-    "/home/ubuntu/traefik/letsencrypt:/letsencrypt:rw"
-    "/home/ubuntu/traefik/logs:/logs:rw"
-    "/run/podman/podman.sock:/var/run/docker.sock:ro"
-  ];
-  labels = {
-    "traefik.enable" = "true";
-    "traefik.http.routers.api.rule" = "Host(`traefik.kuipr.de`)";
-    "traefik.http.routers.api.entrypoints" = "websecure";
-    "traefik.http.routers.api.service" = "api@internal";
-    "traefik.http.routers.api.tls" = "true";
-    "traefik.http.routers.api.tls.options" = "modern@file";
-    "traefik.http.routers.api.middlewares" = "authelia@docker";
-    
-    # Global middleware setup
-    "traefik.http.middlewares.comprehensive-security.chain.middlewares" = "rate-limit@file,security-headers@file,compression@file";
-    
-    # Enable default middlewares for all services
-    "traefik.http.middlewares.default-middleware-chain.chain.middlewares" = "comprehensive-security@file,authelia@docker";
+  virtualisation.oci-containers.containers."traefik" = {
+    image = "traefik:v3.3";
+    volumes = [
+      "/home/ubuntu/traefik/config:/config:rw"
+      "/home/ubuntu/traefik/letsencrypt:/letsencrypt:rw"
+      "/home/ubuntu/traefik/logs:/logs:rw"
+      "/run/podman/podman.sock:/var/run/docker.sock:ro"
+    ];
+    # Removed external labels for the API - we'll only access it internally
+    labels = {
+      "traefik.enable" = "true";
+      # Dashboard/API labels removed since we'll access it internally
+    };
+    environmentFiles = [
+      "/run/secrets/traefik.env"
+    ];
+    ports = [
+      "8081:80/tcp"
+      "8443:443/tcp"
+      # Internal port for API is not exposed to host
+    ];
+    cmd = [
+      "--api=true"
+      "--api.dashboard=true"
+      "--api.insecure=true" 
+      "--log.level=INFO"
+      "--accesslog=true"
+      "--accesslog.filepath=/logs/access.log"
+      "--accesslog.bufferingsize=100"
+      "--providers.docker=true"
+      "--providers.file.directory=/config"
+      "--providers.file.watch=true"
+      "--providers.docker.exposedByDefault=false"
+      "--providers.docker.network=proxy"
+      "--entryPoints.web.address=:80"
+      "--entryPoints.websecure.address=:443"
+      "--entryPoints.traefik.address=:8080"
+      "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      "--certificatesresolvers.myresolver.acme.dnschallenge=true"
+      "--certificatesresolvers.myresolver.acme.dnschallenge.provider=bunny"
+      "--certificatesresolvers.myresolver.acme.email=daniel.inama02@gmail.com"
+      "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      "--serversTransport.insecureSkipVerify=true"
+    ];
+    log-driver = "journald";
+    extraOptions = [
+      "--network-alias=traefik"
+      "--network=proxy"
+    ];
   };
-  environmentFiles = [
-    "/run/secrets/traefik.env"
-  ];
-  ports = [
-    "8081:80/tcp"
-    "8443:443/tcp"
-    "8181:8080/tcp"
-  ];
-  cmd = [
-    "--api=true"
-    "--api.dashboard=true"
-    "--log.level=INFO"
-    "--accesslog=true"
-    "--accesslog.filepath=/logs/access.log"
-    "--accesslog.bufferingsize=100"
-    "--providers.docker=true"
-    "--providers.docker.defaultRule=Host(`{{ normalize .Name }}.kuipr.de`)"
-    "--providers.file.directory=/config"
-    "--providers.file.watch=true"
-    "--providers.docker.exposedByDefault=false"
-    "--providers.docker.network=proxy"
-    "--entryPoints.web.address=:80"
-    "--entryPoints.websecure.address=:443"
-    "--entrypoints.web.http.redirections.entrypoint.to=websecure"
-    "--entrypoints.web.http.redirections.entrypoint.scheme=https"
-    "--certificatesresolvers.myresolver.acme.dnschallenge=true"
-    "--certificatesresolvers.myresolver.acme.dnschallenge.provider=bunny"
-    "--certificatesresolvers.myresolver.acme.email=daniel.inama02@gmail.com"
-    "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
-    "--serversTransport.insecureSkipVerify=true"
-    
-    # Apply default middleware to all services
-    "--experimental.http.middlewares=true"
-  ];
-  log-driver = "journald";
-  extraOptions = [
-    "--network-alias=traefik"
-    "--network=proxy"
-  ];
-};
   systemd.services."podman-traefik" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
