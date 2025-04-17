@@ -56,7 +56,7 @@
       "traefik.http.services.lidarr.loadbalancer.server.port" = "8686";
     };
     dependsOn = [
-      "soularr"
+      "slskd"
     ];
     log-driver = "journald";
     extraOptions = [
@@ -93,10 +93,19 @@
       "/mnt/data/music_download:/downloads:rw"
     ];
     ports = [
-      "5030:5030/tcp"
-      "5031:5031/tcp"
+      # "5030:5030/tcp"
+      # "5031:5031/tcp"
       "50300:50300/tcp"
     ];
+
+    labels = {
+      "traefik.enable" = "true";
+      "traefik.http.routers.slskd.entrypoints" = "websecure";
+      "traefik.http.routers.slskd.middlewares" = "authelia@docker";
+      "traefik.http.routers.slskd.rule" = "Host(`slskd.kuipr.de`)";
+      "traefik.http.routers.slskd.tls.certresolver" = "myresolver";
+      "traefik.http.services.slskd.loadbalancer.server.port" = "5030";
+    };
     dependsOn = [
       "gluetun"
     ];
@@ -109,44 +118,6 @@
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
     };
-    partOf = [
-      "podman-compose-lidarr-root.target"
-    ];
-    wantedBy = [
-      "podman-compose-lidarr-root.target"
-    ];
-  };
-  virtualisation.oci-containers.containers."soularr" = {
-    image = "mrusse08/soularr:latest";
-    environment = {
-      "SCRIPT_INTERVAL" = "300";
-      "TZ" = "Etc/UTC";
-    };
-    volumes = [
-      "/home/ubuntu/soularr:/data:rw"
-      "/mnt/data/music_download:/downloads:rw"
-    ];
-    dependsOn = [
-      "slskd"
-    ];
-    user = "1000:1000";
-    log-driver = "journald";
-    extraOptions = [
-      "--hostname=soularr"
-      "--network-alias=soularr"
-      "--network=lidarr_default"
-    ];
-  };
-  systemd.services."podman-soularr" = {
-    serviceConfig = {
-      Restart = lib.mkOverride 90 "always";
-    };
-    after = [
-      "podman-network-lidarr_default.service"
-    ];
-    requires = [
-      "podman-network-lidarr_default.service"
-    ];
     partOf = [
       "podman-compose-lidarr-root.target"
     ];
