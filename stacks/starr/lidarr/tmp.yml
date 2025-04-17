@@ -1,0 +1,67 @@
+name: lidarr
+services:
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    depends_on:
+      soularr:
+        condition: service_healthy
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - /home/ubuntu/lidarr:/config
+      - /mnt/data/media/music:/data #optional
+      - /mnt/data/music_download:/downloads #optional
+    networks:
+      - default
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.lidarr.rule=Host(`lidarr.kuipr.de`)"
+      - "traefik.http.routers.lidarr.entrypoints=websecure"
+      - "traefik.http.routers.lidarr.tls.certresolver=myresolver"
+      - "traefik.http.services.lidarr.loadbalancer.server.port=8686"
+      - "traefik.http.routers.lidarr.middlewares=authentik@docker"
+    restart: unless-stopped
+
+  slskd:
+    image: slskd/slskd
+    container_name: slskd
+    network_mode: "container:gluetun"
+    ports:
+      - "5030:5030"
+      - "5031:5031"
+      - "50300:50300"
+    environment:
+      - SLSKD_REMOTE_CONFIGURATION=true
+    volumes:
+      - /home/ubuntu/slskd:/app
+      - /mnt/data/media/music:/data #optional
+      - /mnt/data/music_download:/downloads #optional
+    restart: always
+
+  soularr:
+    image: mrusse08/soularr:latest
+    container_name: soularr
+    depends_on:
+      slskd:
+        condition: service_healthy
+    hostname: soularr
+    user: 1000:1000 # this should be set to your UID and GID, which can be determined via `id -u` and `id -g`, respectively
+    environment:
+      - TZ=Etc/UTC
+      - SCRIPT_INTERVAL=300 # Script interval in seconds
+    volumes:
+      # "You can set /downloads to whatever you want but will then need to change the Slskd download dir in your config file"
+      - /mnt/data/music_download:/downloads
+      # Select where you are storing your config file.
+      # Leave "/data" since thats where the script expects the config file to be
+      - /home/ubuntu/soularr:/data
+    restart: unless-stopped
+
+networks:
+  default: {}
+  proxy:
+    external: true
