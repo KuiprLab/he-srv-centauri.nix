@@ -104,7 +104,7 @@
     cmd = [
       "--api=true"
       "--api.dashboard=true"
-      "--api.insecure=true" 
+      "--api.insecure=true"
       "--log.level=INFO"
       "--accesslog=true"
       "--accesslog.filepath=/logs/access.log"

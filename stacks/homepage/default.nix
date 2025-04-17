@@ -14,8 +14,7 @@
     };
   };
 
-
-# services.yaml is just an array without key so sops gets angry if we define it as a yaml file
+  # services.yaml is just an array without key so sops gets angry if we define it as a yaml file
   sops.secrets."hp-services" = {
     sopsFile = ./services.txt;
     key = "";

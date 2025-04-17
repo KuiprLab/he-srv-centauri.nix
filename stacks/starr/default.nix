@@ -5,13 +5,9 @@
   config,
   ...
 }: {
-  # Runtime
-  virtualisation.podman = {
-    enable = true;
-    autoPrune.enable = true;
-    dockerCompat = true;
-  };
-
+  imports = [
+    ./lidarr
+  ];
   sops.secrets."decluttarr.env" = {
     sopsFile = ./declutarr.env;
     format = "dotenv";
