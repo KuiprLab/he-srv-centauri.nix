@@ -34,7 +34,7 @@
       "traefik.http.routers.organizr.middlewares" = "authelia@docker";
       "traefik.http.routers.organizr.rule" = "Host(`organizr.kuipr.de`)";
       "traefik.http.routers.organizr.tls.certresolver" = "myresolver";
-      "traefik.http.services.organizr.loadbalancer.server.port" = "9696";
+      "traefik.http.services.organizr.loadbalancer.server.port" = "80";
     };
     log-driver = "journald";
     extraOptions = [
