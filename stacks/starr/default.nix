@@ -258,7 +258,7 @@
   virtualisation.oci-containers.containers."unpackerr" = {
     image = "golift/unpackerr";
     volumes = [
-      "/mnt/data/torrents/completed:/downloads:rw"
+      "/mnt/data/torrents:/downloads:rw"
     ];
     user = "1000:1000";
     log-driver = "journald";
