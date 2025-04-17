@@ -9,6 +9,5 @@ _: {
     ./qbittorrent
     ./starr
     ./traefik
-    ./organizr
   ];
 }
