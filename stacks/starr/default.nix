@@ -170,7 +170,7 @@
     volumes = [
       "/home/ubuntu/radarr:/config:rw"
       "/mnt/data/media/movies:/movies:rw"
-      "/mnt/data/torrents:/downloads:rw"
+      "/mnt/data/torrents:/app/qBittorrent/downloads:rw"
     ];
     environmentFiles = [
       "/run/secrets/radarr.env"
@@ -212,7 +212,7 @@
     volumes = [
       "/home/ubuntu/sonarr:/config:rw"
       "/mnt/data/media/tv:/tv:rw"
-      "/mnt/data/torrents:/downloads:rw"
+      "/mnt/data/torrents:/app/qBittorrent/downloads:rw"
     ];
     labels = {
       "traefik.docker.network" = "proxy";

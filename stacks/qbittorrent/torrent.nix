@@ -26,7 +26,7 @@
       "/run/secrets/torrent.env"
     ];
     volumes = [
-      "/mnt/data/torrents:/downloads:rw"
+      "/mnt/data/torrents:/app/qBittorrent/downloads:rw"
       "/home/ubuntu/qbittorrent:/config:rw"
     ];
     dependsOn = [
