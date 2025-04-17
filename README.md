@@ -114,13 +114,13 @@ or binary files.
 
 After you're finished editing the file encrypt it with `just encrypt path/to/file`. Now include it in your configuration by using the following snippet:
 ```nix
-  sops.secrets."filename" = {
-    sopsFile = ./path/to/file;
-    key = "";
-    owner = "<optional username>"; # optional
-    format = "<any of yaml,json,ini,env,binary>"; # optional but recommended
-    restartUnits = ["<optional systemd service>"]; # optional
-  };
+sops.secrets."filename" = {
+  sopsFile = ./path/to/file;
+  key = "";
+  owner = "<optional username>"; # optional
+  format = "<any of yaml,json,ini,env,binary>"; # optional but recommended
+  restartUnits = ["<optional systemd service>"]; # optional
+};
 ```
 You can then access the sercrets either by reading `/run/secrets/filename` or by doing `config.sops.secrets."filename".path`. Be aware that the default owner of this file is `root` if
 you dont specify one.

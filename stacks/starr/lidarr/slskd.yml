@@ -1,12 +1,30 @@
 web:
-  authentication:
-    disabled: true
-    username: slskd
-    password: slskd
-    jwt:
-      key: ~
-      ttl: 604800000
-    api_keys:
-      my_api_key:
-        key: <some example string between 16 and 255 characters>
-        cidr: 0.0.0.0/0,::/0
+    authentication:
+        disabled: ENC[AES256_GCM,data:Y4J7DQ==,iv:xD0ertPRVZzsE34H16FvU/PWUPiW8pbW6HzzkPtgrQI=,tag:EOIPxIgzzCb3hCroNZ7Zsg==,type:bool]
+soulseek:
+    username: ENC[AES256_GCM,data:XKLC8LXNHimMtw+OSVXb,iv:ETlJdX41n0IBWv5UqlNZtOnziPKjfwT8jpBvpf2Zpfo=,tag:Q2RU2bQqojUUrkceBBu08g==,type:str]
+    password: ENC[AES256_GCM,data:mQyJt+Estp506ip9mMnuiswITvD/2MacDQ==,iv:6I40qnktkqW7t8HjG4Cw6Ysf1PPf1vp8/1iHYu613MM=,tag:9/LtdGH8JUF0HWIxy7IiPg==,type:str]
+sops:
+    age:
+        - recipient: age1207u8skz74quhs0xtunrrp2xwj0dtmffllfk7fw93q5eywd7w37qslc9yh
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB5TktCaVN4RFlHZFNFOXNh
+            ZXVqbVB0NUNESFYvOHgrV2tMc2lMcWROa0NvCmtwTkwwM0FpUmdpcHZWazJtY0w5
+            RFJWUjZDbGw4T1IyZmRCSEZVYXJlL1UKLS0tIFBobmtoSHFvZTU0TWwvTTE2WnpH
+            NTd5bk9mcklnUUd1R0loYXBMT29ueDgKmkSFGnBhB5c93FlIYaCpXC8pdYM+e5Qj
+            kvmTO6y+BaiQgdOxtxEa0VxQus6ReaWwEe+jaoWshL3ru50/EThg2Q==
+            -----END AGE ENCRYPTED FILE-----
+        - recipient: age1cdr7yexx2vc54q46tkmzw0udh2hynm4dvytjnvzapc64x6rsh59qmemc6g
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBrSGJIZXdzRFFIUmJDeDhW
+            bHljbm05MytxYnBxQ0NmQW05aTlaUktZT0dFCjR0MVpjM1dQMU9DSVdGMEN2UThm
+            NTJNSmxHYXJzQnltdUhIR0phQ2VuTE0KLS0tIG9FN1RUNlR1dFNDeHU1NDFPVDFj
+            SzZNNGphYmdnR3JNRWxNUHNSS3IxclEKmwS6zlwCOPpm55t4lBbsflKq+LrLfLpb
+            0h2PfJhs3BMVcRaPrUQbV65mGMJvyFYJUQxG8uuruzBzPUKduSOEgA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-04-17T07:57:37Z"
+    mac: ENC[AES256_GCM,data:hsMspk+zdBlQV1ibDgp0apOsAlttkw1Mcv8P2V5EKKCU5WLsk1MUdj2mBr12SDPvDZm/qsg5Xi/QI7lPfquOQL/prxVMxRxGHJMmBOIX8PdXDqDlPpGcQjgt08zGBsPKcdF0SJ3sbUMZvgI+pGLR9suZh7N8ePShxNJKxeIM6Ak=,iv:Q/0sjypnzQTdkwNGH5VqXNFUtRqI4NE0pMoMR7EPCoU=,tag:5lc0BzAy1hfvXGjwB55vOg==,type:str]
+    unencrypted_suffix: _unencrypted
+    version: 3.10.1

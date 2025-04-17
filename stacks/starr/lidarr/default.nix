@@ -7,9 +7,19 @@
 }: {
 
 
+
+sops.secrets."slskd.yml" = {
+  sopsFile = ./slskd.yml;
+  key = "";
+  owner = "ubuntu"; # optional
+  format = "yaml"; # optional but recommended
+  restartUnits = ["podman-slskd.service"]; # optional
+};
+
+
   myFolders = {
     lidarr = {
-      path = "/home/ubuntu/{lidarr,soularr,slskd}";
+      path = "/home/ubuntu/{lidarr,slskd}";
       owner = "ubuntu";
       group = "users";
       mode = "0755";
@@ -89,7 +99,7 @@
     };
     volumes = [
       "/home/ubuntu/slskd:/app:rw"
-      "${./slskd.yml}:/app/slskd.yml:ro"
+      "${config.sops.secrets."slskd.yml".path}:/app/slskd.yml:ro"
       "/mnt/data/media/music:/data:rw"
       "/mnt/data/music_download:/downloads:rw"
     ];
