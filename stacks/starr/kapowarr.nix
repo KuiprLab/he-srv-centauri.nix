@@ -21,6 +21,35 @@
 
   virtualisation.oci-containers.backend = "podman";
 
+
+  virtualisation.oci-containers.containers."flaresolverr-gluetun" = {
+    image = "ghcr.io/flaresolverr-gluetun/flaresolverr-gluetun:latest";
+    ports = [
+      "8191:8191/tcp"
+    ];
+    log-driver = "journald";
+    extraOptions = [
+      "--network=container:gluetun"
+    ];
+  };
+  systemd.services."podman-flaresolverr-gluetun" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "always";
+    };
+    after = [
+      "podman-network-starr_default.service"
+    ];
+    requires = [
+      "podman-network-starr_default.service"
+    ];
+    partOf = [
+      "podman-compose-starr-root.target"
+    ];
+    wantedBy = [
+      "podman-compose-starr-root.target"
+    ];
+  };
+
   # Containers
   virtualisation.oci-containers.containers."kapowarr" = {
     image = "mrcas/kapowarr-alpha:latest";
