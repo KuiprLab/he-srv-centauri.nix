@@ -91,7 +91,7 @@
     labels = {
       "traefik.enable" = "true";
       "traefik.http.routers.api.rule" = "Host(`traefik.kuipr.de`)";
-      "traefik.http.routers.api.entrypoints" = "https";
+      "traefik.http.routers.api.entrypoints" = "websecure";
       "traefik.http.routers.api.service" = "api@internal";
       "traefik.http.routers.api.tls" = "true";
       "traefik.http.routers.api.tls.options" = "default";
@@ -106,22 +106,21 @@
       "8181:8080/tcp"
     ];
     cmd = [
-      "--api"
+      "--api=true"
+      "--api.dashboard=true"
       "--log.level=INFO"
       "--accesslog=true"
       "--accesslog.filepath=/logs/access.log"
       "--accesslog.bufferingsize=100"
-      "--api.insecure=true"
       "--providers.docker=true"
       "--providers.file.directory=/config"
       "--providers.file.watch=true"
       "--providers.docker.exposedByDefault=false"
       "--providers.docker.network=proxy"
       "--entryPoints.web.address=:80"
-      "--entrypoints.http.http.redirections.entrypoint.to=https"
-      "--entrypoints.http.http.redirections.entrypoint.scheme=https"
-      "--entrypoints.https=true"
       "--entryPoints.websecure.address=:443"
+      "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       "--certificatesresolvers.myresolver.acme.dnschallenge=true"
       "--certificatesresolvers.myresolver.acme.dnschallenge.provider=bunny"
       "--certificatesresolvers.myresolver.acme.email=daniel.inama02@gmail.com"
