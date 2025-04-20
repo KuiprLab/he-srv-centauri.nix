@@ -72,7 +72,7 @@
     "dependencies"
   ],
   "schedule": [
-    "after 1am and before 5am every weekend"
+    "at any time"
   ],
   "semanticCommits": "enabled",
   "commitMessagePrefix": "chore(deps):",
