@@ -1,84 +1,16 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
-  ],
-  "enabledManagers": [
-    "nix",
-    "github-actions",
-    "custom.regex"
-  ],
   "nix": {
     "enabled": true
   },
-  "packageRules": [
-    {
-      "matchUpdateTypes": [
-        "major",
-        "minor",
-        "patch"
-      ],
-      "matchCurrentVersion": "!/^0/",
-      "automerge": true
-    },
-    {
-      "matchDatasources": [
-        "docker"
-      ],
-      "automerge": true,
-  "schedule": [
-    "at any time"
-  ]
-    },
-    {
-      "matchManagers": [
-        "nix"
-      ],
-      "addLabels": [
-        "nix-update"
-      ]
-    },
-    {
-      "matchManagers": [
-        "custom.regex"
-      ],
-      "matchDatasources": [
-        "docker"
-      ],
-      "addLabels": [
-        "container-update"
-      ]
-    }
-  ],
-  "customManagers": [
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "stacks/.+/default\\.nix$"
-      ],
-      "matchStrings": [
-        "image\\s*=\\s*[\"']?(?<depName>[^\\s\"']+?/[^\\s\"']+?):?(?<currentValue>[^\\s\"']+?)?[\"']?\\s*;"
-      ],
-      "datasourceTemplate": "docker",
-      "versioningTemplate": "docker"
-    }
-  ],
-  "git-submodules": {
-    "enabled": true
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": [
+      "at any time"
+    ]
   },
-  "dependencyDashboard": true,
-  "prHourlyLimit": 0,
-  "prConcurrentLimit": 5,
-  "labels": [
-    "dependencies"
-  ],
   "schedule": [
     "at any time"
   ],
-  "semanticCommits": "enabled",
-  "commitMessagePrefix": "chore(deps):",
-  "rangeStrategy": "bump",
-  "separateMajorMinor": true,
-  "separateMinorPatch": false,
-  "rebaseWhen": "behind-base-branch"
+  "automerge": false,
+  "automergeType": "pr"
 }
