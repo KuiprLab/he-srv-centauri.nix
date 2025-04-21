@@ -11,6 +11,7 @@
   "schedule": [
     "at any time"
   ],
+  "reviewers": ["frostplexx"],
   "automerge": false,
   "automergeType": "pr"
 }
