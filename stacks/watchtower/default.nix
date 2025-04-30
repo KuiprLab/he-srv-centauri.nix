@@ -35,7 +35,6 @@
     cmd = [
             "--cleanup"
             "--remove-volumes"
-            "--rolling-restart"
         ];
   };
   systemd.services."podman-watchtower" = {
