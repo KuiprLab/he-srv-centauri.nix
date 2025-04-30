@@ -1,0 +1,6 @@
+name: watchtower
+services:
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /run/podman/podman.sock:/var/run/docker.sock
