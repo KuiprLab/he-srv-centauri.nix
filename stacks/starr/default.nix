@@ -5,10 +5,9 @@
   config,
   ...
 }: {
-
-    imports = [
-        ./kapowarr.nix
-    ];
+  imports = [
+    ./kapowarr.nix
+  ];
 
   sops.secrets."decluttarr.env" = {
     sopsFile = ./declutarr.env;
