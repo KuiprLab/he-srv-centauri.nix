@@ -32,6 +32,11 @@
     environmentFiles = [
       "${config.sops.secrets."watchtower.env".path}"
     ];
+    cmd = [
+            "--cleanup"
+            "--remove-volumes"
+            "--rolling-restart"
+        ];
   };
   systemd.services."podman-watchtower" = {
     serviceConfig = {
