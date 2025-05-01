@@ -99,6 +99,7 @@
     ports = [
       "8081:80/tcp"
       "8443:443/tcp"
+      "25565:25565/tcp"
       # Internal port for API is not exposed to host
     ];
     cmd = [
@@ -116,6 +117,7 @@
       "--providers.docker.network=proxy"
       "--entryPoints.web.address=:80"
       "--entryPoints.websecure.address=:443"
+      "--entryPoints.minecraft.address=:25565/tcp"
       "--entryPoints.traefik.address=:8080"
       "--entrypoints.web.http.redirections.entrypoint.to=websecure"
       "--entrypoints.web.http.redirections.entrypoint.scheme=https"
