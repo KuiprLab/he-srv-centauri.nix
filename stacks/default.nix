@@ -10,6 +10,5 @@ _: {
     ./starr
     ./traefik
     ./watchtower
-        ./minecraft
   ];
 }
