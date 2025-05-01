@@ -38,14 +38,13 @@
     volumes = [
       "/home/ubuntu/minecraft:/data:rw"
     ];
-    # ports = [
-    #   "25565:25565/tcp"
-    # ];
+    ports = [
+      "25565:25565/tcp"
+    ];
     labels = {
       "traefik.enable" = "true";
       "traefik.http.routers.minecraft.entrypoints" = "minecraft";
       "traefik.http.routers.minecraft.rule" = "Host(`mc.kuipr.de`)";
-      "traefik.http.routers.minecraft.tls.certresolver" = "myresolver";
       "traefik.http.services.minecraft.loadbalancer.server.port" = "25565";
     };
     environmentFiles = [
