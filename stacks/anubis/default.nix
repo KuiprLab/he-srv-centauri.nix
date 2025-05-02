@@ -53,7 +53,7 @@
     log-driver = "journald";
     extraOptions = [
       "--network-alias=anubis"
-      "--network=proxy-network"
+      "--network=proxy"
     ];
   };
   systemd.services."podman-anubis-default" = {
@@ -78,7 +78,7 @@
     log-driver = "journald";
     extraOptions = [
       "--network-alias=anubis-hl"
-      "--network=proxy-network"
+      "--network=proxy"
     ];
   };
   systemd.services."podman-anubis-hl" = {
@@ -103,7 +103,7 @@
     log-driver = "journald";
     extraOptions = [
       "--network-alias=anubis-k8s"
-      "--network=proxy-network"
+      "--network=proxy"
     ];
   };
   systemd.services."podman-anubis-k8s" = {
