@@ -11,58 +11,77 @@
     recommendedOptimisation = true;
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
-
-    # Define Anubis upstream
-    upstreams."anubis" = {
-      servers = {
-        "127.0.0.1:8923" = {};
-      };
-    };
-
+    
+    # Handle HTTP and HTTPS proxying similar to HAProxy setup
+    # This setting will ensure proper forwarding of client IP addresses
+    proxyResolveWhileRunning = false;
+    
+    # Stream configuration to handle TCP traffic like HAProxy does
+    streamConfig = ''
+      # This mimics HAProxy's TCP mode behavior
+      upstream hl_backend_ssl {
+        server 192.168.1.69:443;
+      }
+      
+      upstream k8s_backend_ssl {
+        server 192.168.1.200:443;
+      }
+      
+      upstream traefik_backend_ssl {
+        server 127.0.0.1:8923;
+      }
+      
+      # SSL/TLS routing based on SNI
+      map $ssl_preread_server_name $ssl_backend {
+        ~\.hl\.kuipr\.de$ hl_backend_ssl;
+        ~\.k8s\.kuipr\.de$ k8s_backend_ssl;
+        default traefik_backend_ssl;
+      }
+      
+      # HTTPS listener
+      server {
+        listen 443;
+        proxy_pass $ssl_backend;
+        ssl_preread on;
+      }
+    '';
+    
     virtualHosts = {
-      # HTTP redirects for all domains
+      # HTTP virtual hosts
       "hl.kuipr.de" = {
         serverName = "~^(.*\.)?hl\.kuipr\.de$";
-        locations."/".return = "301 https://$host$request_uri";
+        listenAddresses = [ "0.0.0.0" ];
+        listen = [{ port = 80; addr = "0.0.0.0";}];
+        locations."/".proxyPass = "http://192.168.1.69:80";
+        locations."/".proxyWebsockets = true;
+        forceSSL = false; # We're handling SSL at the TCP level
+        enableACME = false; # Not needed with TCP SSL passthrough
       };
-
+      
       "k8s.kuipr.de" = {
         serverName = "~^(.*\.)?k8s\.kuipr\.de$";
-        locations."/".return = "301 https://$host$request_uri";
-      };
-
-      # HTTPS virtual hosts with Anubis integration
-      "hl.kuipr.de-ssl" = {
-        serverName = "~^(.*\.)?hl\.kuipr\.de$";
-        forceSSL = true;
-        enableACME = true;
-        locations."/".proxyPass = "http://anubis";
+        listenAddresses = [ "0.0.0.0" ];
+        listen = [{ port = 80; addr = "0.0.0.0"; }];
+        locations."/".proxyPass = "http://192.168.1.200:80";
         locations."/".proxyWebsockets = true;
+        forceSSL = false; # We're handling SSL at the TCP level
+        enableACME = false; # Not needed with TCP SSL passthrough
       };
-
-      "k8s.kuipr.de-ssl" = {
-        serverName = "~^(.*\.)?k8s\.kuipr\.de$";
-        forceSSL = true;
-        enableACME = true;
-        locations."/".proxyPass = "http://anubis";
-        locations."/".proxyWebsockets = true;
-      };
-
-      # Default HTTPS backend
+      
+      # Default HTTP backend for all other domains
       "default" = {
         default = true;
-        forceSSL = true;
-        enableACME = true;
-        locations."/".proxyPass = "http://anubis";
+        listenAddresses = [ "0.0.0.0" ];
+        listen = [{ port = 80; addr = "0.0.0.0"; }];
+        locations."/".proxyPass = "http://127.0.0.1:8081";
         locations."/".proxyWebsockets = true;
       };
     };
   };
-
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
-
-  # Ensure Anubis socket directory exists
-  systemd.tmpfiles.rules = [
-    "d /run/anubis 0755 anubis anubis"
+  
+  
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
   ];
 }
