@@ -7,6 +7,8 @@
   
   services.nginx = {
     enable = true;
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
     
@@ -80,7 +82,6 @@
   # Additional configuration for Nginx's stream module
   services.nginx.package = pkgs.nginx.override {
     modules = with pkgs.nginxModules; [ 
-      streamModule # Required for SSL passthrough 
     ];
   };
   
