@@ -72,7 +72,7 @@
       "default" = {
         default = true;
         listenAddresses = [ "0.0.0.0" ];
-        listen = [{ port = 80; }];
+        listen = [{ port = 80; addr = "0.0.0.0"; }];
         locations."/".proxyPass = "http://127.0.0.1:8081";
         locations."/".proxyWebsockets = true;
       };
