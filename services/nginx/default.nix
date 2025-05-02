@@ -5,12 +5,14 @@
         acceptTerms = true;
         defaults.email = "me@dinama.dev";
       };
-  services.nginx = {
+
+services.nginx = {
     enable = true;
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
 
     virtualHosts = {
+      # Wildcard for any subdomain under hl.kuipr.de
       "hl.kuipr.de" = {
         enableACME = true;
         forceSSL = true;
@@ -22,6 +24,7 @@
         '';
       };
 
+      # Wildcard for any subdomain under k8s.kuipr.de
       "k8s.kuipr.de" = {
         enableACME = true;
         forceSSL = true;
@@ -33,16 +36,6 @@
         '';
       };
 
-      "example.com" = {
-        enableACME = true;
-        forceSSL = true;
-        locations."/".proxyPass = "http://127.0.0.1:12345";
-        locations."/".proxyWebsockets = true;
-        locations."/".extraConfig = ''
-          proxy_ssl_server_name on;
-          proxy_pass_header Authorization;
-        '';
-      };
     };
   };
 
