@@ -1,52 +1,91 @@
 { config, pkgs, ... }:
-
 {
-      security.acme = {
-        acceptTerms = true;
-        defaults.email = "me@dinama.dev";
-      };
-
-services.nginx = {
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "me@dinama.dev";
+  };
+  
+  services.nginx = {
     enable = true;
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
-
+    
+    # Handle HTTP and HTTPS proxying similar to HAProxy setup
+    # This setting will ensure proper forwarding of client IP addresses
+    proxyResolveWhileRunning = false;
+    
+    # Stream configuration to handle TCP traffic like HAProxy does
+    streamConfig = ''
+      # This mimics HAProxy's TCP mode behavior
+      upstream hl_backend_ssl {
+        server 192.168.1.69:443;
+      }
+      
+      upstream k8s_backend_ssl {
+        server 192.168.1.200:443;
+      }
+      
+      upstream traefik_backend_ssl {
+        server 127.0.0.1:8443;
+      }
+      
+      # SSL/TLS routing based on SNI
+      map $ssl_preread_server_name $ssl_backend {
+        ~\.hl\.kuipr\.de$ hl_backend_ssl;
+        ~\.k8s\.kuipr\.de$ k8s_backend_ssl;
+        default traefik_backend_ssl;
+      }
+      
+      # HTTPS listener
+      server {
+        listen 443;
+        proxy_pass $ssl_backend;
+        ssl_preread on;
+      }
+    '';
+    
     virtualHosts = {
-      # Wildcard for any subdomain under hl.kuipr.de
+      # HTTP virtual hosts
       "hl.kuipr.de" = {
-        enableACME = true;
-        forceSSL = true;
-        locations."/".proxyPass = "http://192.168.1.69:443";
+        serverName = "~^(.*\.)?hl\.kuipr\.de$";
+        listenAddresses = [ "0.0.0.0" ];
+        listen = [{ port = 80; }];
+        locations."/".proxyPass = "http://192.168.1.69:80";
         locations."/".proxyWebsockets = true;
-        locations."/".extraConfig = ''
-          proxy_ssl_server_name on;
-          proxy_pass_header Authorization;
-        '';
+        forceSSL = false; # We're handling SSL at the TCP level
+        enableACME = false; # Not needed with TCP SSL passthrough
       };
-
-      # Wildcard for any subdomain under k8s.kuipr.de
+      
       "k8s.kuipr.de" = {
-        enableACME = true;
-        forceSSL = true;
-        locations."/".proxyPass = "http://192.168.1.200:443";
+        serverName = "~^(.*\.)?k8s\.kuipr\.de$";
+        listenAddresses = [ "0.0.0.0" ];
+        listen = [{ port = 80; }];
+        locations."/".proxyPass = "http://192.168.1.200:80";
         locations."/".proxyWebsockets = true;
-        locations."/".extraConfig = ''
-          proxy_ssl_server_name on;
-          proxy_pass_header Authorization;
-        '';
+        forceSSL = false; # We're handling SSL at the TCP level
+        enableACME = false; # Not needed with TCP SSL passthrough
       };
-
+      
+      # Default HTTP backend for all other domains
+      "default" = {
+        default = true;
+        listenAddresses = [ "0.0.0.0" ];
+        listen = [{ port = 80; }];
+        locations."/".proxyPass = "http://127.0.0.1:8081";
+        locations."/".proxyWebsockets = true;
+      };
     };
   };
-
+  
+  # Additional configuration for Nginx's stream module
+  services.nginx.package = pkgs.nginx.override {
+    modules = with pkgs.nginxModules; [ 
+      streamModule # Required for SSL passthrough 
+    ];
+  };
+  
   networking.firewall.allowedTCPPorts = [
     80
     443
   ];
-
-  # Optional: if you want a custom Nginx configuration outside of the default virtualHosts.
-  # Ensure to configure `nginx.conf` as needed.
-  # services.nginx.extraConfig = ''
-  #   # Additional Nginx configuration if needed
-  # '';
 }
