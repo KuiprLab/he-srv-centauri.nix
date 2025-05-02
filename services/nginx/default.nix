@@ -51,7 +51,7 @@
       "hl.kuipr.de" = {
         serverName = "~^(.*\.)?hl\.kuipr\.de$";
         listenAddresses = [ "0.0.0.0" ];
-        listen = [{ port = 80; }];
+        listen = [{ port = 80; addr = "0.0.0.0";}];
         locations."/".proxyPass = "http://192.168.1.69:80";
         locations."/".proxyWebsockets = true;
         forceSSL = false; # We're handling SSL at the TCP level
@@ -61,7 +61,7 @@
       "k8s.kuipr.de" = {
         serverName = "~^(.*\.)?k8s\.kuipr\.de$";
         listenAddresses = [ "0.0.0.0" ];
-        listen = [{ port = 80; }];
+        listen = [{ port = 80; addr = "0.0.0.0"; }];
         locations."/".proxyPass = "http://192.168.1.200:80";
         locations."/".proxyWebsockets = true;
         forceSSL = false; # We're handling SSL at the TCP level
