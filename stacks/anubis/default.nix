@@ -34,7 +34,7 @@
             "${config.sops.secrets."anubis.env".path}"
     ];
     ports = [
-      "443:8923/tcp"
+      "8923:8923/tcp"
     ];
     log-driver = "journald";
     extraOptions = [
