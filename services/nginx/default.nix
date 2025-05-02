@@ -16,7 +16,7 @@ services.nginx = {
       "hl.kuipr.de" = {
         enableACME = true;
         forceSSL = true;
-        locations."/".proxyPass = "http://192.168.1.69:80";
+        locations."/".proxyPass = "http://192.168.1.69:443";
         locations."/".proxyWebsockets = true;
         locations."/".extraConfig = ''
           proxy_ssl_server_name on;
@@ -28,7 +28,7 @@ services.nginx = {
       "k8s.kuipr.de" = {
         enableACME = true;
         forceSSL = true;
-        locations."/".proxyPass = "http://192.168.1.200:80";
+        locations."/".proxyPass = "http://192.168.1.200:443";
         locations."/".proxyWebsockets = true;
         locations."/".extraConfig = ''
           proxy_ssl_server_name on;
