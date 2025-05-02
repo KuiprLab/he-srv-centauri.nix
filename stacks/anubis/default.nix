@@ -13,19 +13,6 @@
       key = "";
       restartUnits = ["podman-anubis-default.service"];
     };
-    "anubis-hl.env" = {
-      sopsFile = ./anubis-hl.env;
-      format = "dotenv";
-      key = "";
-      restartUnits = ["podman-anubis-hl.service"];
-    };
-
-    "anubis-k8s.env" = {
-      sopsFile = ./anubis-k8s.env;
-      format = "dotenv";
-      key = "";
-      restartUnits = ["podman-anubis-k8s.service"];
-    };
   };
 
   # Enable container name DNS for all Podman networks.
@@ -47,8 +34,7 @@
             "${config.sops.secrets."anubis.env".path}"
     ];
     ports = [
-      "8923:8923/tcp"
-      "9090:9090/tcp"
+      "443:8923/tcp"
     ];
     log-driver = "journald";
     extraOptions = [
@@ -57,56 +43,6 @@
     ];
   };
   systemd.services."podman-anubis-default" = {
-    serviceConfig = {
-      Restart = lib.mkOverride 90 "always";
-    };
-    partOf = [
-      "podman-compose-anubis-root.target"
-    ];
-    wantedBy = [
-      "podman-compose-anubis-root.target"
-    ];
-  };
-  virtualisation.oci-containers.containers."anubis-hl" = {
-    image = "ghcr.io/techarohq/anubis:latest";
-    environmentFiles = [
-            "${config.sops.secrets."anubis-hl.env".path}"
-    ];
-    ports = [
-      "8924:8923/tcp"
-    ];
-    log-driver = "journald";
-    extraOptions = [
-      "--network-alias=anubis-hl"
-      "--network=proxy"
-    ];
-  };
-  systemd.services."podman-anubis-hl" = {
-    serviceConfig = {
-      Restart = lib.mkOverride 90 "always";
-    };
-    partOf = [
-      "podman-compose-anubis-root.target"
-    ];
-    wantedBy = [
-      "podman-compose-anubis-root.target"
-    ];
-  };
-  virtualisation.oci-containers.containers."anubis-k8s" = {
-    image = "ghcr.io/techarohq/anubis:latest";
-    environmentFiles = [
-            "${config.sops.secrets."anubis-k8s.env".path}"
-    ];
-    ports = [
-      "8925:8923/tcp"
-    ];
-    log-driver = "journald";
-    extraOptions = [
-      "--network-alias=anubis-k8s"
-      "--network=proxy"
-    ];
-  };
-  systemd.services."podman-anubis-k8s" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
     };
