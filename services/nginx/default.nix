@@ -28,7 +28,7 @@
       }
       
       upstream traefik_backend_ssl {
-        server 127.0.0.1:8123;
+        server 127.0.0.1:8443;
       }
       
       # SSL/TLS routing based on SNI
