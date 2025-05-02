@@ -79,11 +79,6 @@
     };
   };
   
-  # Additional configuration for Nginx's stream module
-  services.nginx.package = pkgs.nginx.override {
-    modules = with pkgs.nginxModules; [ 
-    ];
-  };
   
   networking.firewall.allowedTCPPorts = [
     80
