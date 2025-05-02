@@ -31,7 +31,7 @@
   virtualisation.oci-containers.containers."anubis-default" = {
     image = "ghcr.io/techarohq/anubis:latest";
     environmentFiles = [
-            "${config.sops.secrets."anubis.env".path}"
+      "${config.sops.secrets."anubis.env".path}"
     ];
     ports = [
       "8923:8923/tcp"
