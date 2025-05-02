@@ -15,7 +15,7 @@
     # Define Anubis upstream
     upstreams."anubis" = {
       servers = {
-        "unix:/run/anubis/nginx.sock" = {};
+        "127.0.0.1:8923" = {};
       };
     };
 
@@ -56,20 +56,6 @@
         locations."/".proxyPass = "http://anubis";
         locations."/".proxyWebsockets = true;
       };
-    };
-  };
-
-  # Anubis service configuration
-  services.anubis = {
-    enable = true;
-    settings = {
-      bind = "unix:/run/anubis/nginx.sock";
-      backends = [
-        { match = "host:hl.kuipr.de"; backend = "http://192.168.1.69:80"; }
-        { match = "host:k8s.kuipr.de"; backend = "http://192.168.1.200:80"; }
-        { default = true; backend = "http://127.0.0.1:8081"; }
-      ];
-      # Additional Anubis configuration as needed
     };
   };
 
