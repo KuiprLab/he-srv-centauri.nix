@@ -21,10 +21,10 @@
   users.users.nginx.extraGroups = [ config.users.groups.anubis.name ];
   services.nginx = {
     enable = true;
-    recommendedGzipSettings = true;
-    recommendedOptimisation = true;
-    recommendedProxySettings = true;
-    recommendedTlsSettings = true;
+    # recommendedGzipSettings = true;
+    # recommendedOptimisation = true;
+    # recommendedProxySettings = true;
+    # recommendedTlsSettings = true;
 
     virtualHosts = {
       # HTTP virtual hosts
