@@ -1,8 +1,25 @@
 { config, pkgs, ... }:
 {
+
+    imports = [./anubis.nix];
   security.acme = {
     acceptTerms = true;
     defaults.email = "me@dinama.dev";
+  };
+  
+  # Anubis service configuration
+  services.anubis = {
+    package = pkgs.anubis;
+    instances = {
+      "nginx" = {
+        target = "unix:///run/nginx/nginx.sock";
+        domain = "kuipr.de"; # Use your actual base domain
+        systemd.socketActivated = true;
+        env = {
+          DIFFICULTY = 5; # Default difficulty
+        };
+      };
+    };
   };
   
   services.nginx = {
@@ -15,6 +32,18 @@
     # Handle HTTP and HTTPS proxying similar to HAProxy setup
     # This setting will ensure proper forwarding of client IP addresses
     proxyResolveWhileRunning = false;
+    
+    # Add Anubis upstream configuration
+    appendHttpConfig = ''
+      # Define Anubis upstream
+      upstream anubis {
+        # This uses the socket path from the socket-activated Anubis instance
+        server unix:/run/anubis/nginx/nginx.sock;
+        
+        # Optional: fall back to serving websites directly if Anubis fails
+        # server unix:/run/nginx/nginx.sock backup;
+      }
+    '';
     
     # Stream configuration to handle TCP traffic like HAProxy does
     streamConfig = ''
@@ -46,13 +75,20 @@
       }
     '';
     
+    # Create a server block for the backend socket that Anubis will forward to
+    # This is where all the actual HTTP routing happens after Anubis filtering
     virtualHosts = {
       # HTTP virtual hosts
       "hl.kuipr.de" = {
         serverName = "~^(.*\.)?hl\.kuipr\.de$";
         listenAddresses = [ "0.0.0.0" ];
         listen = [{ port = 80; addr = "0.0.0.0";}];
-        locations."/".proxyPass = "http://192.168.1.69:80";
+        # Route through Anubis instead of directly to backend
+        locations."/".proxyPass = "http://anubis";
+        locations."/".extraConfig = ''
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+        '';
         locations."/".proxyWebsockets = true;
         forceSSL = false; # We're handling SSL at the TCP level
         enableACME = false; # Not needed with TCP SSL passthrough
@@ -62,7 +98,12 @@
         serverName = "~^(.*\.)?k8s\.kuipr\.de$";
         listenAddresses = [ "0.0.0.0" ];
         listen = [{ port = 80; addr = "0.0.0.0"; }];
-        locations."/".proxyPass = "http://192.168.1.200:80";
+        # Route through Anubis instead of directly to backend
+        locations."/".proxyPass = "http://anubis";
+        locations."/".extraConfig = ''
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+        ''; 
         locations."/".proxyWebsockets = true;
         forceSSL = false; # We're handling SSL at the TCP level
         enableACME = false; # Not needed with TCP SSL passthrough
@@ -73,12 +114,44 @@
         default = true;
         listenAddresses = [ "0.0.0.0" ];
         listen = [{ port = 80; addr = "0.0.0.0"; }];
+        # Route through Anubis instead of directly to backend
+        locations."/".proxyPass = "http://anubis";
+        locations."/".extraConfig = ''
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+        '';
+        locations."/".proxyWebsockets = true;
+      };
+      
+      # Create backend server blocks that listen on UNIX socket for each virtual host
+      "hl.kuipr.de-backend" = {
+        serverName = "hl.kuipr.de";
+        listen = [{ port = 0; addr = "unix:/run/nginx/nginx.sock"; }];
+        locations."/".proxyPass = "http://192.168.1.69:80";
+        locations."/".proxyWebsockets = true;
+      };
+      
+      "k8s.kuipr.de-backend" = {
+        serverName = "k8s.kuipr.de";
+        listen = [{ port = 0; addr = "unix:/run/nginx/nginx.sock"; }];
+        locations."/".proxyPass = "http://192.168.1.200:80";
+        locations."/".proxyWebsockets = true;
+      };
+      
+      "default-backend" = {
+        default = true;
+        listen = [{ port = 0; addr = "unix:/run/nginx/nginx.sock"; }];
         locations."/".proxyPass = "http://127.0.0.1:8081";
         locations."/".proxyWebsockets = true;
       };
     };
   };
   
+  # Ensure the required runtime directories exist for Nginx
+  systemd.tmpfiles.rules = [
+    "d /run/nginx 0755 nginx nginx -"
+    # Anubis directories are managed by systemd
+  ];
   
   networking.firewall.allowedTCPPorts = [
     80
