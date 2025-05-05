@@ -30,31 +30,31 @@
     proxyResolveWhileRunning = false;
 
     # Stream configuration to handle TCP traffic like HAProxy does
-    streamConfig = ''
-      # This mimics HAProxy's TCP mode behavior
-      upstream hl_backend_ssl {
-        server 192.168.1.69:443;
-      }
-
-      upstream k8s_backend_ssl {
-        server 192.168.1.200:443;
-      }
-
-
-      # SSL/TLS routing based on SNI
-      map $ssl_preread_server_name $ssl_backend {
-        ~\.hl\.kuipr\.de$ hl_backend_ssl;
-        ~\.k8s\.kuipr\.de$ k8s_backend_ssl;
-        # default traefik_backend_ssl;
-      }
-
-      # HTTPS listener
-      server {
-        listen 443;
-        proxy_pass $ssl_backend;
-        ssl_preread on;
-      }
-    '';
+    # streamConfig = ''
+    #   # This mimics HAProxy's TCP mode behavior
+    #   upstream hl_backend_ssl {
+    #     server 192.168.1.69:443;
+    #   }
+    #
+    #   upstream k8s_backend_ssl {
+    #     server 192.168.1.200:443;
+    #   }
+    #
+    #
+    #   # SSL/TLS routing based on SNI
+    #   map $ssl_preread_server_name $ssl_backend {
+    #     ~\.hl\.kuipr\.de$ hl_backend_ssl;
+    #     ~\.k8s\.kuipr\.de$ k8s_backend_ssl;
+    #     # default traefik_backend_ssl;
+    #   }
+    #
+    #   # HTTPS listener
+    #   server {
+    #     listen 443;
+    #     proxy_pass $ssl_backend;
+    #     ssl_preread on;
+    #   }
+    # '';
 
     virtualHosts = {
       # HTTP virtual hosts
@@ -91,13 +91,6 @@
       # Default HTTP backend for all other domains
       "default" = {
         default = true;
-        listenAddresses = ["0.0.0.0"];
-        listen = [
-          {
-            port = 80;
-            addr = "0.0.0.0";
-          }
-        ];
         # locations."/".proxyPass = "http://127.0.0.1:8081";
         locations."/".proxyPass = "http://unix:${config.services.anubis.instances.default.settings.BIND}";
         locations."/".proxyWebsockets = true;
