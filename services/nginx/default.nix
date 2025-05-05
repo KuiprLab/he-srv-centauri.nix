@@ -64,7 +64,7 @@ USE_REMOTE_ADDRESS = true;
         listenAddresses = ["0.0.0.0"];
         listen = [
           {
-            port = 80;
+            port = 443;
             addr = "0.0.0.0";
           }
         ];
