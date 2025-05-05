@@ -45,7 +45,7 @@
       map $ssl_preread_server_name $ssl_backend {
         ~\.hl\.kuipr\.de$ hl_backend_ssl;
         ~\.k8s\.kuipr\.de$ k8s_backend_ssl;
-        default traefik_backend_ssl;
+        # default traefik_backend_ssl;
       }
 
       # HTTPS listener
