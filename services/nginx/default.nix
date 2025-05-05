@@ -10,7 +10,11 @@
 
   services.anubis = {
     instances = {
-      default.settings.TARGET = "http://127.0.0.1:8081";
+      default.settings = {
+                TARGET = "http://127.0.0.1:8081";
+USE_REMOTE_ADDRESS = true;
+            };
+
     };
   };
 
