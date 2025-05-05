@@ -6,14 +6,16 @@
   };
   
   # Anubis service configuration
-  services.anubis = {
+ services.anubis = {
     package = pkgs.anubis;
     instances = {
       "nginx" = {
         settings = {
           TARGET = "unix:///run/nginx/nginx.sock";
           DIFFICULTY = 5; # Set difficulty level
-          # These settings help ensure the socket has the right permissions
+          # Explicitly define socket path and settings
+          BIND = "/run/anubis/nginx/nginx.sock";
+          BIND_NETWORK = "unix";
           SOCKET_MODE = "0660";
         };
         # If you need a custom bot policy, add it here
@@ -21,7 +23,6 @@
       };
     };
   };
-
   # Make sure nginx has the proper permissions to access the anubis socket
   users.users.nginx.extraGroups = [ config.users.groups.anubis.name ];
   
