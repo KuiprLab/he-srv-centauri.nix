@@ -59,8 +59,8 @@ USE_REMOTE_ADDRESS = true;
       };
 
       # Default HTTP backend for all other domains
-      "default" = {
-        default = true;
+      "kuipr.de" = {
+        serverName = "~^([a-z]*\.)?kuipr\.de$";
         listenAddresses = ["0.0.0.0"];
       enableACME = true;
       forceSSL = true;
