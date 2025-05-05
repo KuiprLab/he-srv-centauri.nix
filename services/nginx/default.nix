@@ -1,30 +1,29 @@
 { config, pkgs, ... }:
 {
-
   security.acme = {
     acceptTerms = true;
     defaults.email = "me@dinama.dev";
   };
   
   # Anubis service configuration
-services.anubis = {
-  package = pkgs.anubis;
-  instances = {
-    "nginx" = {
-      settings = {
-        TARGET = "unix:///run/nginx/nginx.sock";
-        DIFFICULTY = 5; # Set difficulty level
-        # If you're using socket activation, these will be set automatically
-        # No need to set BIND and BIND_NETWORK if using socket activation
+  services.anubis = {
+    package = pkgs.anubis;
+    instances = {
+      "nginx" = {
+        settings = {
+          TARGET = "unix:///run/nginx/nginx.sock";
+          DIFFICULTY = 5; # Set difficulty level
+          # These settings help ensure the socket has the right permissions
+          SOCKET_MODE = "0660";
+        };
+        # If you need a custom bot policy, add it here
+        # botPolicy = { ... };
       };
-      # If you need a custom bot policy, add it here
-      # botPolicy = { ... };
     };
   };
-};
 
-# Make sure nginx has the proper permissions to access the anubis socket
-users.users.nginx.extraGroups = [ config.users.groups.anubis.name ];
+  # Make sure nginx has the proper permissions to access the anubis socket
+  users.users.nginx.extraGroups = [ config.users.groups.anubis.name ];
   
   services.nginx = {
     enable = true;
@@ -41,11 +40,8 @@ users.users.nginx.extraGroups = [ config.users.groups.anubis.name ];
     appendHttpConfig = ''
       # Define Anubis upstream
       upstream anubis {
-        # This uses the socket path from the socket-activated Anubis instance
-        server unix:/run/anubis/nginx/nginx.sock;
-        
-        # Optional: fall back to serving websites directly if Anubis fails
-        # server unix:/run/nginx/nginx.sock backup;
+        # This uses the socket path from the Anubis instance
+        server unix:${config.services.anubis.instances.nginx.settings.BIND};
       }
     '';
     
