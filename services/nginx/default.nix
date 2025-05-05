@@ -9,10 +9,6 @@
   };
 
   services.anubis = {
-    defaultOptions = {
-      botPolicy = {dnsbl = false;};
-      settings.DIFFICULTY = 3;
-    };
     instances = {
       default.settings.TARGET = "http://127.0.0.1:8081";
     };
