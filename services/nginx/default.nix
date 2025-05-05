@@ -1,26 +1,30 @@
 { config, pkgs, ... }:
 {
 
-    imports = [./anubis.nix];
   security.acme = {
     acceptTerms = true;
     defaults.email = "me@dinama.dev";
   };
   
   # Anubis service configuration
-  services.anubis = {
-    package = pkgs.anubis;
-    instances = {
-      "nginx" = {
-        target = "unix:///run/nginx/nginx.sock";
-        domain = "kuipr.de"; # Use your actual base domain
-        systemd.socketActivated = true;
-        env = {
-          DIFFICULTY = 5; # Default difficulty
-        };
+services.anubis = {
+  package = pkgs.anubis;
+  instances = {
+    "nginx" = {
+      settings = {
+        TARGET = "unix:///run/nginx/nginx.sock";
+        DIFFICULTY = 5; # Set difficulty level
+        # If you're using socket activation, these will be set automatically
+        # No need to set BIND and BIND_NETWORK if using socket activation
       };
+      # If you need a custom bot policy, add it here
+      # botPolicy = { ... };
     };
   };
+};
+
+# Make sure nginx has the proper permissions to access the anubis socket
+users.users.nginx.extraGroups = [ config.users.groups.anubis.name ];
   
   services.nginx = {
     enable = true;
