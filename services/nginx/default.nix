@@ -62,6 +62,8 @@ USE_REMOTE_ADDRESS = true;
       "default" = {
         default = true;
         listenAddresses = ["0.0.0.0"];
+      enableACME = true;
+      forceSSL = true;
         listen = [
           {
             port = 443;
@@ -71,12 +73,12 @@ USE_REMOTE_ADDRESS = true;
         # locations."/".proxyPass = "http://127.0.0.1:8081";
         locations."/".proxyPass = "http://unix:${config.services.anubis.instances.default.settings.BIND}";
         locations."/".proxyWebsockets = true;
-  extraConfig = ''
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-  '';
+        extraConfig = ''
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+        '';
       };
     };
   };
