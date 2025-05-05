@@ -61,6 +61,13 @@
       # Default HTTP backend for all other domains
       "default" = {
         default = true;
+        listenAddresses = ["0.0.0.0"];
+        listen = [
+          {
+            port = 80;
+            addr = "0.0.0.0";
+          }
+        ];
         # locations."/".proxyPass = "http://127.0.0.1:8081";
         locations."/".proxyPass = "http://unix:${config.services.anubis.instances.default.settings.BIND}";
         locations."/".proxyWebsockets = true;
