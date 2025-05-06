@@ -75,8 +75,10 @@
       # Default HTTP backend for all other domains
       "kuipr.de" = {
         serverName = "~^([a-z0-9-]+\\.)*kuipr\\.de$";
-        # forceSSL = true;
-        # acmeRoot = "/var/lib/acme";
+  forceSSL = true;
+  enableACME = false;  # Since you're manually specifying the cert files
+  sslCertificate = "/var/lib/acme/kuipr.de/cert.pem";
+  sslCertificateKey = "/var/lib/acme/kuipr.de/key.pem";
         locations."/" = {
           proxyPass = "http://unix:${config.services.anubis.instances.default.settings.BIND}";
           proxyWebsockets = true;

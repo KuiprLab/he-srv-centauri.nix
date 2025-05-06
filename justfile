@@ -14,7 +14,7 @@ install ip="37.27.26.175": format test
 
 # Helper to warn if deploying dev
 warn-if-dev branch:
-    if [ "{{branch}}" = "dev" ]; then echo -e "\033[38;5;208m[WARNING] You are deploying the 'dev' branch!\033[0m"; fi
+    @if [ "{{branch}}" = "dev" ]; then echo -e "\033[38;5;208m[WARNING] You are deploying the 'dev' branch!\033[0m"; fi
 
 
 [doc("Locally deploy the config using nh")]
