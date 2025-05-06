@@ -26,7 +26,8 @@
 services.anubis = {
   instances = {
     default.settings = {
-      TARGET = "http://127.0.0.1:8081";
+      # TARGET = "http://127.0.0.1:8081";
+      TARGET = "https://127.0.0.1:8443";
       USE_REMOTE_ADDRESS = true;
       HOST_REWRITE = false;
       PRESERVE_HOST = true;
