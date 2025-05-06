@@ -114,7 +114,10 @@
       # Special handling for Jellyfin to prevent redirect loops
       "jelly.kuipr.de" = {
         serverName = "~^jelly\.kuipr\.de$";
-        forceSSL = true;
+  forceSSL = true;
+  enableACME = false;  
+  sslCertificate = "/var/lib/acme/kuipr.de/cert.pem";
+  sslCertificateKey = "/var/lib/acme/kuipr.de/key.pem";
         locations."/" = {
           # Use the special jellyfin instance of Anubis
           proxyPass = "http://unix:${config.services.anubis.instances.jellyfin.settings.BIND}";
@@ -137,8 +140,10 @@
       # Default HTTP backend for all other domains
       "kuipr.de" = {
         serverName = "~^([a-z0-9-]+\\.)*kuipr\\.de$";
-        forceSSL = true;
-        
+  forceSSL = true;
+  enableACME = false;  
+  sslCertificate = "/var/lib/acme/kuipr.de/cert.pem";
+  sslCertificateKey = "/var/lib/acme/kuipr.de/key.pem";
         # Exclude the domains we've already defined
         extraConfig = ''
           if ($host ~* ^(.*\.)?hl\.kuipr\.de$) {
