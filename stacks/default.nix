@@ -8,8 +8,8 @@ _: {
     ./obsidian-share-notes
     ./qbittorrent
     ./starr
-    ./traefik
     ./watchtower
+        # ./traefik
     # ./anubis
   ];
 }
