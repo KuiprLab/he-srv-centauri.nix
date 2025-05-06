@@ -6,7 +6,7 @@
   sops.secrets."hetzner.env" = {
     sopsFile = ./hetzner.env;
     owner = "ubuntu";
-    format = "env";
+    format = "dotenv";
     key = "";
   };
 
