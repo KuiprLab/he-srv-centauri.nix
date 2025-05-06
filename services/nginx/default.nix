@@ -13,7 +13,7 @@
   security.acme = {
     acceptTerms = true;
     email = "me@dinama.dev";
-    cert = {
+    certs = {
       "kuipr.de" = {
         dnsProvider = "hetzner";
         credentialsFile = "${config.sops.secrets."hetzner.env".path}";
