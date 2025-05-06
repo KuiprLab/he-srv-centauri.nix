@@ -9,7 +9,7 @@ _: {
     ./qbittorrent
     ./starr
     ./watchtower
-    # ./traefik
-    # ./anubis
+    ./traefik
+    ./anubis
   ];
 }
