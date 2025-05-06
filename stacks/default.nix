@@ -1,5 +1,6 @@
 _: {
   imports = [
+    ./anubis
     ./authelia
     ./gatus
     ./homepage
@@ -8,8 +9,7 @@ _: {
     ./obsidian-share-notes
     ./qbittorrent
     ./starr
-    ./watchtower
     ./traefik
-    ./anubis
+    ./watchtower
   ];
 }
