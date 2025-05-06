@@ -90,18 +90,26 @@
       "/home/ubuntu/traefik/logs:/logs:rw"
       "/run/podman/podman.sock:/var/run/docker.sock:ro"
     ];
-    # Removed external labels for the API - we'll only access it internally
-    labels = {
-      "traefik.enable" = "true";
-      "traefik.docker.network"="proxy";
-      # Redirect any HTTP to HTTPS
-      "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme"="https";
-      "traefik.http.routers.web.rule"="PathPrefix(`/`)";
-      "traefik.http.routers.web.entrypoints"="web";
-      "traefik.http.routers.web.middlewares"="redirect-to-https";
-      "traefik.http.routers.web.tls" = "false";
-    };
-    environmentFiles = [
+
+labels = {
+  "traefik.enable" = "true";
+  "traefik.docker.network" = "proxy";
+
+  # HTTP to HTTPS redirect (already present)
+  "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme" = "https";
+  "traefik.http.routers.web.rule" = "PathPrefix(`/`)";
+  "traefik.http.routers.web.entrypoints" = "web";
+  "traefik.http.routers.web.middlewares" = "redirect-to-https";
+  "traefik.http.routers.web.tls" = "false";
+
+  # Add Traefik dashboard route on HTTPS with Authelia
+  "traefik.http.routers.traefik.rule" = "Host(`traefik.kuipr.de`)";
+  "traefik.http.routers.traefik.entrypoints" = "websecure";
+  "traefik.http.routers.traefik.tls.certresolver" = "myresolver";
+  "traefik.http.routers.traefik.service" = "api@internal";
+  "traefik.http.routers.traefik.middlewares" = "authelia@docker";
+};
+   environmentFiles = [
       "/run/secrets/traefik.env"
     ];
     ports = [
