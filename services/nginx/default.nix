@@ -3,11 +3,6 @@
   pkgs,
   ...
 }: {
-  security.acme = {
-    acceptTerms = true;
-    defaults.email = "me@dinama.dev";
-  };
-
   services.nginx = {
     enable = true;
     recommendedGzipSettings = true;

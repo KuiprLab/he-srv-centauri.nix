@@ -1,6 +1,7 @@
 _: {
   imports = [
     ./tailscale.nix
-    ./nginx
+    # ./nginx
+        ./haproxy
   ];
 }
