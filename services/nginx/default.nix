@@ -23,19 +23,19 @@
     };
   };
 
-  services.anubis = {
-    instances = {
-      default.settings = {
-  # TARGET = "http://127.0.0.1:8081";
-  TARGET = "https://127.0.0.1:8443";
+services.anubis = {
+  instances = {
+    default.settings = {
+      TARGET = "http://127.0.0.1:8081";  # Change back to HTTP as it's more reliable for internal connections
       USE_REMOTE_ADDRESS = true;
-      HOST_REWRITE = false;  # Don't rewrite the Host header
-      PRESERVE_HOST = true;  # Preserve the original Host header
-      FORWARDED_HOST = true; # Use X-Forwarded-Host header
-      FORWARDED_PROTO = true; # Use X-Forwarded-Proto header
-      };
+      HOST_REWRITE = false;
+      PRESERVE_HOST = true;
+      FORWARDED_HOST = true;
+      FORWARDED_PROTO = true;
+      INSECURE_SKIP_VERIFY = true;  # Add this if using HTTPS target to skip certificate verification
     };
   };
+};
 
   users.users.nginx.extraGroups = [config.users.groups.anubis.name "acme"];
   services.nginx = {
