@@ -51,7 +51,7 @@
     image = "traefik/whoami";
     labels = {
       "traefik.enable" = "true";
-      "traefik.http.routers.whoami.entrypoints" = "websecure";
+      "traefik.http.routers.whoami.entrypoints" = "web";
       "traefik.http.routers.whoami.middlewares" = "authelia@docker";
       "traefik.http.routers.whoami.rule" = "Host(`whoami.kuipr.de`)";
       "traefik.http.routers.whoami.tls.certresolver" = "myresolver";
@@ -119,12 +119,12 @@
       "--entryPoints.websecure.address=:443"
       "--entryPoints.minecraft.address=:25565/tcp"
       "--entryPoints.traefik.address=:8080"
-      "--entrypoints.web.http.redirections.entrypoint.to=websecure"
-      "--entrypoints.web.http.redirections.entrypoint.scheme=https"
-      "--certificatesresolvers.myresolver.acme.dnschallenge=true"
-      "--certificatesresolvers.myresolver.acme.dnschallenge.provider=bunny"
-      "--certificatesresolvers.myresolver.acme.email=daniel.inama02@gmail.com"
-      "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      # "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      # "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      # "--certificatesresolvers.myresolver.acme.dnschallenge=true"
+      # "--certificatesresolvers.myresolver.acme.dnschallenge.provider=bunny"
+      # "--certificatesresolvers.myresolver.acme.email=daniel.inama02@gmail.com"
+      # "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
       "--serversTransport.insecureSkipVerify=true"
     ];
     log-driver = "journald";
