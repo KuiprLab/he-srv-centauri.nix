@@ -1,28 +1,31 @@
-alias d := deploy
-alias dl := deploy-local
+alias dm := deploy-main
+alias dd := deploy-dev
 alias ul := upgrade-local
 
 [doc("Default Recipe")]
 default:
     just --list
 
-[doc("Deploy the config using deploy-rs")]
-deploy: format
-    @git add .
-    @nix run nixpkgs#deploy-rs -- --remote-build -s .#he-srv-centauri
-
-
 [doc("Install NixOS using nix-anywhere")]
 install ip="37.27.26.175": format test
     @nix run github:nix-community/nixos-anywhere -- --flake .#he-srv-centauri root@{{ip}} --build-on remote
 
 [doc("Locally deploy the config using nh")]
-deploy-local host="he-srv-centauri":
+deploy-main host="he-srv-centauri":
+    @sudo git checkout main
     @sudo git pull
     @nix run nixpkgs#nh -- os switch -H {{host}} .
 
+
+[doc("Locally deploy the config using nh")]
+deploy-dev host="he-srv-centauri":
+    @sudo git checkout dev
+    @sudo git pull
+    @nix run nixpkgs#nh -- os switch -H {{host}} .
+
+
 [doc("Locally update flake and deploy the config using nh")]
-upgrade-local host="he-srv-centauri":
+upgrade host="he-srv-centauri":
     @nix run nixpkgs#nh -- os switch --hostname {{host}} --update .
 
 
