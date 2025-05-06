@@ -115,7 +115,7 @@
       "--providers.docker.network=proxy"
       "--entryPoints.web.address=:80"
       "--entryPoints.websecure.address=:443"
-      "--entryPoints.minecraft.address=:25565/tcp"
+      "--entryPoints.anubis.address=:3923"
       "--entryPoints.traefik.address=:8080"
       "--entrypoints.web.http.redirections.entrypoint.to=websecure"
       "--entrypoints.web.http.redirections.entrypoint.scheme=https"
