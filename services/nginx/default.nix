@@ -12,11 +12,14 @@
 
   security.acme = {
     acceptTerms = true;
-    defaults = {
-      email = "me@dinama.dev";
-      dnsProvider = "hetzner";
-      credentialsFile = "${config.sops.secrets."hetzner.env".path}";
-      dnsPropagationCheck = true;
+    email = "me@dinama.dev";
+    cert = {
+      "kuipr.de" = {
+        dnsProvider = "hetzner";
+        credentialsFile = "${config.sops.secrets."hetzner.env".path}";
+        dnsPropagationCheck = true;
+        domain = "*.kuipr.de";
+      };
     };
   };
 
@@ -72,7 +75,6 @@
       # Default HTTP backend for all other domains
       "kuipr.de" = {
         serverName = "~^([a-z0-9-]+\\.)*kuipr\\.de$";
-        enableACME = true;
         forceSSL = true;
 
         locations."/" = {
