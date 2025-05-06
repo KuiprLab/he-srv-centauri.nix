@@ -70,6 +70,7 @@
       22 # SSH
       80 # HTTP
       443 # HTTPS
+      3923
       # Gluetun ports
       8888
       8388
