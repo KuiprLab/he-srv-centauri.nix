@@ -2,6 +2,8 @@ alias dm := deploy-main
 alias dd := deploy-dev
 alias u := upgrade
 
+current-branch := `git rev-parse --abbrev-ref HEAD`
+
 [doc("Default Recipe")]
 default:
     just --list
@@ -12,12 +14,8 @@ install ip="37.27.26.175": format test
 
 # Helper to warn if deploying dev
 warn-if-dev branch:
-    if [ "{{branch}}" = "dev" ]; then
-        echo "\033[38;5;208m[WARNING] You are deploying the 'dev' branch!\033[0m"
-    fi
+    if [ "{{branch}}" = "dev" ]; then echo -e "\033[38;5;208m[WARNING] You are deploying the 'dev' branch!\033[0m"; fi
 
-# Get current branch
-current-branch := `git rev-parse --abbrev-ref HEAD`
 
 [doc("Locally deploy the config using nh")]
 deploy-main host="he-srv-centauri":
