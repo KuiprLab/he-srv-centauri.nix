@@ -115,6 +115,7 @@ labels = {
     ports = [
       "8081:80/tcp"
       "8443:443/tcp"
+      "3923:3923/tcp"
     ];
     cmd = [
       "--api=true"
