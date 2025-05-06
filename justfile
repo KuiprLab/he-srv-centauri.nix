@@ -1,6 +1,6 @@
 alias dm := deploy-main
 alias dd := deploy-dev
-alias ul := upgrade-local
+alias u := upgrade
 
 [doc("Default Recipe")]
 default:
