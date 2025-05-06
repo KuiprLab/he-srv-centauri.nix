@@ -115,7 +115,6 @@ labels = {
     ports = [
       "8081:80/tcp"
       "8443:443/tcp"
-      "3923:3923/tcp"
     ];
     cmd = [
       "--api=true"
@@ -129,7 +128,6 @@ labels = {
       "--entryPoints.web.address=:80"
       "--entryPoints.websecure.address=:443"
       "--entryPoints.anubis.address=:3923"
-      "--entryPoints.traefik.address=:8080"
       "--certificatesresolvers.myresolver.acme.dnschallenge=true"
       "--certificatesresolvers.myresolver.acme.dnschallenge.provider=hetzner"
       "--certificatesresolvers.myresolver.acme.email=daniel.inama02@gmail.com"

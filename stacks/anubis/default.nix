@@ -39,7 +39,7 @@
       "traefik.http.routers.anubis.rule" = "PathRegexp(`.*`)"; # Wildcard match every path
       "traefik.http.routers.anubis.entrypoints" = "websecure"; # Listen on HTTPS
       "traefik.http.services.anubis.loadbalancer.server.port" = "8181"; # Telling Traefik to which port it should route requests
-      # "traefik.http.routers.anubis.service" = "anubis"; # Telling Traefik to use the above specified port
+      "traefik.http.routers.anubis.service" = "anubis"; # Telling Traefik to use the above specified port
       "traefik.http.routers.anubis.tls.certresolver" = "myresolver"; # Telling Traefik to resolve a Cert for Anubis
     };
     user = "0:0";
