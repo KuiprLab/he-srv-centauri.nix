@@ -51,7 +51,7 @@
     image = "traefik/whoami";
     labels = {
       "traefik.enable" = "true";
-      "traefik.http.routers.whoami.entrypoints" = "anubis";
+      "traefik.http.routers.whoami.entrypoints" = "websecure";
       "traefik.http.routers.whoami.middlewares" = "authelia@docker";
       "traefik.http.routers.whoami.rule" = "Host(`whoami.kuipr.de`)";
       "traefik.http.routers.whoami.tls.certresolver" = "myresolver";
@@ -81,7 +81,7 @@
     ];
   };
   virtualisation.oci-containers.containers."traefik" = {
-    image = "traefik:v3.4";
+    image = "traefik:v3.3";
     volumes = [
       "/home/ubuntu/traefik/config:/config:rw"
       "/home/ubuntu/traefik/letsencrypt:/letsencrypt:rw"
@@ -91,6 +91,7 @@
     # Removed external labels for the API - we'll only access it internally
     labels = {
       "traefik.enable" = "true";
+      # Dashboard/API labels removed since we'll access it internally
     };
     environmentFiles = [
       "/run/secrets/traefik.env"
@@ -123,7 +124,6 @@
       "--certificatesresolvers.myresolver.acme.email=daniel.inama02@gmail.com"
       "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
       "--serversTransport.insecureSkipVerify=true"
-      "--entrypoints.anubis.address=:3923"
     ];
     log-driver = "journald";
     extraOptions = [

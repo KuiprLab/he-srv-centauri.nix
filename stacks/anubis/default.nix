@@ -33,9 +33,9 @@
     environmentFiles = [
       "${config.sops.secrets."anubis.env".path}"
     ];
-    ports = [
-      "8923:8923/tcp"
-    ];
+    # ports = [
+    #   "8923:8923/tcp"
+    # ];
     labels = {
       "traefik.docker.network" = "proxy"; # Telling Traefik which network to use
       "traefik.http.routers.anubis.priority" = 1; # Setting Anubis to the lowest priority, so it only takes the slack
