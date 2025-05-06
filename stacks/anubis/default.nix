@@ -28,7 +28,7 @@
   virtualisation.oci-containers.backend = "podman";
 
   # Containers
-  virtualisation.oci-containers.containers."anubis-default" = {
+  virtualisation.oci-containers.containers."anubis" = {
     image = "ghcr.io/techarohq/anubis:latest";
     environmentFiles = [
       "${config.sops.secrets."anubis.env".path}"
@@ -51,7 +51,7 @@
       "--network=proxy"
     ];
   };
-  systemd.services."podman-anubis-default" = {
+  systemd.services."podman-anubis" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
     };
