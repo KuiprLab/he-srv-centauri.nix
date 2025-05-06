@@ -93,7 +93,7 @@
     # Removed external labels for the API - we'll only access it internally
     labels = {
       "traefik.enable" = "true";
-      "traefik.docker.network"="traefik";
+      "traefik.docker.network"="proxy";
       # Redirect any HTTP to HTTPS
       "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme"="https";
       "traefik.http.routers.web.rule"="PathPrefix(`/`)";
@@ -128,7 +128,7 @@
       "--entrypoints.web.http.redirections.entrypoint.to=websecure"
       "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       "--certificatesresolvers.myresolver.acme.dnschallenge=true"
-      "--certificatesresolvers.myresolver.acme.dnschallenge.provider=bunny"
+      "--certificatesresolvers.myresolver.acme.dnschallenge.provider=hetzner"
       "--certificatesresolvers.myresolver.acme.email=daniel.inama02@gmail.com"
       "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
       "--serversTransport.insecureSkipVerify=true"
