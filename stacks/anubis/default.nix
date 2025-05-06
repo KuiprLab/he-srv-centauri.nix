@@ -43,9 +43,6 @@
       "traefik.http.routers.anubis.tls.certresolver" = "myresolver"; # Telling Traefik to resolve a Cert for Anubis
     };
     user = "0:0";
-    # ports = [
-    #   "8181:8181/tcp"
-    # ];
     log-driver = "journald";
     extraOptions = [
       "--add-host=host.docker.internal:host-gateway"
