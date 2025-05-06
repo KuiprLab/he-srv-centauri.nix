@@ -51,7 +51,7 @@
     image = "traefik/whoami";
     labels = {
       "traefik.enable" = "true";
-      "traefik.http.routers.whoami.entrypoints" = "websecure";
+      "traefik.http.routers.whoami.entrypoints" = "anubis";
       "traefik.http.routers.whoami.middlewares" = "authelia@docker";
       "traefik.http.routers.whoami.rule" = "Host(`whoami.kuipr.de`)";
       "traefik.http.routers.whoami.tls.certresolver" = "myresolver";
