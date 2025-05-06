@@ -12,7 +12,7 @@
 
   security.acme = {
     acceptTerms = true;
-    email = "me@dinama.dev";
+    defaults.email = "me@dinama.dev";
     certs = {
       "kuipr.de" = {
         dnsProvider = "hetzner";
@@ -26,8 +26,12 @@
   services.anubis = {
     instances = {
       default.settings = {
-        TARGET = "http://127.0.0.1:8081";
-        USE_REMOTE_ADDRESS = true;
+  TARGET = "http://127.0.0.1:8081";
+      USE_REMOTE_ADDRESS = true;
+      HOST_REWRITE = false;  # Don't rewrite the Host header
+      PRESERVE_HOST = true;  # Preserve the original Host header
+      FORWARDED_HOST = true; # Use X-Forwarded-Host header
+      FORWARDED_PROTO = true; # Use X-Forwarded-Proto header
       };
     };
   };
