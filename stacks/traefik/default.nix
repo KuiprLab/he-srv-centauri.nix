@@ -53,7 +53,7 @@
       "traefik.enable" = "true";
       "traefik.docker.network"="proxy";
       "traefik.http.routers.whoami.entrypoints" = "anubis";
-      "traefik.http.routers.whoami.middlewares" = "authelia@docker";
+      # "traefik.http.routers.whoami.middlewares" = "authelia@docker";
       "traefik.http.routers.whoami.rule" = "Host(`whoami.kuipr.de`)";
       # "traefik.http.routers.whoami.tls.certresolver" = "myresolver"; # This cant be enabled when using anubis
       "traefik.http.services.whoami.loadbalancer.server.port" = "80";
