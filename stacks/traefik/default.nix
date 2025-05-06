@@ -52,12 +52,12 @@
     labels = {
       "traefik.enable" = "true";
       "traefik.docker.network"="proxy";
-      "traefik.http.routers.whoami.entrypoints" = "anubis";
-      # "traefik.http.routers.whoami.middlewares" = "authelia@docker";
+      "traefik.http.routers.whoami.entrypoints" = "websecure";
+      "traefik.http.routers.whoami.middlewares" = "authelia@docker";
       "traefik.http.routers.whoami.rule" = "Host(`whoami.kuipr.de`)";
-      # "traefik.http.routers.whoami.tls.certresolver" = "myresolver";
+      "traefik.http.routers.whoami.tls.certresolver" = "myresolver";
       "traefik.http.services.whoami.loadbalancer.server.port" = "80";
-    "traefik.http.routers.whoami.service"="whoami";
+      "traefik.http.routers.whoami.service"="whoami";
     };
     log-driver = "journald";
     extraOptions = [
