@@ -81,7 +81,7 @@
     ];
   };
   virtualisation.oci-containers.containers."traefik" = {
-    image = "traefik:v3.3";
+    image = "traefik:v3.4";
     volumes = [
       "/home/ubuntu/traefik/config:/config:rw"
       "/home/ubuntu/traefik/letsencrypt:/letsencrypt:rw"

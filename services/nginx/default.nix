@@ -26,13 +26,13 @@
 services.anubis = {
   instances = {
     default.settings = {
-      TARGET = "http://127.0.0.1:8081";  # Change back to HTTP as it's more reliable for internal connections
+      TARGET = "http://127.0.0.1:8081";
       USE_REMOTE_ADDRESS = true;
       HOST_REWRITE = false;
       PRESERVE_HOST = true;
       FORWARDED_HOST = true;
       FORWARDED_PROTO = true;
-      INSECURE_SKIP_VERIFY = true;  # Add this if using HTTPS target to skip certificate verification
+      INSECURE_SKIP_VERIFY = true;
     };
   };
 };
@@ -40,10 +40,10 @@ services.anubis = {
   users.users.nginx.extraGroups = [config.users.groups.anubis.name "acme"];
   services.nginx = {
     enable = true;
-    # recommendedGzipSettings = true;
-    # recommendedOptimisation = true;
-    # recommendedProxySettings = true;
-    # recommendedTlsSettings = true;
+    recommendedGzipSettings = true;
+    recommendedOptimisation = true;
+    recommendedProxySettings = true;
+    recommendedTlsSettings = true;
 
     virtualHosts = {
       # HTTP virtual hosts
