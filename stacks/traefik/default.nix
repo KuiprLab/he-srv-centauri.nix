@@ -91,7 +91,13 @@
     # Removed external labels for the API - we'll only access it internally
     labels = {
       "traefik.enable" = "true";
-      # Dashboard/API labels removed since we'll access it internally
+      "traefik.docker.network"="traefik";
+      # Redirect any HTTP to HTTPS
+      "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme"="https";
+      "traefik.http.routers.web.rule"="PathPrefix(`/`)";
+      "traefik.http.routers.web.entrypoints"="web";
+      "traefik.http.routers.web.middlewares"="redirect-to-https";
+      "traefik.http.routers.web.tls" = "false";
     };
     environmentFiles = [
       "/run/secrets/traefik.env"
