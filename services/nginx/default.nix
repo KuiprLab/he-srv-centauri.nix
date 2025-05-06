@@ -70,7 +70,7 @@
       # };
 
       # Default HTTP backend for all other domains
-      services.nginx.virtualHosts."kuipr.de" = {
+      "kuipr.de" = {
         serverName = "~^([a-z0-9-]+\\.)*kuipr\\.de$";
         enableACME = true;
         forceSSL = true;
