@@ -43,7 +43,7 @@
       "traefik.http.routers.anubis.entrypoints" = "websecure"; # Listen on HTTPS
       "traefik.http.services.anubis.loadbalancer.server.port" = "8181"; # Telling Traefik to which port it should route requests
       "traefik.http.routers.anubis.service" = "anubis"; # Telling Traefik to use the above specified port
-      "traefik.http.routers.anubis.tls.certresolver" = "le"; # Telling Traefik to resolve a Cert for Anubis
+      # "traefik.http.routers.anubis.tls.certresolver" = "le"; # Telling Traefik to resolve a Cert for Anubis
     };
     log-driver = "journald";
     extraOptions = [
