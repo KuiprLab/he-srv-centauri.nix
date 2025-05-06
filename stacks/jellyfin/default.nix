@@ -37,14 +37,14 @@
       "/home/ubuntu/jellyfin/cache:/cache:rw"
       "/home/ubuntu/jellyfin/config:/config:rw"
     ];
-    labels = {
-      "traefik.enable" = "true";
-      # "traefik.http.routers.jellyfin.entrypoints" = "websecure";
-      "traefik.http.routers.jellyfin.entrypoints" = "web";
-      "traefik.http.routers.jellyfin.rule" = "Host(`jelly.kuipr.de`)";
-      "traefik.http.routers.jellyfin.tls.certresolver" = "myresolver";
-      "traefik.http.services.jellyfin.loadbalancer.server.port" = "8096";
-    };
+    # labels = {
+    #   "traefik.enable" = "true";
+    #   "traefik.http.routers.jellyfin.entrypoints" = "websecure";
+    #   "traefik.http.routers.jellyfin.entrypoints" = "web";
+    #   "traefik.http.routers.jellyfin.rule" = "Host(`jelly.kuipr.de`)";
+    #   "traefik.http.routers.jellyfin.tls.certresolver" = "myresolver";
+    #   "traefik.http.services.jellyfin.loadbalancer.server.port" = "8096";
+    # };
     user = "0:0";
     log-driver = "journald";
     extraOptions = [

@@ -3,45 +3,11 @@
   pkgs,
   ...
 }: {
-  sops.secrets."hetzner.env" = {
-    sopsFile = ./hetzner.env;
-    owner = "ubuntu";
-    format = "dotenv";
-    key = "";
-  };
-
   security.acme = {
     acceptTerms = true;
-    email = "me@dinama.dev";
-    certs = {
-      "kuipr.de" = {
-        dnsProvider = "hetzner";
-        credentialsFile = "${config.sops.secrets."hetzner.env".path}";
-        dnsPropagationCheck = true;
-        domain = "*.kuipr.de";
-      };
-    };
+    defaults.email = "me@dinama.dev";
   };
 
-  services.anubis = {
-    instances = {
-      default.settings = {
-        TARGET = "http://127.0.0.1:8081";  # Traefik HTTP endpoint
-        USE_REMOTE_ADDRESS = true;
-      };
-      
-      # Create a special instance for Jellyfin to bypass Anubis processing
-      jellyfin.settings = {
-        TARGET = "http://127.0.0.1:8081";  # Traefik HTTP endpoint
-        USE_REMOTE_ADDRESS = true;
-        # Minimal processing for Jellyfin traffic
-        MAX_BODY_SIZE = 0;  # Unlimited body size
-        DISABLE_SECURITY_HEADERS = true;  # Don't add any security headers
-      };
-    };
-  };
-
-  users.users.nginx.extraGroups = [config.users.groups.anubis.name];
   services.nginx = {
     enable = true;
     recommendedGzipSettings = true;
@@ -49,9 +15,13 @@
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
 
-    # Stream configuration to handle TCP/SSL traffic
+    # Handle HTTP and HTTPS proxying similar to HAProxy setup
+    # This setting will ensure proper forwarding of client IP addresses
+    proxyResolveWhileRunning = false;
+
+    # Stream configuration to handle TCP traffic like HAProxy does
     streamConfig = ''
-      # SSL/TLS passthrough for specific domains
+      # This mimics HAProxy's TCP mode behavior
       upstream hl_backend_ssl {
         server 192.168.1.69:443;
       }
@@ -80,7 +50,7 @@
     '';
 
     virtualHosts = {
-      # HTTP virtual hosts for specific subdomains
+      # HTTP virtual hosts
       "hl.kuipr.de" = {
         serverName = "~^(.*\.)?hl\.kuipr\.de$";
         listenAddresses = ["0.0.0.0"];
@@ -111,63 +81,18 @@
         enableACME = false; # Not needed with TCP SSL passthrough
       };
 
-      # Special handling for Jellyfin to prevent redirect loops
-      "jelly.kuipr.de" = {
-        serverName = "~^jelly\.kuipr\.de$";
-  forceSSL = true;
-  enableACME = false;  
-  sslCertificate = "/var/lib/acme/kuipr.de/cert.pem";
-  sslCertificateKey = "/var/lib/acme/kuipr.de/key.pem";
-        locations."/" = {
-          # Use the special jellyfin instance of Anubis
-          proxyPass = "http://unix:${config.services.anubis.instances.jellyfin.settings.BIND}";
-          proxyWebsockets = true;
-        };
-        extraConfig = ''
-          proxy_ssl_server_name on;
-          proxy_set_header Host $host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $scheme;
-          proxy_read_timeout 300;
-          proxy_connect_timeout 300;
-          proxy_send_timeout 300;
-          # Prevent redirect loops
-          proxy_redirect off;
-        '';
-      };
-
       # Default HTTP backend for all other domains
-      "kuipr.de" = {
-        serverName = "~^([a-z0-9-]+\\.)*kuipr\\.de$";
-  forceSSL = true;
-  enableACME = false;  
-  sslCertificate = "/var/lib/acme/kuipr.de/cert.pem";
-  sslCertificateKey = "/var/lib/acme/kuipr.de/key.pem";
-        # Exclude the domains we've already defined
-        extraConfig = ''
-          if ($host ~* ^(.*\.)?hl\.kuipr\.de$) {
-            return 404;
+      "default" = {
+        default = true;
+        listenAddresses = ["0.0.0.0"];
+        listen = [
+          {
+            port = 80;
+            addr = "0.0.0.0";
           }
-          if ($host ~* ^(.*\.)?k8s\.kuipr\.de$) {
-            return 404;
-          }
-          if ($host ~* ^jelly\.kuipr\.de$) {
-            return 404;
-          }
-
-          proxy_ssl_server_name on;
-          proxy_set_header Host $host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $scheme;
-        '';
-
-        locations."/" = {
-          proxyPass = "http://unix:${config.services.anubis.instances.default.settings.BIND}";
-          proxyWebsockets = true;
-        };
-
+        ];
+        locations."/".proxyPass = "http://127.0.0.1:8081";
+        locations."/".proxyWebsockets = true;
       };
     };
   };

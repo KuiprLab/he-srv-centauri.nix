@@ -51,7 +51,7 @@
     image = "traefik/whoami";
     labels = {
       "traefik.enable" = "true";
-      "traefik.http.routers.whoami.entrypoints" = "web";
+      "traefik.http.routers.whoami.entrypoints" = "anubis";
       "traefik.http.routers.whoami.middlewares" = "authelia@docker";
       "traefik.http.routers.whoami.rule" = "Host(`whoami.kuipr.de`)";
       "traefik.http.routers.whoami.tls.certresolver" = "myresolver";
@@ -91,7 +91,6 @@
     # Removed external labels for the API - we'll only access it internally
     labels = {
       "traefik.enable" = "true";
-      # Dashboard/API labels removed since we'll access it internally
     };
     environmentFiles = [
       "/run/secrets/traefik.env"
@@ -99,8 +98,6 @@
     ports = [
       "8081:80/tcp"
       "8443:443/tcp"
-      "25565:25565/tcp"
-      # Internal port for API is not exposed to host
     ];
     cmd = [
       "--api=true"
@@ -119,13 +116,14 @@
       "--entryPoints.websecure.address=:443"
       "--entryPoints.minecraft.address=:25565/tcp"
       "--entryPoints.traefik.address=:8080"
-      # "--entrypoints.web.http.redirections.entrypoint.to=websecure"
-      # "--entrypoints.web.http.redirections.entrypoint.scheme=https"
-      # "--certificatesresolvers.myresolver.acme.dnschallenge=true"
-      # "--certificatesresolvers.myresolver.acme.dnschallenge.provider=bunny"
-      # "--certificatesresolvers.myresolver.acme.email=daniel.inama02@gmail.com"
-      # "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      "--certificatesresolvers.myresolver.acme.dnschallenge=true"
+      "--certificatesresolvers.myresolver.acme.dnschallenge.provider=bunny"
+      "--certificatesresolvers.myresolver.acme.email=daniel.inama02@gmail.com"
+      "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
       "--serversTransport.insecureSkipVerify=true"
+      "--entrypoints.anubis.address=:3923"
     ];
     log-driver = "journald";
     extraOptions = [
