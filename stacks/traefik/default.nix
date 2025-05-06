@@ -126,26 +126,20 @@ labels = {
       "--accesslog.filepath=/logs/access.log"
       "--accesslog.bufferingsize=100"
       "--providers.docker=true"
-      "--providers.file.directory=/config"
-      "--providers.file.watch=true"
-      "--providers.docker.exposedByDefault=false"
-      "--providers.docker.network=proxy"
       "--entryPoints.web.address=:80"
       "--entryPoints.websecure.address=:443"
       "--entryPoints.anubis.address=:3923"
       "--entryPoints.traefik.address=:8080"
-      "--entrypoints.web.http.redirections.entrypoint.to=websecure"
-      "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       "--certificatesresolvers.myresolver.acme.dnschallenge=true"
       "--certificatesresolvers.myresolver.acme.dnschallenge.provider=hetzner"
       "--certificatesresolvers.myresolver.acme.email=daniel.inama02@gmail.com"
       "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
-      "--serversTransport.insecureSkipVerify=true"
     ];
     log-driver = "journald";
     extraOptions = [
       "--network-alias=traefik"
       "--network=proxy"
+      "--network=anubis_default"
     ];
   };
   systemd.services."podman-traefik" = {
