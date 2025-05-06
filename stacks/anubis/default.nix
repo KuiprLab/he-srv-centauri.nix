@@ -29,23 +29,22 @@
 
   # Containers
   virtualisation.oci-containers.containers."anubis" = {
-    image = "ghcr.io/techarohq/anubis:latest";
+    image = "ghcr.io/techarohq/anubis:main";
     environmentFiles = [
       "${config.sops.secrets."anubis.env".path}"
-    ];
-    ports = [
-      "8181:8181/tcp"
     ];
     labels = {
       "traefik.docker.network" = "proxy"; # Telling Traefik which network to use
       "traefik.http.routers.anubis.priority" = "1"; # Setting Anubis to the lowest priority, so it only takes the slack
-      # "traefik.http.routers.anubis.rule" = "PathRegexp(`.*`)"; # Wildcard match every path
-      "traefik.http.routers.anubis.rule" = "Host(`.*`)"; # Wildcard match every path
+      "traefik.http.routers.anubis.rule" = "PathRegexp(`.*`)"; # Wildcard match every path
       "traefik.http.routers.anubis.entrypoints" = "websecure"; # Listen on HTTPS
       "traefik.http.services.anubis.loadbalancer.server.port" = "8181"; # Telling Traefik to which port it should route requests
       "traefik.http.routers.anubis.service" = "anubis"; # Telling Traefik to use the above specified port
       "traefik.http.routers.anubis.tls.certresolver" = "myresolver"; # Telling Traefik to resolve a Cert for Anubis
     };
+    ports = [
+      "8181:8181/tcp"
+    ];
     log-driver = "journald";
     extraOptions = [
       "--network-alias=anubis"
