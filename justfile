@@ -10,15 +10,22 @@ default:
 install ip="37.27.26.175": format test
     @nix run github:nix-community/nixos-anywhere -- --flake .#he-srv-centauri root@{{ip}} --build-on remote
 
+# Define a function to show an orange warning
+warn-if-dev branch:
+    if [ "{{branch}}" = "dev" ]; then
+        echo "\033[38;5;208m[WARNING] You are deploying the 'dev' branch!\033[0m"
+    fi
+
 [doc("Locally deploy the config using nh")]
 deploy-main host="he-srv-centauri":
+    @just warn-if-dev main
     @sudo git checkout main
     @sudo git pull
     @nix run nixpkgs#nh -- os switch -H {{host}} .
 
-
 [doc("Locally deploy the config using nh")]
 deploy-dev host="he-srv-centauri":
+    @just warn-if-dev dev
     @sudo git checkout dev
     @sudo git pull
     @nix run nixpkgs#nh -- os switch -H {{host}} .

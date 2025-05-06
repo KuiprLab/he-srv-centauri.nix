@@ -75,8 +75,8 @@
       # Default HTTP backend for all other domains
       "kuipr.de" = {
         serverName = "~^([a-z0-9-]+\\.)*kuipr\\.de$";
-        forceSSL = true;
-        acmeRoot = "/var/lib/acme";
+        # forceSSL = true;
+        # acmeRoot = "/var/lib/acme";
         locations."/" = {
           proxyPass = "http://unix:${config.services.anubis.instances.default.settings.BIND}";
           proxyWebsockets = true;
