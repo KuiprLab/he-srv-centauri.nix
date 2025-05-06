@@ -39,28 +39,53 @@
       "traefik.http.routers.anubis.rule" = "PathRegexp(`.*`)"; # Wildcard match every path
       "traefik.http.routers.anubis.entrypoints" = "websecure"; # Listen on HTTPS
       "traefik.http.services.anubis.loadbalancer.server.port" = "8181"; # Telling Traefik to which port it should route requests
-      "traefik.http.routers.anubis.service" = "anubis"; # Telling Traefik to use the above specified port
+      # "traefik.http.routers.anubis.service" = "anubis"; # Telling Traefik to use the above specified port
       "traefik.http.routers.anubis.tls.certresolver" = "myresolver"; # Telling Traefik to resolve a Cert for Anubis
     };
-    ports = [
-      "8181:8181/tcp"
-    ];
+    user = "0:0";
+    # ports = [
+    #   "8181:8181/tcp"
+    # ];
     log-driver = "journald";
     extraOptions = [
+      "--add-host=host.docker.internal:host-gateway"
       "--network-alias=anubis"
       "--network=proxy"
+      "--network=anubis_default"
     ];
   };
   systemd.services."podman-anubis" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
     };
+    after = [
+      "podman-network-anubis_default.service"
+    ];
+    requires = [
+      "podman-network-anubis_default.service"
+    ];
+ 
     partOf = [
       "podman-compose-anubis-root.target"
     ];
     wantedBy = [
       "podman-compose-anubis-root.target"
     ];
+  };
+
+
+  systemd.services."podman-network-anubis_default" = {
+    path = [pkgs.podman];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStop = "podman network rm -f anubis_default";
+    };
+    script = ''
+      podman network inspect anubis_default || podman network create anubis_default
+    '';
+    partOf = ["podman-compose-anubis-root.target"];
+    wantedBy = ["podman-compose-anubis-root.target"];
   };
 
   # Root service
