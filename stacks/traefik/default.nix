@@ -52,7 +52,7 @@
     labels = {
       "traefik.enable" = "true";
       "traefik.docker.network"="proxy";
-      "traefik.http.routers.whoami.entrypoints" = "websecure";
+      "traefik.http.routers.whoami.entrypoints" = "anubis";
       "traefik.http.routers.whoami.middlewares" = "authelia@docker";
       "traefik.http.routers.whoami.rule" = "Host(`whoami.kuipr.de`)";
       "traefik.http.routers.whoami.tls.certresolver" = "myresolver";
@@ -83,7 +83,7 @@
     ];
   };
   virtualisation.oci-containers.containers."traefik" = {
-    image = "traefik:v3.3";
+    image = "traefik:v3.4";
     volumes = [
       "/home/ubuntu/traefik/config:/config:rw"
       "/home/ubuntu/traefik/letsencrypt:/letsencrypt:rw"
