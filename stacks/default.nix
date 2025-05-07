@@ -1,6 +1,6 @@
 _: {
   imports = [
-    ./anubis
+    # ./anubis
     ./authelia
     ./gatus
     ./jellyfin
