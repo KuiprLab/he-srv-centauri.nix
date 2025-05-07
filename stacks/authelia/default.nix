@@ -67,7 +67,6 @@
       "traefik.enable" = "true";
       "traefik.http.routers.authelia.rule" = "Host(`auth.kuipr.de`)";
       "traefik.http.routers.authelia.entrypoints" = "websecure";
-      # "traefik.http.routers.authelia.entrypoints" = "anubis";
       "traefik.http.routers.authelia.tls.certresolver" = "myresolver";
       "traefik.http.services.authelia.loadbalancer.server.port" = "9091";
       "traefik.http.middlewares.authelia.forwardauth.address" = "http://authelia:9091/api/verify?rd=https://auth.kuipr.de";

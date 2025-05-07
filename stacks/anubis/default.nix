@@ -45,7 +45,6 @@
     user = "0:0";
     log-driver = "journald";
     extraOptions = [
-      "--add-host=host.docker.internal:host-gateway"
       "--network-alias=anubis"
       "--network=proxy"
       "--network=anubis_default"
