@@ -3,7 +3,6 @@ _: {
     ./anubis
     ./authelia
     ./gatus
-    ./homepage
     ./jellyfin
     ./komga
     ./obsidian-share-notes
