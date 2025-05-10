@@ -97,13 +97,4 @@
       "podman-compose-seedbox-root.target"
     ];
   };
-  # Root service
-  # When started, this will automatically create all resources and start
-  # the containers. When stopped, this will teardown all resources.
-  systemd.targets."podman-compose-seedbox-root" = {
-    unitConfig = {
-      Description = "Root target for seedbox services";
-    };
-    wantedBy = ["multi-user.target"];
-  };
 }
