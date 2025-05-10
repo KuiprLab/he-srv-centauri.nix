@@ -35,6 +35,15 @@
     extraOptions = [
       "--network=container:gluetun"
     ];
+    # Add specific labels for qbittorrent service
+    labels = {
+      "traefik.enable" = "true";
+      "traefik.http.routers.qbittorrent.entrypoints" = "websecure";
+      "traefik.http.routers.qbittorrent.rule" = "Host(`qbit.kuipr.de`)";
+      "traefik.http.routers.qbittorrent.service" = "qbittorrent";
+      "traefik.http.routers.qbittorrent.tls.certresolver" = "myresolver";
+      "traefik.http.services.qbittorrent.loadbalancer.server.port" = "8585";
+    };
   };
 
   # Service
@@ -44,9 +53,11 @@
     };
     after = [
       "podman-network-seedbox_default.service"
+      "podman-gluetun.service"
     ];
     requires = [
       "podman-network-seedbox_default.service"
+      "podman-gluetun.service"
     ];
     partOf = [
       "podman-compose-seedbox-root.target"
