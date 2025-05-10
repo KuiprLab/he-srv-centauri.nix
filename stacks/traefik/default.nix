@@ -51,11 +51,13 @@
     image = "traefik/whoami";
     labels = {
       "traefik.enable" = "true";
-      "traefik.http.routers.whoami.entrypoints" = "websecure";
-      "traefik.http.routers.whoami.middlewares" = "authelia@docker";
+      "traefik.docker.network"="proxy";
+      "traefik.http.routers.whoami.entrypoints" = "anubis";
+      # "traefik.http.routers.whoami.middlewares" = "authelia@docker";
       "traefik.http.routers.whoami.rule" = "Host(`whoami.kuipr.de`)";
-      "traefik.http.routers.whoami.tls.certresolver" = "myresolver";
+      # "traefik.http.routers.whoami.tls.certresolver" = "myresolver"; # This cant be enabled when using anubis
       "traefik.http.services.whoami.loadbalancer.server.port" = "80";
+      "traefik.http.routers.whoami.service"="whoami";
     };
     log-driver = "journald";
     extraOptions = [
@@ -81,26 +83,38 @@
     ];
   };
   virtualisation.oci-containers.containers."traefik" = {
-    image = "traefik:v3.3";
+    image = "traefik:v3.4";
     volumes = [
       "/home/ubuntu/traefik/config:/config:rw"
       "/home/ubuntu/traefik/letsencrypt:/letsencrypt:rw"
       "/home/ubuntu/traefik/logs:/logs:rw"
       "/run/podman/podman.sock:/var/run/docker.sock:ro"
     ];
-    # Removed external labels for the API - we'll only access it internally
-    labels = {
-      "traefik.enable" = "true";
-      # Dashboard/API labels removed since we'll access it internally
-    };
-    environmentFiles = [
+
+labels = {
+  "traefik.enable" = "true";
+  "traefik.docker.network" = "proxy";
+
+  # HTTP to HTTPS redirect (already present)
+  "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme" = "https";
+  "traefik.http.routers.web.rule" = "PathPrefix(`/`)";
+  "traefik.http.routers.web.entrypoints" = "web";
+  "traefik.http.routers.web.middlewares" = "redirect-to-https";
+  "traefik.http.routers.web.tls" = "false";
+
+  # Add Traefik dashboard route on HTTPS with Authelia
+  "traefik.http.routers.traefik.rule" = "Host(`traefik.kuipr.de`)";
+  "traefik.http.routers.traefik.entrypoints" = "websecure";
+  "traefik.http.routers.traefik.tls.certresolver" = "myresolver";
+  "traefik.http.routers.traefik.service" = "api@internal";
+  "traefik.http.routers.traefik.middlewares" = "authelia@docker";
+};
+   environmentFiles = [
       "/run/secrets/traefik.env"
     ];
     ports = [
       "8081:80/tcp"
       "8443:443/tcp"
-      "25565:25565/tcp"
-      # Internal port for API is not exposed to host
     ];
     cmd = [
       "--api=true"
@@ -111,26 +125,19 @@
       "--accesslog.filepath=/logs/access.log"
       "--accesslog.bufferingsize=100"
       "--providers.docker=true"
-      "--providers.file.directory=/config"
-      "--providers.file.watch=true"
-      "--providers.docker.exposedByDefault=false"
-      "--providers.docker.network=proxy"
       "--entryPoints.web.address=:80"
       "--entryPoints.websecure.address=:443"
-      "--entryPoints.minecraft.address=:25565/tcp"
-      "--entryPoints.traefik.address=:8080"
-      "--entrypoints.web.http.redirections.entrypoint.to=websecure"
-      "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      "--entryPoints.anubis.address=:3923"
       "--certificatesresolvers.myresolver.acme.dnschallenge=true"
-      "--certificatesresolvers.myresolver.acme.dnschallenge.provider=bunny"
+      "--certificatesresolvers.myresolver.acme.dnschallenge.provider=hetzner"
       "--certificatesresolvers.myresolver.acme.email=daniel.inama02@gmail.com"
       "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
-      "--serversTransport.insecureSkipVerify=true"
     ];
     log-driver = "journald";
     extraOptions = [
       "--network-alias=traefik"
       "--network=proxy"
+      "--network=anubis_default"
     ];
   };
   systemd.services."podman-traefik" = {

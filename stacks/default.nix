@@ -1,8 +1,8 @@
 _: {
   imports = [
+    # ./anubis
     ./authelia
     ./gatus
-    ./homepage
     ./jellyfin
     ./komga
     ./obsidian-share-notes
@@ -10,6 +10,5 @@ _: {
     ./starr
     ./traefik
     ./watchtower
-    # ./anubis
   ];
 }

@@ -1,28 +1,39 @@
-alias d := deploy
-alias dl := deploy-local
-alias ul := upgrade-local
+alias dm := deploy-main
+alias dd := deploy-dev
+alias u := upgrade
+
+current-branch := `git rev-parse --abbrev-ref HEAD`
 
 [doc("Default Recipe")]
 default:
     just --list
 
-[doc("Deploy the config using deploy-rs")]
-deploy: format
-    @git add .
-    @nix run nixpkgs#deploy-rs -- --remote-build -s .#he-srv-centauri
-
-
 [doc("Install NixOS using nix-anywhere")]
 install ip="37.27.26.175": format test
     @nix run github:nix-community/nixos-anywhere -- --flake .#he-srv-centauri root@{{ip}} --build-on remote
 
+# Helper to warn if deploying dev
+warn-if-dev branch:
+    @if [ "{{branch}}" = "dev" ]; then echo -e "\033[38;5;208m[WARNING] You are deploying the 'dev' branch!\033[0m"; fi
+
+
 [doc("Locally deploy the config using nh")]
-deploy-local host="he-srv-centauri":
+deploy-main host="he-srv-centauri":
+    @just warn-if-dev main
+    @if [ "{{current-branch}}" = "dev" ]; then sudo git checkout main; else echo "Already on main."; fi
     @sudo git pull
     @nix run nixpkgs#nh -- os switch -H {{host}} .
 
+[doc("Locally deploy the config using nh")]
+deploy-dev host="he-srv-centauri":
+    @just warn-if-dev dev
+    @if [ "{{current-branch}}" = "main" ]; then sudo git checkout dev; else echo "Already on dev."; fi
+    @sudo git pull
+    @nix run nixpkgs#nh -- os switch -H {{host}} .
+
+
 [doc("Locally update flake and deploy the config using nh")]
-upgrade-local host="he-srv-centauri":
+upgrade host="he-srv-centauri":
     @nix run nixpkgs#nh -- os switch --hostname {{host}} --update .
 
 

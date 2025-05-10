@@ -48,11 +48,12 @@
     labels = {
       "traefik.docker.network" = "proxy";
       "traefik.enable" = "true";
-      "traefik.http.routers.komga.entrypoints" = "websecure";
+      # "traefik.http.routers.komga.entrypoints" = "websecure";
+      "traefik.http.routers.komga.entrypoints" = "anubis";
+       # "traefik.http.routers.komga.tls.certresolver" = "myresolver";
       "traefik.http.routers.komga.rule" = "Host(`comics.kuipr.de`)";
-      "traefik.http.routers.komga.tls.certresolver" = "myresolver";
       "traefik.http.services.komga.loadbalancer.server.port" = "25600";
-      "traefik.port" = "25600";
+      # "traefik.port" = "25600";
     };
     user = "1000:1000";
     log-driver = "journald";
