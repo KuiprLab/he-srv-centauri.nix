@@ -45,9 +45,9 @@
     ];
     labels = {
       "traefik.enable" = "true";
-      "traefik.http.routers.notesx-server.entrypoints" = "websecure";
+      "traefik.http.routers.notesx-server.entrypoints" = "anubis";
       "traefik.http.routers.notesx-server.rule" = "Host(`notes.kuipr.de`)";
-      "traefik.http.routers.notesx-server.tls.certresolver" = "myresolver";
+      # "traefik.http.routers.notesx-server.tls.certresolver" = "myresolver";
       "traefik.http.services.notesx-server.loadbalancer.server.port" = "3000";
     };
     log-driver = "journald";
