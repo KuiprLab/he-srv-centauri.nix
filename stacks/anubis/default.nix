@@ -60,7 +60,7 @@
     requires = [
       "podman-network-anubis_default.service"
     ];
- 
+
     partOf = [
       "podman-compose-anubis-root.target"
     ];
@@ -68,7 +68,6 @@
       "podman-compose-anubis-root.target"
     ];
   };
-
 
   systemd.services."podman-network-anubis_default" = {
     path = [pkgs.podman];

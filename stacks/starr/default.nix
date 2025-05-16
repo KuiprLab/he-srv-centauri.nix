@@ -44,9 +44,16 @@
     restartUnits = ["podman-flaresolverr.service"];
   };
 
+  sops.secrets."lidarr.env" = {
+    sopsFile = ./lidarr.env;
+    format = "dotenv";
+    key = "";
+    restartUnits = ["podman-lidarr.service"];
+  };
+
   myFolders = {
     starr = {
-      path = "/home/ubuntu/{sonarr,radarr,prowlarr}";
+      path = "/home/ubuntu/{sonarr,radarr,prowlarr,lidarr}";
       owner = "ubuntu";
       group = "users";
       mode = "0755";
@@ -267,6 +274,52 @@
       "--network=starr_default"
     ];
   };
+
+  virtualisation.oci-containers.containers."lidarr" = {
+    image = "lscr.io/linuxserver/lidarr:latest";
+    volumes = [
+      "/home/ubuntu/lidarr:/config:rw"
+      "/mnt/data/media/music:/music:rw"
+      "/mnt/data/torrents:/app/qBittorrent/downloads:rw"
+    ];
+    labels = {
+      "traefik.docker.network" = "proxy";
+      "traefik.enable" = "true";
+      "traefik.http.routers.lidarr.entrypoints" = "websecure";
+      "traefik.http.routers.lidarr.middlewares" = "authelia@docker";
+      "traefik.http.routers.lidarr.rule" = "Host(`lidarr.kuipr.de`)";
+      "traefik.http.routers.lidarr.tls.certresolver" = "myresolver";
+      "traefik.http.services.lidarr.loadbalancer.server.port" = "8686";
+      "traefik.port" = "8686";
+    };
+    environmentFiles = [
+      "/run/secrets/lidarr.env"
+    ];
+    log-driver = "journald";
+    extraOptions = [
+      "--network-alias=lidarr"
+      "--network=proxy"
+      "--network=starr_default"
+    ];
+  };
+  systemd.services."podman-lidarr" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "always";
+    };
+    after = [
+      "podman-network-starr_default.service"
+    ];
+    requires = [
+      "podman-network-starr_default.service"
+    ];
+    partOf = [
+      "podman-compose-starr-root.target"
+    ];
+    wantedBy = [
+      "podman-compose-starr-root.target"
+    ];
+  };
+
   systemd.services."podman-unpackerr" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
