@@ -32,10 +32,10 @@
     # ];
     labels = {
       "traefik.enable" = "true";
-      # "traefik.http.routers.navidrome.entrypoints" = "websecure";
-      "traefik.http.routers.navidrome.entrypoints" = "anubis";
+      "traefik.http.routers.navidrome.entrypoints" = "websecure";
+      # "traefik.http.routers.navidrome.entrypoints" = "anubis";
       "traefik.http.routers.navidrome.rule" = "Host(`music.kuipr.de`)";
-      # "traefik.http.routers.navidrome.tls.certresolver" = "myresolver";
+      "traefik.http.routers.navidrome.tls.certresolver" = "myresolver";
       "traefik.http.services.navidrome.loadbalancer.server.port" = "4533";
     };
  
