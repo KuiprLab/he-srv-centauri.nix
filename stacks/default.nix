@@ -10,5 +10,6 @@ _: {
     ./starr
     ./traefik
     ./watchtower
+        ./navidrome
   ];
 }

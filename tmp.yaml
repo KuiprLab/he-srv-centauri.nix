@@ -1,13 +1,11 @@
-name: minecraft-server
+name: navidrome
 services:
-  mc:
-    image: itzg/minecraft-server
-    tty: true
-    stdin_open: true
+  navidrome:
+    image: deluan/navidrome:latest
+    user: 1000:1000 # should be owner of volumes
     ports:
-      - "25565:25565"
-    environment:
-      EULA: "TRUE"
+      - "4533:4533"
+    restart: unless-stopped
     volumes:
-      # attach the relative directory 'data' to the container's /data path
-      - /home/ubuntu/minecraft:/data
+      - "/home/ubuntu/navidrome:/data"
+      - "/mnt/data/media/music:/music:ro"
