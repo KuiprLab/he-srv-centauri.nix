@@ -1,9 +1,8 @@
-keys:
-  - &key age1207u8skz74quhs0xtunrrp2xwj0dtmffllfk7fw93q5eywd7w37qslc9yh
-  - &server age1cdr7yexx2vc54q46tkmzw0udh2hynm4dvytjnvzapc64x6rsh59qmemc6g
 creation_rules:
-  - path_regex: .*\.(yaml|yml|json|env|ini|sops|txt)$
-    key_groups:
-      - age:
-          - *key
-          - *server
+- path_regex: .*\.(yaml|yml|json|env|ini|sops|txt)$
+  age: null
+  key_groups:
+  - age:
+    - age1207u8skz74quhs0xtunrrp2xwj0dtmffllfk7fw93q5eywd7w37qslc9yh
+    - age1cdr7yexx2vc54q46tkmzw0udh2hynm4dvytjnvzapc64x6rsh59qmemc6g
+onepassworditem: op://OpsVault/he-srv-centauri-sops-key/age
