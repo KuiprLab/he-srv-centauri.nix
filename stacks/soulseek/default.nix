@@ -64,8 +64,7 @@
     log-driver = "journald";
     extraOptions = [
       "--network-alias=slskd"
-      "--network=soulseek_default"
-      "--network=proxy"
+      "--network=container:gluetun"
     ];
   };
   systemd.services."podman-slskd" = {
