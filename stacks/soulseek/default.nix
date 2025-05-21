@@ -3,16 +3,16 @@
 
 {
 
-  sops.secrets."config.ini" = {
-    sopsFile = ./config.ini;
-    format = "ini";
-    owner = "ubuntu";
-    group = "users";
-    key = "";
-    path = "/home/ubuntu/soularr/config.ini";
-    restartUnits = ["podman-soularr.service"];
-  };
-
+  # sops.secrets."config.ini" = {
+  #   sopsFile = ./config.ini;
+  #   format = "ini";
+  #   owner = "ubuntu";
+  #   group = "users";
+  #   key = "";
+  #   path = "/home/ubuntu/soularr/config.ini";
+  #   restartUnits = ["podman-soularr.service"];
+  # };
+  #
 
   myFolders = {
     soularr = {
