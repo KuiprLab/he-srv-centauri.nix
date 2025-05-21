@@ -71,7 +71,7 @@
     ];
     extraOptions = [
       "--network=container:gluetun"
-      "--publish=127.0.0.1:5050:5050" # Exposes to host
+      "--publish=127.0.0.1:5030:5030" # Exposes to host
     ];
   };
   systemd.services."podman-slskd" = {

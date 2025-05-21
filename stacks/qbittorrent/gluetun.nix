@@ -23,10 +23,12 @@
       "--network-alias=gluetun"
       "--network=proxy"
       "--network=seedbox_default"
+      "--network=soulseek_default"
     ];
     ports = [
       "8080:8080/tcp"
       "47594/tcp"
+      "5030:5030"
       "47594/udp"
     ];
   };
