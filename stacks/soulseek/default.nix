@@ -62,8 +62,10 @@
       "traefik.http.services.slskd.loadbalancer.server.port" = "5030";
     };
     log-driver = "journald";
+    dependsOn = [
+      "gluetun"
+    ];
     extraOptions = [
-      "--network-alias=slskd"
       "--network=container:gluetun"
     ];
   };
@@ -73,9 +75,11 @@
     };
     after = [
       "podman-network-soulseek_default.service"
+      "podman-gluetun.service"
     ];
     requires = [
       "podman-network-soulseek_default.service"
+      "podman-gluetun.service"
     ];
     partOf = [
       "podman-compose-soulseek-root.target"
