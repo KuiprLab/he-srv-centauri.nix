@@ -10,6 +10,6 @@ _: {
     ./starr
     ./traefik
     ./watchtower
-        ./soulseek
+    ./soulseek
   ];
 }
