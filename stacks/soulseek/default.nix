@@ -71,6 +71,7 @@
     ];
     extraOptions = [
       "--network=container:gluetun"
+      "--publish=127.0.0.1:5050:5050" # Exposes to host
     ];
   };
   systemd.services."podman-slskd" = {
@@ -98,7 +99,6 @@
       "SCRIPT_INTERVAL" = "300";
       "TZ" = "Etc/UTC";
     };
-    dependsOn = ["gluetun"];
     volumes = [
       "/home/ubuntu/soularr:/data:rw"
       "/mnt/data/downloads:/downloads:rw"
@@ -107,7 +107,9 @@
     log-driver = "journald";
     extraOptions = [
       "--hostname=soularr"
-      "--network=container:gluetun"
+      "--network-alias=soularr"
+      "--network=soulseek_default"
+      "--network=proxy"
     ];
   };
   systemd.services."podman-soularr" = {
