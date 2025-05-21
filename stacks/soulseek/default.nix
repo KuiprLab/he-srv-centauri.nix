@@ -73,7 +73,7 @@
     ];
   };
   virtualisation.oci-containers.containers."soularr" = {
-    image = "mrusse08/soularr:latest";
+    image = "budinjm/soularr:latest";
     environment = {
       "SCRIPT_INTERVAL" = "300";
       "TZ" = "Etc/UTC";
