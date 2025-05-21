@@ -68,7 +68,7 @@ generate-user-pw-hash password:
 
 [doc("Generate a random 64 bit long secret")]
 generate-generic-secret:
-    @tr -dc A-Za-z0-9 </dev/urandom | head -c 64; echo
+    @LC_ALL=C tr -dc A-Za-z0-9 </dev/urandom | head -c 64; echo
 
 [doc("Generate a random pbkdf2 secret for use in authelia")]
 generate-client-secret:

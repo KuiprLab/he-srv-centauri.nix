@@ -3,6 +3,14 @@
 
 {
 
+  sops.secrets."config.ini" = {
+    sopsFile = ./config.ini;
+    format = "ini";
+    key = "";
+    path = "/home/ubuntu/soularr/config.ini";
+    restartUnits = ["podman-soularr.service"];
+  };
+
 
   myFolders = {
     soularr = {
@@ -34,6 +42,9 @@
       "/mnt/data/downloads:/downloads:rw"
       "/mnt/data/media/music:/music:rw"
     ];
+        cmd = [
+            "--generate-secret"
+        ];
     ports = [
       # "5030:5030/tcp"
       # "5031:5031/tcp"
