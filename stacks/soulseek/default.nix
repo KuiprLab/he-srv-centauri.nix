@@ -45,7 +45,7 @@
     };
     volumes = [
       "/home/ubuntu/slskd:/app:rw"
-      "/mnt/data/downloads:/downloads:rw"
+      "/mnt/data/downloads:/app/downloads:rw"
       "/mnt/data/media/music:/music:rw"
     ];
     cmd = [
