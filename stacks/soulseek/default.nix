@@ -36,9 +36,18 @@
     ];
     ports = [
       "5030:5030/tcp"
-      "5031:5031/tcp"
+      # "5031:5031/tcp"
       "50300:50300/tcp"
     ];
+
+    labels = {
+      "traefik.enable" = "true";
+      "traefik.http.routers.slskd.entrypoints" = "websecure";
+      "traefik.http.routers.slskd.middlewares" = "authelia@docker";
+      "traefik.http.routers.slskd.rule" = "Host(`slskd.kuipr.de`)";
+      "traefik.http.routers.slskd.tls.certresolver" = "myresolver";
+      "traefik.http.services.slskd.loadbalancer.server.port" = "5031";
+    };
     log-driver = "journald";
     extraOptions = [
       "--network-alias=slskd"
