@@ -280,6 +280,7 @@
     volumes = [
       "/home/ubuntu/lidarr:/config:rw"
       "/mnt/data/media/music:/music:rw"
+      "/mnt/data/downloads:/downloads:rw"
       "/mnt/data/torrents:/app/qBittorrent/downloads:rw"
     ];
     labels = {
