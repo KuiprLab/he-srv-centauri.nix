@@ -27,6 +27,7 @@
   # Containers
   virtualisation.oci-containers.containers."watchtower" = {
     image = "containrrr/watchtower";
+    user = "0:0"; # Run as root user
     volumes = [
       "/run/podman/podman.sock:/var/run/docker.sock:rw"
     ];
