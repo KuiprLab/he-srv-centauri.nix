@@ -11,5 +11,6 @@ _: {
     ./traefik
     ./watchtower
     ./soulseek
+        ./minecraft
   ];
 }
