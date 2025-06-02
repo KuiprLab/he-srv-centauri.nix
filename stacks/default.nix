@@ -5,12 +5,12 @@ _: {
     ./gatus
     ./jellyfin
     ./komga
+    ./minecraft
     ./obsidian-share-notes
     ./qbittorrent
+    ./soulseek
     ./starr
     ./traefik
-    ./watchtower
-    ./soulseek
-    ./minecraft
+    ./update-containers.nix
   ];
 }
