@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }:
-
 let
+  # Discord webhook URL from sops secrets
   discordWebhookUrl = config.sops.secrets.discord-webhook-url.path;
   
   updateScript = pkgs.writeShellScriptBin "update-containers" ''
@@ -114,7 +114,7 @@ let
     # Send Discord notification
     echo "Sending Discord notification..."
     
-    webhook_url=$(cat "$CREDENTIALS_DIRECTORY/discord-webhook")
+    webhook_url=$(cat "${discordWebhookUrl}")
     
     payload=$(${pkgs.jq}/bin/jq -n \
       --arg summary "$summary" \
@@ -159,8 +159,8 @@ in
   # Define the sops secret for the Discord webhook URL
   sops.secrets.discord-webhook-url = {
     sopsFile = ./discord-webhook.yaml;  # Adjust path to your secrets file
-    owner = "ubuntu";
-    group = "ubuntu";
+    owner = "root";
+    group = "root";
     mode = "0400";
   };
 
@@ -179,15 +179,12 @@ in
       Type = "oneshot";
       ExecStart = lib.getExe updateScript;
       # Security settings
-      DynamicUser = true;
+      User = "root";  # Need root access for sops secrets and podman
       PrivateTmp = true;
-      ProtectSystem = "strict";
       ProtectHome = true;
       NoNewPrivileges = true;
-      # Allow access to podman socket and secrets
+      # Allow access to podman socket
       SupplementaryGroups = [ "podman" ];
-      # Grant access to the secret file
-      LoadCredential = "discord-webhook:${config.sops.secrets.discord-webhook-url.path}";
     };
     # Ensure podman is available
     wants = [ "podman.service" ];
