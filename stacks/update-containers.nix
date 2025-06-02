@@ -4,6 +4,7 @@ let
   discordWebhookUrl = config.sops.secrets.discord-webhook-url.path;
   
   updateScript = pkgs.writeShellScriptBin "update-containers" ''
+    export PATH=${lib.makeBinPath [ pkgs.podman pkgs.jq pkgs.curl pkgs.nettools pkgs.coreutils ]}:$PATH
     set -euo pipefail
     
     # Initialize counters and arrays
