@@ -8,7 +8,7 @@ let
 
     # Pull all images (this will update existing ones)
     echo "Pulling all Docker images..."
-    yes |sudo docker pull *
+    sudo docker images | awk '(NR>1) && ($2!~/none/) {print $1":"$2}' | xargs -L1 sudo docker pull
 
     # Restart all containers
     echo "Restarting all containers..."
