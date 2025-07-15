@@ -6,7 +6,6 @@ _: {
     ./jellyfin
     ./komga
     ./minecraft
-    ./obsidian-share-notes
     ./qbittorrent
     ./soulseek
     ./starr
