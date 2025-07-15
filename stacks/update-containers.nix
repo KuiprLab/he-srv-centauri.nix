@@ -8,7 +8,7 @@ let
 
     # Pull all images (this will update existing ones)
     echo "Pulling all Docker images..."
-    sudo docker images --format "{{.Repository}}:{{.Tag}}" | grep -v "<none>" | xargs -I {} sudo docker pull {}
+    yes |sudo docker pull *
 
     # Restart all containers
     echo "Restarting all containers..."
