@@ -45,7 +45,7 @@ access_control:
           resources:
             - ENC[AES256_GCM,data:p2x6FHL01jn0,iv:34QCZ67CohJRK/lmSVep0Hk4wzjrab+VTWtPSzN0+ok=,tag:6qedwYXEJmp2lUFwL7VU0Q==,type:str]
           policy: ENC[AES256_GCM,data:95e5nnFx,iv:Y4nfLwHQmD6mtebnN9MOWFD6rjZsYt8lWFfFF5lcdQI=,tag:NDa2lFET5eJ9WzKcO3Tycw==,type:str]
-        - domain: ENC[AES256_GCM,data:GkikiLh2tXOQLrz2148=,iv:C3qmQ/omtIG3SKHjJSn8niI2mDMO6vv9KCZdiPUlboY=,tag:SASOVQAL4q5hkdIAXqQaiw==,type:str]
+        - domain: ENC[AES256_GCM,data:3ATPafEWIRIWrjhuE+mwe+KBtGknDg==,iv:UJk368Ae+vqR+i5R/2AUV0mg0B2xpAnxxYPpPenOCY8=,tag:GvsniB7aFfI7OpFuICLFuA==,type:str]
           policy: ENC[AES256_GCM,data:MZnFkm7XOtoGpA==,iv:QGIbo2Uwn9AYz71ihLfJhU0lDSNbQO4sfxfViXEtv1o=,tag:9kNi6K/HdIOLwApoSJCVmw==,type:str]
 #ENC[AES256_GCM,data:1fAtYJtZbzo9FaxX8pTit3zbRe9g3w==,iv:cWlFOI/NQIOzNKajGLiHqduJuVDln3ab8M9mrZR0CeQ=,tag:VDIqNnm3Jhhd0YB2cxd/0Q==,type:comment]
 session:
@@ -163,7 +163,7 @@ sops:
             RmM4OUhpTEJCR3BsaGdpU0J2R1c1N2cKD94MXwrOGcn/jyRT9oP3TROFSXaiFsJH
             7MCoRoSa+EQUgjzmwucIK9b8TiY9tgEfits8UBv//NJVPM77vQR+XQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-07-21T14:06:31Z"
-    mac: ENC[AES256_GCM,data:oyGMWTg/bb8pcxAzdPnoiyvEG9WARCFHBYwaHTJoKvk1coJlj2JYrR+xqdSOQZmsjhYsDTVG9zDaYw+Q9kTKxkHvW1H3qH8cV8k5L2HDeGu0MFjP0DCkaQikx3Iwb+xFtemuN+7McpJTuVCl3tT8GTq6RPto2aOSMi9Udfhgv40=,iv:VS5NV/r/VOkRTuo70q9hjzalzc7ESn/pbQrRqhh2hTc=,tag:CBCLsfX+gN2EJ1T60uglow==,type:str]
+    lastmodified: "2025-07-21T14:17:03Z"
+    mac: ENC[AES256_GCM,data:LnfHnmB9UvuAhXbpkeLhu+FD1a08dt6tACn9h4it8SM/YEWGhKqN4HmLv3+a10HGQZh5aCJBcBEdN7/CpIZNxGKts0vlAa5uK2szobYtkTihrrLJ+ZT8U4dT/yG10xbc3Mv01B/nCBZrqinEXk1kZ2DMEKJ2lI7Nf6GRLdtGJ+o=,iv:LyEPmqX+Y9Gcq4fl0T7ePLEKqd0y7Ai+bhTZPmvg/bI=,tag:1yWaqSiP63/DnNhHq4U0Ow==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.10.2
