@@ -18,7 +18,7 @@ totp:
     skew: ENC[AES256_GCM,data:dQ==,iv:2YmvwvDkpnwpKJ1wcKJH8mw1t6e6ay0NxVbA2j8bmg8=,tag:lwjW2tDtSCqWgj2gjSRVbw==,type:int]
 #ENC[AES256_GCM,data:pM8Tfag32dRUNWrlylqWIpBrVKlWJA==,iv:16zc5/WbipXe64vkZvuK491m5Rv6T5j8onT9sGCAlUA=,tag:Lvp4nsQLrSjAI/JsKtsudQ==,type:comment]
 notifier:
-    disable_startup_check: ENC[AES256_GCM,data:uHtQBUE=,iv:G2e6NeZGKeBRDWSWTph3hYRfUCXSplILLAxxM+rFAmc=,tag:DDH4L/CyHSuM3hBU4sBOjQ==,type:bool]
+    disable_startup_check: ENC[AES256_GCM,data:oyQZKQ==,iv:NjsCMykI3DCsuKGZIPpejHdDIi0a+pG9JiUD8rAjgT8=,tag:cdrx+SnXXZ6jPe91HuQNEg==,type:bool]
     smtp:
         address: ENC[AES256_GCM,data:cOdlI6mn6isEXFqAEBsyBgQNXLmp+bJxJEXbOLRBjg==,iv:m/dFwPQAW/5Tq0FkDwhCZi8h94F0VFSR7zXHzxvCVf0=,tag:zCU9373lOk1ZH3ULsVlyeA==,type:str]
         username: ENC[AES256_GCM,data:5GOTfKRkKDgxDIJmLYDqvuG4X+UyBBKg,iv:qDsJPaXGMcp9wQavuDy2/FguKmJD3H2vUZwcL2w2c1Y=,tag:CNz+434SnfBtk6a0gtErlQ==,type:str]
@@ -166,7 +166,7 @@ sops:
             RmM4OUhpTEJCR3BsaGdpU0J2R1c1N2cKD94MXwrOGcn/jyRT9oP3TROFSXaiFsJH
             7MCoRoSa+EQUgjzmwucIK9b8TiY9tgEfits8UBv//NJVPM77vQR+XQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-07-21T14:49:44Z"
-    mac: ENC[AES256_GCM,data:gYwkaJP7jFR0qw0PJmrxDPHPeeulN4Ewz4QYK8Zc7fnqTgK41fgyCIMh0QWXyBuVsBNMid9e72ZUGWShxaLIutVuPe5b0EWbiT3O2WL/gYhveW8ZOkLTpZFvNDjjvGM1Fyb4MtraYG/MH+9mW4l6waRQ5djms5uSvt5NVgcIB2M=,iv:l779KNih4qmS96FAuQ8zlrTSYDZHlo5yOS/MA/slzrE=,tag:jK4tYclHQK3FMSkvpAqXPw==,type:str]
+    lastmodified: "2025-07-21T15:01:35Z"
+    mac: ENC[AES256_GCM,data:zm4/GCzi3Hqct9936J76DSizQTHbjApeievY7o7Z3UI41+nfvfHgdVOMXnzVwuElIEBOYR65zq+QZZ2fNGXRE3SLTa5oDcODVQtaM2KMcY+97/yzD0GS7EYn/M2+89FVwV9CClguPX+Ih50x6JTJwIKunIOzN0Ks0UqrH2+d3PM=,iv:ZpQiaYKul/7RvM3FPopzxo9w1P6QIeuReSXbkwNsHQE=,tag:SAR8w/8vdhElYE6gjGYyPw==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.10.2
