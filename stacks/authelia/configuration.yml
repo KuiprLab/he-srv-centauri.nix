@@ -11,6 +11,8 @@ server:
         authz:
             auth-request:
                 implementation: ENC[AES256_GCM,data:uO1QUGstbo3MbqI=,iv:fugKGoUYadquCbmVwqti+MhQWPxRh+iPco1ZPUlLtiQ=,tag:CVYxNyoI+GFgDXCWIOHenA==,type:str]
+            forward-auth:
+                implementation: ENC[AES256_GCM,data:zLEhvvwR19lXQkw=,iv:JC3HEgEO5siU4bzjTevUYqttS68IILe6qQ3m+Pju+JY=,tag:79LjUO9jBU2mCRFhN6A4dg==,type:str]
 #ENC[AES256_GCM,data:NLvkI8DbgesdvJ8J2Ao=,iv:OpplxCjfrjCHZM+pVnnunb07ASrmzoe5CzgTCsGw6M4=,tag:Mtcd3RpO9EXTZPXyYjU5IA==,type:comment]
 totp:
     issuer: ENC[AES256_GCM,data:8Gx0pHYq1XY=,iv:8EL/LQYRKMdK/rBU8I2W6lViaRYyBumtunrj2I6qP+w=,tag:1fzJFDF+OQ8MW4rmUST3Qw==,type:str]
@@ -167,7 +169,7 @@ sops:
             RmM4OUhpTEJCR3BsaGdpU0J2R1c1N2cKD94MXwrOGcn/jyRT9oP3TROFSXaiFsJH
             7MCoRoSa+EQUgjzmwucIK9b8TiY9tgEfits8UBv//NJVPM77vQR+XQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-07-21T15:22:30Z"
-    mac: ENC[AES256_GCM,data:3KLsqJpP0BRxn/tGeTIXR7p6F0rPx0MpP3Xbt+NJ5g5BWa52sESTVy/wwQQKHhJsq0iiUMWE5U8gW4iE5sPWJe9VcPqNWU/mr99NOPF0VyhT82LmVPE87sf/z/5atgdN7mTO/OjkG4UQSewkeiJGS9mclOmuyxSqEBEwhfET1AY=,iv:ICi9FbL51f3iSle0Reo7CQ0jEjh0VTCM0bFQMW0MfEk=,tag:6AvBhoStFSHyjwbnrqNMDw==,type:str]
+    lastmodified: "2025-07-21T15:30:24Z"
+    mac: ENC[AES256_GCM,data:jm9FxuyBSX5Hn6KGvsiWULxRGNuSnLnR17alrOKmGaU4r+82otBkghBhYSLNicAr5tUfcCIRW+HTTLWF7KbsHFpWK77hgwzjgCGi8Bw7z53Mrddqu6eoMjSFX4lcPnnyEpuyDXqFDzl+41Z6mAJxy0y/sEcoMFG8zxhwzA7xJDE=,iv:jkOzP51dwNf5Rc5rlqZRftDDnrPuRNkPhS1ZGr1yZTQ=,tag:RCJjoUSYGw5zsf6YdqWCUw==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.10.2
