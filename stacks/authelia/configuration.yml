@@ -11,8 +11,6 @@ server:
         authz:
             auth-request:
                 implementation: ENC[AES256_GCM,data:uO1QUGstbo3MbqI=,iv:fugKGoUYadquCbmVwqti+MhQWPxRh+iPco1ZPUlLtiQ=,tag:CVYxNyoI+GFgDXCWIOHenA==,type:str]
-#ENC[AES256_GCM,data:/L/NWj62Om84lU329PGS3wrMxMmspkF1,iv:7p+Lv9TI0VrXG8CyF2eKRqN7LLoM2tMFt1Go1OOm9+0=,tag:AhO9SfsDdpnUyNuiH3BKkA==,type:comment]
-default_redirection_url: ENC[AES256_GCM,data:plwY4f8Ku7V20j0Ml8gvxiE6ZPPk,iv:SMF/5SC91LPrnLuqIhWT1Jn/yViIW7WCwav5cn0pH78=,tag:GoK/Zlwsaaer8vDv2ixu0Q==,type:str]
 #ENC[AES256_GCM,data:NLvkI8DbgesdvJ8J2Ao=,iv:OpplxCjfrjCHZM+pVnnunb07ASrmzoe5CzgTCsGw6M4=,tag:Mtcd3RpO9EXTZPXyYjU5IA==,type:comment]
 totp:
     issuer: ENC[AES256_GCM,data:8Gx0pHYq1XY=,iv:8EL/LQYRKMdK/rBU8I2W6lViaRYyBumtunrj2I6qP+w=,tag:1fzJFDF+OQ8MW4rmUST3Qw==,type:str]
@@ -168,7 +166,7 @@ sops:
             RmM4OUhpTEJCR3BsaGdpU0J2R1c1N2cKD94MXwrOGcn/jyRT9oP3TROFSXaiFsJH
             7MCoRoSa+EQUgjzmwucIK9b8TiY9tgEfits8UBv//NJVPM77vQR+XQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-07-21T14:46:21Z"
-    mac: ENC[AES256_GCM,data:gftpzIKax8QqiyVPog0jdZy+1WQ0FdQQcyoIYetmlDx8sgdgIam7rHVIMEPGwm+wcox+dWbncBJu3UhFMPOYrtltvmguyLMwP5pBaMQDb1dX+EjSDdxvoyAlhDy4OgbAXGJCKsCYPkLfxii1Pmt27rehVRNAE188sNoHeMHOxFI=,iv:JBmv30Dm0inNUo12UqyLiTbw4CjPoZa1ZehNp8M7Xws=,tag:mAsOmr0QnGf3T+VtsVjQTQ==,type:str]
+    lastmodified: "2025-07-21T14:47:20Z"
+    mac: ENC[AES256_GCM,data:M57O4WuyCBE+U0s5i3FJM/xUYpnpk4lyC1VmnrIsWFjiWpWr/tFk1uALGXpLTfAyOsc9bIORdGI8wM9/o/5qcuAvvMfZU7J0lPQAiZNIu7pt0HI699JoUy/xwnjlotyTnX2VSSoJKGpPHkmJCMIi5VV0PdojnxBfClXNEPP42wU=,iv:FISLkuDOI4c3fbbhdrVnEWaPhLceOkfs8jJG5BuXm+I=,tag:TGNJEViWY0IQyLlDrlNxLg==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.10.2
