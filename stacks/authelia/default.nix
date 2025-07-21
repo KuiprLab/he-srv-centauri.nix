@@ -69,7 +69,7 @@
       "traefik.http.routers.authelia.entrypoints" = "websecure";
       "traefik.http.routers.authelia.tls.certresolver" = "myresolver";
       "traefik.http.services.authelia.loadbalancer.server.port" = "9091";
-      "traefik.http.middlewares.authelia.forwardauth.address" = "http://authelia:9091/api/verify?rd=https://auth.kuipr.de";
+      "traefik.http.middlewares.authelia.forwardauth.address" = "http://authelia:9091/api/authz/forward-auth?rd=https://auth.kuipr.de";
       "traefik.http.middlewares.authelia.forwardauth.trustForwardHeader" = "true";
       "traefik.http.middlewares.authelia.forwardauth.authResponseHeaders" = "Remote-User,Remote-Groups,Remote-Name,Remote-Email";
     };
