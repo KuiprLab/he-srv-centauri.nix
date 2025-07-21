@@ -101,6 +101,7 @@
       "traefik.http.routers.web.entrypoints" = "web";
       "traefik.http.routers.web.middlewares" = "redirect-to-https";
       "traefik.http.routers.web.tls" = "false";
+      "traefik.frontend.passHostHeader" = true;
 
       # Add Traefik dashboard route on HTTPS with Authelia
       "traefik.http.routers.traefik.rule" = "Host(`traefik.kuipr.de`)";
