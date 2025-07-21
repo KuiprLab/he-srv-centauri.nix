@@ -7,6 +7,10 @@
 server:
     host: ENC[AES256_GCM,data:Fp1GjEQerg==,iv:MqHV086HeIfhZDQ6oHtjeCyvrps1N5VTN33Lpm0FNJg=,tag:XKOFTloqiODhxrO3AasfLQ==,type:str]
     port: ENC[AES256_GCM,data:HqGrDg==,iv:JJsrxJznE+wEhvUCmBTWXzrShHy6bvHsGnuqklo8IoI=,tag:bc9Ar3YL8xFAtGCrrbBK2Q==,type:int]
+    endpoints:
+        authz:
+            auth-request:
+                implementation: ENC[AES256_GCM,data:uO1QUGstbo3MbqI=,iv:fugKGoUYadquCbmVwqti+MhQWPxRh+iPco1ZPUlLtiQ=,tag:CVYxNyoI+GFgDXCWIOHenA==,type:str]
 #ENC[AES256_GCM,data:/L/NWj62Om84lU329PGS3wrMxMmspkF1,iv:7p+Lv9TI0VrXG8CyF2eKRqN7LLoM2tMFt1Go1OOm9+0=,tag:AhO9SfsDdpnUyNuiH3BKkA==,type:comment]
 default_redirection_url: ENC[AES256_GCM,data:plwY4f8Ku7V20j0Ml8gvxiE6ZPPk,iv:SMF/5SC91LPrnLuqIhWT1Jn/yViIW7WCwav5cn0pH78=,tag:GoK/Zlwsaaer8vDv2ixu0Q==,type:str]
 #ENC[AES256_GCM,data:NLvkI8DbgesdvJ8J2Ao=,iv:OpplxCjfrjCHZM+pVnnunb07ASrmzoe5CzgTCsGw6M4=,tag:Mtcd3RpO9EXTZPXyYjU5IA==,type:comment]
@@ -176,7 +180,7 @@ sops:
             RmM4OUhpTEJCR3BsaGdpU0J2R1c1N2cKD94MXwrOGcn/jyRT9oP3TROFSXaiFsJH
             7MCoRoSa+EQUgjzmwucIK9b8TiY9tgEfits8UBv//NJVPM77vQR+XQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-05-17T06:14:01Z"
-    mac: ENC[AES256_GCM,data:A8V2D5pAjYl9h7es8qB98TpYKyCbYvjuYY73bn1aCmrHfU3/I6TpcYxN64C9zurJsG4rbVhb+7KzidZGP3423KU7NLRtxtXF9DZexJmBVwawXa+eNcTznustGcz2RiqF9l9mM+CIZgH6v0eCO/6vH5D/zOqJkKQKuKzLZiAhEIs=,iv:vv5c6MZ8kay3TvfxFfl5u1DsKUqoRZats1ZkVSmQUmg=,tag:E+sgbs4xo8qyOWUcCEclBg==,type:str]
+    lastmodified: "2025-07-21T13:39:48Z"
+    mac: ENC[AES256_GCM,data:tjc2kLmmF5pxQSmMvg9wJxYTSju50qX7Yw2B3RFZyiYZYvsfTmoddhsvdLPiiG5tfKj19SLeo2Hc7TqBLb5816yax1XpHLOPWu0rYQ4lKtKm/Ra0FmP7BuVLd9zNoqyipD7rry5NNDOP4rzF6UZToFLejfJORrG+d6TVG+SdvO0=,iv:sFXNQyxgGgLRMbjz/Ed6rTgHOqIJ0zw4u8otHWy1KsM=,tag:RACqgoLng0W00uksNTL8+w==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.10.2
