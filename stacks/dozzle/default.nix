@@ -40,6 +40,8 @@
     extraOptions = [
       "--network-alias=dozzle"
       "--network=dozzle_default"
+            "--enable-shell"
+            "--hostname dozzle.kuipr.de"
     ];
   };
   systemd.services."podman-dozzle" = {
