@@ -27,7 +27,10 @@
     # ports = [
     #   "8080:8080/tcp"
     # ];
-
+    cmd = [
+       "--enable-shell"
+       "--hostname dozzle.kuipr.de"
+    ];
     labels = {
       "traefik.enable" = "true";
       "traefik.http.routers.dozzle.entrypoints" = "websecure";
@@ -40,8 +43,6 @@
     extraOptions = [
       "--network-alias=dozzle"
       "--network=dozzle_default"
-            "--enable-shell"
-            "--hostname dozzle.kuipr.de"
     ];
   };
   systemd.services."podman-dozzle" = {
