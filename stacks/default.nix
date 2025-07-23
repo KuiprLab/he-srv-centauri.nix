@@ -10,6 +10,7 @@ _: {
     ./soulseek
     ./starr
     ./traefik
+    ./dozzle
     ./update-containers.nix
   ];
 }
