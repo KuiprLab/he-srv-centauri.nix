@@ -29,7 +29,6 @@
     # ];
     cmd = [
        "--enable-shell"
-       "--hostname dozzle.kuipr.de"
     ];
     labels = {
       "traefik.enable" = "true";
