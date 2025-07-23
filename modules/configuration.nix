@@ -96,6 +96,7 @@
     just
     cifs-utils # For SMB/CIFS shares
     geoip
+    goaccess
   ];
 
   # Enable SSH for remote access
