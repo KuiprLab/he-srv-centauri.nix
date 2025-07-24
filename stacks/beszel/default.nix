@@ -66,7 +66,7 @@
     environment = {
       # Host/IP as set above ☝️ on the dashboard; select 'Binary'.
       "KEY" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINtCehsgIJdTJr1Eqds8ZMWSb1YgNtkjf5s91eZO39jB";
-      "LISTEN" = "/home/ubuntu/beszel_socket/beszel.sock";
+      "LISTEN" = "/beszel_socket/beszel.sock";
     };
     volumes = [
       "/home/ubuntu/beszel_socket:/beszel_socket:rw"
