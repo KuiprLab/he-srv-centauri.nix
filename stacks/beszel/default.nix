@@ -70,7 +70,7 @@
     };
     volumes = [
       "/home/ubuntu/beszel_socket:/beszel_socket:rw"
-      "/run/podman/podman.sock:/var/run/docker.sock:rw"
+      "/var/run/docker.sock:/var/run/docker.sock:ro"
     ];
     log-driver = "journald";
     extraOptions = [
