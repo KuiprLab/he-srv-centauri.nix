@@ -4,7 +4,7 @@
 {
   myFolders = {
     beszel = {
-      path = "/home/ubuntu/{beszel_data}";
+      path = "/home/ubuntu/{beszel_data, beszel_socket}";
       owner = "ubuntu";
       group = "users";
       mode = "0755";
@@ -25,7 +25,7 @@
     image = "henrygd/beszel:latest";
     volumes = [
       "/home/ubuntu/beszel_data:/beszel_data:rw"
-      "./beszel_socket:/beszel_socket:rw"
+      "/home/ubuntu/beszel_socket:/beszel_socket:rw"
     ];
     # ports = [
     #   "8090:8090/tcp"
@@ -69,7 +69,7 @@
       "LISTEN" = "/beszel_socket/beszel.sock";
     };
     volumes = [
-      "./beszel_socket:/beszel_socket:rw"
+      "/home/ubuntu/beszel_socket:/beszel_socket:rw"
       "/run/podman/podman.sock:/var/run/docker.sock:rw"
     ];
     log-driver = "journald";
