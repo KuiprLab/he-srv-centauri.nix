@@ -4,7 +4,7 @@
 {
   myFolders = {
     beszel = {
-      path = "/home/ubuntu/{beszel_data, beszel_socket}";
+      path = "/home/ubuntu/{beszel_data,beszel_socket}";
       owner = "ubuntu";
       group = "users";
       mode = "0755";
@@ -65,8 +65,8 @@
     image = "henrygd/beszel-agent:latest";
     environment = {
       # Host/IP as set above ☝️ on the dashboard; select 'Binary'.
-      "KEY" = "ssh-RestOfYourKey";
-      "LISTEN" = "/beszel_socket/beszel.sock";
+      "KEY" = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINtCehsgIJdTJr1Eqds8ZMWSb1YgNtkjf5s91eZO39jB";
+      "LISTEN" = "/home/ubuntu/beszel_socket/beszel.sock";
     };
     volumes = [
       "/home/ubuntu/beszel_socket:/beszel_socket:rw"
