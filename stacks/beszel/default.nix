@@ -3,7 +3,7 @@
 
 {
   myFolders = {
-    authelia = {
+    beszel = {
       path = "/home/ubuntu/beszel_data";
       owner = "ubuntu";
       group = "users";
