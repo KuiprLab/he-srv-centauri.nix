@@ -83,7 +83,6 @@
     log-driver = "journald";
     extraOptions = [
       "--network=host"
-      "--network=beszel_default"
     ];
   };
   systemd.services."podman-beszel-agent" = {
