@@ -32,10 +32,10 @@
     # ];
     labels = {
       "traefik.enable" = "true";
-      "traefik.http.routers.beszel.entrypoints" = "websecure";
-      "traefik.http.routers.beszel.middlewares" = "authelia@docker";
+      # "traefik.http.routers.beszel.entrypoints" = "websecure";
+      "traefik.http.routers.jellyfin.entrypoints" = "anubis";
       "traefik.http.routers.beszel.rule" = "Host(`beszel.kuipr.de`)";
-      "traefik.http.routers.beszel.tls.certresolver" = "myresolver";
+      # "traefik.http.routers.beszel.tls.certresolver" = "myresolver";
       "traefik.http.services.beszel.loadbalancer.server.port" = "8090";
     };
     log-driver = "journald";
