@@ -120,7 +120,7 @@
       "--api=true"
       "--api.dashboard=true"
       "--api.insecure=true"
-      "--log.level=INFO"
+      "--log.level=ERROR"
       "--accesslog=true"
       "--accesslog.filepath=/logs/access.log"
       "--accesslog.bufferingsize=100"
