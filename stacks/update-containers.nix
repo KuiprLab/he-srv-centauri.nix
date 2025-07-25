@@ -1,7 +1,11 @@
-{ pkgs, lib, config, ... }:
-let
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
   updateScript = pkgs.writeShellScriptBin "update-containers" ''
-    export PATH=${lib.makeBinPath [ pkgs.docker ]}:$PATH
+    export PATH=${lib.makeBinPath [pkgs.docker]}:$PATH
     set -euo pipefail
 
     echo "Starting container update process at $(date)"
@@ -16,15 +20,14 @@ let
 
     echo "Container update process completed at $(date)"
   '';
-in
-{
+in {
   systemd.timers.update-containers = {
     timerConfig = {
       Unit = "update-containers.service";
       OnCalendar = "weekly";
       Persistent = true;
     };
-    wantedBy = [ "timers.target" ];
+    wantedBy = ["timers.target"];
   };
 
   systemd.services.update-containers = {
@@ -34,7 +37,7 @@ in
       ExecStart = lib.getExe updateScript;
       User = "root";
     };
-    wants = [ "docker.service" ];
-    after = [ "docker.service" "network-online.target" ];
+    wants = ["docker.service"];
+    after = ["docker.service" "network-online.target"];
   };
 }

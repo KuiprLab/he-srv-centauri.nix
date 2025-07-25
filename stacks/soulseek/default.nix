@@ -103,6 +103,10 @@
       "/home/ubuntu/soularr:/data:rw"
       "/mnt/data/downloads:/downloads:rw"
     ];
+    labels = {
+      # Dummy port otherwise traefik gets mad
+      "traefik.http.services.soularr.loadbalancer.server.port" = "1337";
+    };
     user = "1000:1000";
     log-driver = "journald";
     extraOptions = [

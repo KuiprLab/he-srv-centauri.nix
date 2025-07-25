@@ -9,13 +9,6 @@
     ./kapowarr.nix
   ];
 
-  sops.secrets."decluttarr.env" = {
-    sopsFile = ./declutarr.env;
-    format = "dotenv";
-    key = "";
-    restartUnits = ["podman-decluttarr.service"];
-  };
-
   sops.secrets."radarr.env" = {
     sopsFile = ./radarr.env;
     format = "dotenv";
@@ -72,37 +65,6 @@
 
   virtualisation.oci-containers.backend = "podman";
 
-  # Containers
-  virtualisation.oci-containers.containers."decluttarr" = {
-    image = "ghcr.io/manimatter/decluttarr:latest";
-    log-driver = "journald";
-    extraOptions = [
-      "--network-alias=decluttarr"
-      "--network=proxy"
-      "--network=starr_default"
-    ];
-    environmentFiles = [
-      "/run/secrets/decluttarr.env"
-    ];
-  };
-
-  systemd.services."podman-decluttarr" = {
-    serviceConfig = {
-      Restart = lib.mkOverride 90 "always";
-    };
-    after = [
-      "podman-network-starr_default.service"
-    ];
-    requires = [
-      "podman-network-starr_default.service"
-    ];
-    partOf = [
-      "podman-compose-starr-root.target"
-    ];
-    wantedBy = [
-      "podman-compose-starr-root.target"
-    ];
-  };
   virtualisation.oci-containers.containers."flaresolverr" = {
     image = "ghcr.io/flaresolverr/flaresolverr:latest";
     ports = [
@@ -266,6 +228,10 @@
     volumes = [
       "/mnt/data/torrents:/downloads:rw"
     ];
+    labels = {
+      # Dummy port otherwise traefik gets mad
+      "traefik.http.services.unpackerr.loadbalancer.server.port" = "1337";
+    };
     user = "1000:1000";
     log-driver = "journald";
     extraOptions = [
