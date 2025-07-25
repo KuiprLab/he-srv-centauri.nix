@@ -79,6 +79,9 @@
     environmentFiles = [
       "/run/secrets/zabbix.env"
     ];
+    ports = [
+      "10050:10050"
+    ];
     volumes = [
       "/home/ubuntu/zabbix/server-data:/var/lib/zabbix:rw"
     ];
