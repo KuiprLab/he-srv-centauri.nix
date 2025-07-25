@@ -32,7 +32,7 @@
     sopsFile = ./zabbix.env;
     format = "dotenv";
     key = "";
-    restartUnits = ["podman-zabbix-db.service" "podman-zabbix-server.service" "podman-zabbix-web.service"];
+    restartUnits = ["podman-zabbix-db.service" "podman-zabbix-server.service" "podman-zabbix-web.service" "podman-zabbix-agent.service"];
   };
 
   # Enable container name DNS for all Podman networks.
@@ -123,7 +123,46 @@
     dependsOn = ["zabbix-server"];
   };
 
+  virtualisation.oci-containers.containers."zabbix-agent" = {
+    image = "zabbix/zabbix-agent:latest";
+    environment = {
+      "ZBX_HOSTNAME" = "Zabbix server";
+      "ZBX_SERVER_HOST" = "zabbix-server";
+      "ZBX_SERVER_PORT" = "10051";
+      "ZBX_PASSIVE_ALLOW" = "true";
+      "ZBX_ACTIVE_ALLOW" = "true";
+      "TZ" = "Europe/Rome";
+    };
+    ports = [
+      "10050:10050"
+    ];
+    log-driver = "journald";
+    extraOptions = [
+      "--network-alias=zabbix-agent"
+      "--network=zabbix_default"
+    ];
+    dependsOn = ["zabbix-server"];
+  };
+
   # Service configurations
+  systemd.services."podman-zabbix-agent" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "always";
+    };
+    after = [
+      "podman-network-zabbix_default.service"
+      "podman-zabbix-server.service"
+    ];
+    requires = [
+      "podman-network-zabbix_default.service"
+    ];
+    partOf = [
+      "podman-compose-zabbix-root.target"
+    ];
+    wantedBy = [
+      "podman-compose-zabbix-root.target"
+    ];
+  };
   systemd.services."podman-zabbix-db" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
