@@ -12,6 +12,6 @@
     "at any time"
   ],
   "reviewers": ["frostplexx"],
-  "automerge": false,
+  "automerge": true,
   "automergeType": "pr"
 }
