@@ -70,6 +70,8 @@
 
   virtualisation.oci-containers.containers."zabbix-server" = {
     image = "zabbix/zabbix-server-pgsql:latest";
+
+    user = "root";
     environment = {
       "DB_SERVER_HOST" = "zabbix-db";
       "POSTGRES_DB" = "zabbix";
@@ -90,6 +92,8 @@
       "--network-alias=zabbix-server"
       "--network=zabbix_default"
       "--network=proxy"
+
+      "--cap-add=NET_RAW"
     ];
     dependsOn = ["zabbix-db"];
   };
@@ -123,12 +127,16 @@
       "--network-alias=zabbix-web"
       "--network=zabbix_default"
       "--network=proxy"
+
+      "--cap-add=NET_RAW"
     ];
     dependsOn = ["zabbix-server"];
   };
 
   virtualisation.oci-containers.containers."zabbix-agent" = {
     image = "zabbix/zabbix-agent:latest";
+
+    user = "root";
     environment = {
       "ZBX_HOSTNAME" = "Zabbix server";
       "ZBX_SERVER_HOST" = "zabbix-server";
@@ -144,6 +152,7 @@
     extraOptions = [
       "--network-alias=zabbix-agent"
       "--network=zabbix_default"
+      "--cap-add=NET_RAW"
     ];
     dependsOn = ["zabbix-server"];
   };
