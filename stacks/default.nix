@@ -11,6 +11,7 @@ _: {
     ./starr
     ./traefik
     ./beszel
+    ./dozzle
     ./update-containers.nix
   ];
 }
