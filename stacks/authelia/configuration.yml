@@ -39,7 +39,7 @@ authentication_backend:
             memory: ENC[AES256_GCM,data:QUw=,iv:AK+UmmdAXcVWP7A67lmXage7GU9mUT8H97odaEREN40=,tag:/r6Yk6jlMgHvW2pKwFFr9Q==,type:int]
 #ENC[AES256_GCM,data:7mvCWE9H3jXrTSBYSJ36CFC1e8ssZiaSLk0hRTU=,iv:t7gWmsiMDSf2ZpRyczXRMFSrWTxJHgotGsAA32P28aw=,tag:l2u1EDbjujP9ocSLiSgX9w==,type:comment]
 access_control:
-    default_policy: ENC[AES256_GCM,data:U715aQQqFs9GOg==,iv:01fHurBEMZkY8RU2Yzttj0u/iHlBrfokDw8rcqXNRGs=,tag:Evg5QZEMgUQUgbvmknM2Cw==,type:str]
+    default_policy: ENC[AES256_GCM,data:ZQXytUel4/58TQ==,iv:j1P85c+qWOsw+IialQrun5okui3hd5I8HLnXdaJN5tA=,tag:u4SHUtWk24eivhKWf95G5A==,type:str]
     rules:
         - domain: ENC[AES256_GCM,data:8K6GfzyYN/Tayw9IgSo=,iv:A8R4edMByQ/n/MWf67Oy0/ysujy/HodHyQPNtem4bHs=,tag:7Nopyno7LJ7+f0ZcEA8R2A==,type:str]
           policy: ENC[AES256_GCM,data:MZnFkm7XOtoGpA==,iv:QGIbo2Uwn9AYz71ihLfJhU0lDSNbQO4sfxfViXEtv1o=,tag:9kNi6K/HdIOLwApoSJCVmw==,type:str]
@@ -191,7 +191,7 @@ sops:
             RmM4OUhpTEJCR3BsaGdpU0J2R1c1N2cKD94MXwrOGcn/jyRT9oP3TROFSXaiFsJH
             7MCoRoSa+EQUgjzmwucIK9b8TiY9tgEfits8UBv//NJVPM77vQR+XQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-07-25T06:57:19Z"
-    mac: ENC[AES256_GCM,data:pcpa6kK0e7gtVcxto/gU5uiKAfLSYqjga2slvnEtjyLkIRcMvxuT/kj6o4iC7uTrXLMDqqcI9Ltgy1OutpqXyW0co5KYNHaNJpiZnehaZ6ebC4POcVk0PsYfw41On3snXrzs/AtMQESi/2q5Lyw72z5Y+59dTUE8Q8VviBceTlg=,iv:PPXx5Yt/kXyAhggrGIrwyQfjTnkfAuN41UMd+puNY/w=,tag:kQMVfdBsZWsYt7MsMlR0FA==,type:str]
+    lastmodified: "2025-07-25T07:11:59Z"
+    mac: ENC[AES256_GCM,data:WeN5MSMCnydIzJ+OwmjwVoy+9M9eOPNYkfd74Rx9FW95XVFTKVAI0/HWxlVj/tnpoA034owmkMmIJUvXEuPtzuCO7ojD7hkgVcHLc+RAz2GgKtzGQzIURsvZSoofQY8SkYH/7lfEArXRsdP93PjAbbqVLlPu4+/w10Xvh/I2210=,iv:eaUVbGlJ3Se5vLkV3SISjYvhefCCg0SWqEKRPBJtT/U=,tag:mndEWiYC4If8S5zsAMgFmQ==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.10.2
