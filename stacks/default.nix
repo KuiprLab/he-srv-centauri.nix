@@ -13,6 +13,5 @@ _: {
     ./beszel
     ./dozzle
     ./update-containers.nix
-    ./zabbix
   ];
 }
