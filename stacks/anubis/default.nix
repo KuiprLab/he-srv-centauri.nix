@@ -35,7 +35,7 @@
     ];
     labels = {
       "traefik.docker.network" = "proxy"; # Telling Traefik which network to use
-      "traefik.http.routers.anubis.rule" = "HostRegexp(`.*\.?kuipr\.de$`) && PathRegexp(`.*`)"; # Wildcard match every path
+      "traefik.http.routers.anubis.rule" = "HostRegexp(`{subdomain:.+}\\.kuipr\\.de`) && PathRegexp(`.*`)";
       "traefik.http.routers.anubis.priority" = "1"; # Setting Anubis to the lowest priority, so it only takes the slack
       "traefik.http.routers.anubis.entrypoints" = "websecure"; # Listen on HTTPS
       "traefik.http.routers.anubis.service" = "anubis"; # Telling Traefik to use the above specified port
