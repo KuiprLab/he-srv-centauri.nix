@@ -92,7 +92,6 @@
       "--network-alias=zabbix-server"
       "--network=zabbix_default"
       "--network=proxy"
-
       "--cap-add=NET_RAW"
     ];
     dependsOn = ["zabbix-db"];
@@ -127,7 +126,6 @@
       "--network-alias=zabbix-web"
       "--network=zabbix_default"
       "--network=proxy"
-
       "--cap-add=NET_RAW"
     ];
     dependsOn = ["zabbix-server"];
@@ -145,9 +143,6 @@
       "ZBX_ACTIVE_ALLOW" = "true";
       "TZ" = "Europe/Rome";
     };
-    ports = [
-      "10050:10050"
-    ];
     log-driver = "journald";
     extraOptions = [
       "--network-alias=zabbix-agent"
