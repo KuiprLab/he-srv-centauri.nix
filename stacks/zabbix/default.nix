@@ -79,16 +79,17 @@
     environmentFiles = [
       "/run/secrets/zabbix.env"
     ];
-    ports = [
-      "10050:10050"
-    ];
     volumes = [
       "/home/ubuntu/zabbix/server-data:/var/lib/zabbix:rw"
     ];
+    labels = {
+      "traefik.http.services.zabbix_server.loadbalancer.server.port" = "10050";
+    };
     log-driver = "journald";
     extraOptions = [
       "--network-alias=zabbix-server"
       "--network=zabbix_default"
+      "--network=proxy"
     ];
     dependsOn = ["zabbix-db"];
   };
