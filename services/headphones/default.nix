@@ -1,6 +1,6 @@
 _: {
   services.headphones = {
     enable = true;
-    host = "headphones.kuipr.de";
+    host = "127.0.0.1";
   };
 }
