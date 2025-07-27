@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  impurity,
   ...
 }: {
   imports = [../../utils/my-declared-folders.nix];
@@ -34,9 +35,7 @@
     };
   };
 
-  systemd.tmpfiles.rules = [
-    "L+ /home/ubuntu/traefik/config/dynamic.yml - - - - ${./dynamic.yml}"
-  ];
+  "/home/ubuntu/traefik/config/dynamic.yml" = impurity.link ./default.nix;
 
   # Enable container name DNS for all Podman networks.
   networking.firewall.interfaces = let

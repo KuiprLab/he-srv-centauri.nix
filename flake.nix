@@ -10,6 +10,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    impurity.url = "github:outfoxxed/impurity.nix";
+
     # For secrets management
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -31,6 +33,7 @@
     nixpkgs,
     deploy-rs,
     sops-nix,
+    impurity,
     ...
   } @ inputs: let
     system = "aarch64-linux";
@@ -60,6 +63,10 @@
           ./services
           sops-nix.nixosModules.sops
           inputs.disko.nixosModules.disko
+          {
+            imports = [impurity.nixosModules.impurity];
+            impurity.configRoot = self;
+          }
         ];
       };
     };
