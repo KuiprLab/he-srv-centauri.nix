@@ -139,9 +139,6 @@
       "--providers.file.watch=true"
     ];
     log-driver = "journald";
-    extraHosts = [
-      "host.docker.internal:host-gateway"
-    ];
     extraOptions = [
       "--network-alias=traefik"
       "--network=proxy"
