@@ -35,7 +35,7 @@
     };
   };
 
-  "/home/ubuntu/traefik/config/dynamic.yml".source = impurity.link ./default.nix;
+  #TODO: figure out how to automatically move ./dynamic.yml to the correct place
 
   # Enable container name DNS for all Podman networks.
   networking.firewall.interfaces = let
