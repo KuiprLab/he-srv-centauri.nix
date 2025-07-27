@@ -6,8 +6,9 @@
   ...
 }: {
   imports = [
+    # ./declutarr.nix
+    # ./headphones.nix
     ./kapowarr.nix
-    ./headphones.nix
   ];
 
   sops.secrets."radarr.env" = {
