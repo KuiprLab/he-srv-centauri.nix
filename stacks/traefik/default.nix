@@ -144,6 +144,7 @@
       "--network=proxy"
       "--network=anubis_default"
       "--add-host=host.containers.internal:host-gateway"
+      "--network=host" # Add host network access
     ];
   };
   systemd.services."podman-traefik" = {
