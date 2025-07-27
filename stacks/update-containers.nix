@@ -12,11 +12,11 @@
 
     # Pull all images (this will update existing ones)
     echo "Pulling all Docker images..."
-    sudo docker images | awk '(NR>1) && ($2!~/none/) {print $1":"$2}' | xargs -L1 sudo docker pull
+    docker images | awk '(NR>1) && ($2!~/none/) {print $1":"$2}' | xargs -L1 docker pull
 
     # Restart all containers
     echo "Restarting all containers..."
-    sudo systemctl restart podman-*
+    systemctl restart podman-*
 
     echo "Container update process completed at $(date)"
   '';
