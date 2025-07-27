@@ -34,6 +34,10 @@
     };
   };
 
+  systemd.tmpfiles.rules = [
+    "L+ /home/ubuntu/traefik/config/dynamic.yml - - - - ${./dynamic.yml}"
+  ];
+
   # Enable container name DNS for all Podman networks.
   networking.firewall.interfaces = let
     matchAll =
@@ -108,12 +112,6 @@
       "traefik.http.routers.traefik.tls.certresolver" = "myresolver";
       "traefik.http.routers.traefik.service" = "api@internal";
       "traefik.http.routers.traefik.middlewares" = "authelia@docker";
-
-      # Add headphones route
-      "traefik.http.routers.headphones.rule" = "Host(`headphones.kuipr.de`)";
-      "traefik.http.routers.headphones.entrypoints" = "websecure";
-      "traefik.http.routers.headphones.middlewares" = "authelia@docker";
-      "traefik.http.services.headphones.loadbalancer.server.url" = "http://headphones.kuipr.de:8181/";
     };
     environmentFiles = [
       "/run/secrets/traefik.env"
@@ -138,6 +136,8 @@
       "--certificatesresolvers.myresolver.acme.dnschallenge.provider=hetzner"
       "--certificatesresolvers.myresolver.acme.email=daniel.inama02@gmail.com"
       "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      "--providers.file.directory=/config"
+      "--providers.file.watch=true"
     ];
     log-driver = "journald";
     extraOptions = [

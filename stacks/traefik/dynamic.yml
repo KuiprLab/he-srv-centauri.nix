@@ -1,0 +1,17 @@
+http:
+  routers:
+    headphones:
+      rule: "Host(`headphones.kuipr.de`)"
+      entryPoints:
+        - websecure
+      middlewares:
+        - authelia@docker
+      service: headphones-service
+      tls:
+        certResolver: myresolver
+
+  services:
+    headphones-service:
+      loadBalancer:
+        servers:
+          - url: "http://127.0.0.1:8181/"
