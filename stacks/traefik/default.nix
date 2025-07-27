@@ -35,7 +35,7 @@
     };
   };
 
-  "/home/ubuntu/traefik/config/dynamic.yml" = impurity.link ./default.nix;
+  "/home/ubuntu/traefik/config/dynamic.yml".source = impurity.link ./default.nix;
 
   # Enable container name DNS for all Podman networks.
   networking.firewall.interfaces = let
