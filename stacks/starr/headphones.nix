@@ -22,7 +22,7 @@
   };
 
   virtualisation.oci-containers.containers."headphones" = {
-    image = "factualgoldfish/headphones:latest";
+    image = "waxou/headphones:latest";
     volumes = [
       "/home/ubuntu/headphones:/config:rw"
       "/mnt/data/media/music:/music:rw"
