@@ -143,8 +143,7 @@
       "--network-alias=traefik"
       "--network=proxy"
       "--network=anubis_default"
-      "--add-host=host.containers.internal:host-gateway"
-      "--cap-add=NET_ADMIN" # Add network admin capability
+      "--add-host=host.docker.internal:host-gateway"
     ];
   };
   systemd.services."podman-traefik" = {
