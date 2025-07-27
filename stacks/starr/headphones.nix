@@ -1,4 +1,3 @@
-
 # Auto-generated using compose2nix v0.3.2-pre.
 {
   pkgs,
@@ -29,6 +28,7 @@
       "/mnt/data/media/music:/music:rw"
       "/mnt/data/downloads:/downloads:rw"
     ];
+    user = "0:0";
     labels = {
       "traefik.docker.network" = "proxy";
       "traefik.enable" = "true";
