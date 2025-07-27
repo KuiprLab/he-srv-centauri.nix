@@ -7,6 +7,7 @@
 }: {
   imports = [
     ./kapowarr.nix
+    ./headphones.nix
   ];
 
   sops.secrets."radarr.env" = {
