@@ -113,7 +113,7 @@
       "traefik.http.routers.headphones.rule" = "Host(`headphones.kuipr.de`)";
       "traefik.http.routers.headphones.entrypoints" = "websecure";
       "traefik.http.routers.headphones.middlewares" = "authelia@docker";
-      "traefik.http.services.headphones.loadbalancer.server.url" = "http://127.0.0.1:8181";
+      "traefik.http.services.headphones.loadbalancer.server.url" = "http://localhost:8181";
     };
     environmentFiles = [
       "/run/secrets/traefik.env"
