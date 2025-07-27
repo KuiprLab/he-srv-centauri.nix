@@ -5,7 +5,7 @@ http:
       entryPoints:
         - websecure
       middlewares:
-        - authelia@docker
+        # - authelia@docker
       service: headphones-service
       tls:
         certResolver: myresolver
@@ -14,4 +14,5 @@ http:
     headphones-service:
       loadBalancer:
         servers:
-          - url: "http://127.0.0.1:8181"
+          - url: "http://127.0.0.1"
+          - port: "8181"

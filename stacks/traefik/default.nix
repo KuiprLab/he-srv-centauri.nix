@@ -143,6 +143,7 @@
       "--network-alias=traefik"
       "--network=proxy"
       "--network=anubis_default"
+      "--add-host=host.containers.internal:host-gateway"
     ];
   };
   systemd.services."podman-traefik" = {
