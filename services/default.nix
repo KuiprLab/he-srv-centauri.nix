@@ -3,5 +3,6 @@ _: {
     ./tailscale.nix
     # ./nginx
     ./haproxy
+    ./headphones
   ];
 }
