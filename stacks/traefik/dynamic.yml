@@ -14,4 +14,4 @@ http:
     headphones-service:
       loadBalancer:
         servers:
-          - url: "http://127.0.0.1:8181/"
+          - url: "http://127.0.0.1:8181"
