@@ -19,6 +19,7 @@ warn-if-dev branch:
 
 [doc("Locally deploy the config using nh")]
 deploy-main host="he-srv-centauri":
+    @sudo chown ubuntu *
     @just warn-if-dev main
     @if [ "{{current-branch}}" = "dev" ]; then sudo git checkout main; else echo "Already on main."; fi
     @sudo git pull
