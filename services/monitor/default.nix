@@ -164,7 +164,7 @@ with lib; let
 
         def __init__(self, config: Config):
             self.config = config
-            openai.api_key = config.openai_api_key
+            self.client = OpenAI(api_key=config.openai_api_key)
 
         def summarize_logs(self, docker_logs: Dict[str, str], fail2ban_logs: str) -> str:
             """Generate AI summary of all logs"""
@@ -177,7 +177,7 @@ with lib; let
 
                 prompt = self._create_summary_prompt(log_content)
 
-                response = openai.ChatCompletion.create(
+                response = self.client.chat.completions.create(
                     model="gpt-3.5-turbo",
                     messages=[
                         {"role": "system", "content": "You are a system administrator assistant that analyzes server logs and provides concise, actionable summaries."},
@@ -248,7 +248,7 @@ with lib; let
                         "title": f"Daily Log Summary - Part {i+1}/{len(chunks)}" if len(chunks) > 1 else "Daily Log Summary",
                         "description": chunk,
                         "color": 0x00ff00 if "error" not in chunk.lower() and "warning" not in chunk.lower() else 0xff0000,
-                        "timestamp": datetime.utcnow().isoformat(),
+                        "timestamp": datetime.now().isoformat(),
                         "footer": {
                             "text": f"Generated at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
                         }
@@ -302,6 +302,23 @@ with lib; let
         """Load configuration from environment variables"""
         discord_webhook = os.getenv('DISCORD_WEBHOOK_URL')
         openai_key = os.getenv('OPENAI_API_KEY')
+
+        # Handle file-based secrets (common in NixOS)
+        if discord_webhook and discord_webhook.startswith('/'):
+            try:
+                with open(discord_webhook, 'r') as f:
+                    discord_webhook = f.read().strip()
+            except Exception as e:
+                logger.error(f"Error reading Discord webhook from file: {e}")
+                raise ValueError("Could not read DISCORD_WEBHOOK_URL from file")
+
+        if openai_key and openai_key.startswith('/'):
+            try:
+                with open(openai_key, 'r') as f:
+                    openai_key = f.read().strip()
+            except Exception as e:
+                logger.error(f"Error reading OpenAI key from file: {e}")
+                raise ValueError("Could not read OPENAI_API_KEY from file")
 
         if not discord_webhook:
             raise ValueError("DISCORD_WEBHOOK_URL environment variable is required")
@@ -438,6 +455,18 @@ in {
 
     users.groups.${cfg.group} = {};
 
+    # Ensure docker socket permissions
+    systemd.services.log-monitor-setup = {
+      description = "Setup log monitor permissions";
+      wantedBy = ["log-monitor.service" "log-monitor-test.service"];
+      before = ["log-monitor.service" "log-monitor-test.service"];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = "${pkgs.coreutils}/bin/chmod g+rw /var/run/docker.sock || true";
+      };
+    };
+
     # Create log directory
     systemd.tmpfiles.rules = [
       "d /var/log 0755 root root -"
@@ -447,7 +476,7 @@ in {
     # SystemD service
     systemd.services.log-monitor = {
       description = "Daily Log Monitor and AI Summarizer";
-      after = ["network.target" "docker.service" "fail2ban.service"];
+      after = ["network.target" "docker.service" "fail2ban.service" "log-monitor-setup.service"];
       wants = ["network.target"];
       wantedBy = ["multi-user.target"];
 
@@ -478,6 +507,7 @@ in {
 
     systemd.services.log-monitor-test = {
       description = "Test Log Monitor";
+      after = ["log-monitor-setup.service"];
       serviceConfig = {
         Type = "oneshot";
         User = cfg.user;
