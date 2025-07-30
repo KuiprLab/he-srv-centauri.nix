@@ -461,8 +461,8 @@ in {
 
       serviceConfig = {
         Type = "simple";
-        User = cfg.user;
-        Group = cfg.group;
+        User = "root"; # Run as root
+        Group = "root"; # Run as root group
         ExecStart = "${pythonEnv}/bin/python ${logMonitorScript}";
         Restart = "always";
         RestartSec = "10";
@@ -489,8 +489,8 @@ in {
       after = ["log-monitor-setup.service"];
       serviceConfig = {
         Type = "oneshot";
-        User = cfg.user;
-        Group = cfg.group;
+        User = "root"; # Run as root
+        Group = "root"; # Run as root group
         ExecStart = "${pythonEnv}/bin/python ${logMonitorScript}";
         BindReadOnlyPaths = ["/run/podman/podman.sock"];
         Environment = "XDG_RUNTIME_DIR=/run"; # for rootful podman socket

@@ -34,7 +34,7 @@
     maxLogLines = 10000;
     summaryMaxTokens = 1000;
     logFile = "/var/log/log-monitor.log";
-    user = "log-monitor";
-    group = "log-monitor";
+    user = "root";
+    group = "root";
   };
 }
