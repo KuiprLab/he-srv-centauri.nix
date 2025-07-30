@@ -490,8 +490,8 @@ in {
       };
 
       environment = {
-        DISCORD_WEBHOOK_URL = cfg.discordWebhookUrl;
-        OPENAI_API_KEY = cfg.openaiApiKey;
+        DISCORD_WEBHOOK_FILE = cfg.discordWebhookUrl;
+        OPENAI_API_KEY_FILE = cfg.openaiApiKey;
       };
     };
 
