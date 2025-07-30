@@ -469,6 +469,21 @@ in {
       };
     };
 
+    systemd.services.log-monitor-test = {
+      description = "Test Log Monitor";
+      serviceConfig = {
+        Type = "oneshot";
+        User = cfg.user;
+        Group = cfg.group;
+        ExecStart = "${pythonEnv}/bin/python ${logMonitorScript}";
+      };
+      environment = {
+        DISCORD_WEBHOOK_URL = cfg.discordWebhookUrl;
+        OPENAI_API_KEY = cfg.openaiApiKey;
+        TEST_RUN = "1";
+      };
+    };
+
     # Ensure required services are available
     warnings =
       optional (!config.virtualisation.docker.enable)
