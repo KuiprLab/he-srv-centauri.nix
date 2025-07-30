@@ -89,6 +89,10 @@ with lib; let
                         # Get logs for each container
                         log_result = subprocess.run(
                             ["${pkgs.podman}/bin/podman", "logs", "--since", since_str, "--tail", str(self.config.max_log_lines), container],
+                            capture_output=True,
+                            text=True,
+                            timeout=30
+                        )
 
                         if log_result.stdout or log_result.stderr:
                             combined_logs = f"STDOUT:\n{log_result.stdout}\n\nSTDERR:\n{log_result.stderr}"
