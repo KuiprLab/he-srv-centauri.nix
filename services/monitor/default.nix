@@ -445,18 +445,6 @@ in {
 
     users.groups.${cfg.group} = {};
 
-    # Ensure docker socket permissions
-    systemd.services.log-monitor-setup = {
-      description = "Setup log monitor permissions";
-      wantedBy = ["log-monitor.service" "log-monitor-test.service"];
-      before = ["log-monitor.service" "log-monitor-test.service"];
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-        ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.coreutils}/bin/chmod g+rw /var/run/docker.sock'";
-      };
-    };
-
     # Create log directory
     systemd.tmpfiles.rules = [
       "d /var/log 0755 root root -"
@@ -466,7 +454,7 @@ in {
     # SystemD service
     systemd.services.log-monitor = {
       description = "Daily Log Monitor and AI Summarizer";
-      after = ["network.target" "docker.service" "fail2ban.service" "log-monitor-setup.service"];
+      after = ["network.target" "docker.service" "fail2ban.service"];
       wants = ["network.target"];
       wantedBy = ["multi-user.target"];
 
@@ -478,8 +466,6 @@ in {
         Restart = "always";
         RestartSec = "10";
 
-        # Security hardening
-        NoNewPrivileges = true;
         PrivateTmp = true;
         ProtectSystem = "strict";
         ProtectHome = true;
