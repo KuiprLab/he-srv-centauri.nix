@@ -213,7 +213,7 @@ with lib; let
             # Add fail2ban logs
             if fail2ban_logs.strip():
                 content_parts.append("=== FAIL2BAN LOGS ===")
-                content_parts.append(fail2ban_logs[:3000])  # Limit to prevent token overflow
+                content_parts.append(fail2ban_logs[:1000])  # Limit to prevent token overflow
 
             # Add docker logs
             if docker_logs:
