@@ -20,8 +20,8 @@
   # Enable and configure the log monitor service
   services.log-monitor = {
     enable = true;
-    discordWebhookUrl = builtins.readFile config.sops.secrets."discord-webhook".path;
-    openaiApiKey = builtins.readFile config.sops.secrets."openai-api-key".path;
+    discordWebhookUrl = config.sops.secrets."discord-webhook".path;
+    openaiApiKey = config.sops.secrets."openai-api-key".path;
 
     # Optional customizations
     fail2banLogPath = "/var/log/fail2ban.log";
