@@ -33,6 +33,7 @@ with lib; let
     from typing import Dict, List, Optional
     import openai
     from dataclasses import dataclass
+    import sys
 
     # Configure logging
     logging.basicConfig(
@@ -354,6 +355,12 @@ with lib; let
 
     def main():
         """Main entry point"""
+        # Check if this is a test run
+        if os.getenv('TEST_RUN') == '1':
+            logger.info("Running in test mode - executing single summary")
+            run_daily_summary()
+            sys.exit(0)
+
         logger.info("Starting log monitor service")
 
         # Schedule daily run at 8 AM
