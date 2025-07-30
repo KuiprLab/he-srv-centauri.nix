@@ -12,7 +12,6 @@ with lib; let
       requests
       schedule
       openai
-      pathlib
     ]);
 
   logMonitorScript = pkgs.writeText "log_monitor.py" ''
