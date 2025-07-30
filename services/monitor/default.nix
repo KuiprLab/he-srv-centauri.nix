@@ -423,13 +423,13 @@ in {
 
     user = mkOption {
       type = types.str;
-      default = "log-monitor";
+      default = "root";
       description = "User to run the log monitor service as";
     };
 
     group = mkOption {
       type = types.str;
-      default = "log-monitor";
+      default = "root";
       description = "Group to run the log monitor service as";
     };
   };
