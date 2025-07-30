@@ -165,7 +165,7 @@ with lib; let
 
         def __init__(self, config: Config):
             self.config = config
-            self.client = OpenAI(api_key=config.openai_api_key)
+            # self.client = OpenAI(api_key=config.openai_api_key)
 
         def summarize_logs(self, docker_logs: Dict[str, str], fail2ban_logs: str) -> str:
             """Generate AI summary of all logs"""
