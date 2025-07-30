@@ -34,7 +34,7 @@ with lib; let
     from dataclasses import dataclass
     import sys
     import openai
-    from openai import OpenAI  # Add this import at the top
+    from openai import OpenAI
 
     # Configure logging
     logging.basicConfig(
@@ -58,6 +58,18 @@ with lib; let
 
     class LogCollector:
         """Handles collection of Docker and fail2ban logs"""
+
+        def compress_and_deduplicate_logs(self, logs: str) -> str:
+            """Compress and deduplicate log lines, including occurrence counts"""
+            from collections import Counter
+
+            line_counts = Counter(logs.splitlines())
+            compressed_logs = [
+                f"[{count}x] {line}" if count > 1 else line
+                for line, count in line_counts.items()
+            ]
+
+            return '\n'.join(compressed_logs)
 
         def __init__(self, config: Config):
             self.config = config
@@ -96,7 +108,7 @@ with lib; let
 
                         if log_result.stdout or log_result.stderr:
                             combined_logs = f"STDOUT:\n{log_result.stdout}\n\nSTDERR:\n{log_result.stderr}"
-                            logs[container] = combined_logs
+                            logs[container] = self.compress_and_deduplicate_logs(combined_logs)
 
                     except subprocess.TimeoutExpired:
                         logger.warning(f"Timeout collecting logs for container: {container}")
@@ -123,10 +135,10 @@ with lib; let
                         check=True,
                         timeout=30
                     )
-                    return result.stdout
+                    return self.compress_and_deduplicate_logs(result.stdout)
                 except (subprocess.CalledProcessError, FileNotFoundError):
                     # Fallback to log file parsing
-                    return self._parse_fail2ban_logfile(hours)
+                    return self.compress_and_deduplicate_logs(self._parse_fail2ban_logfile(hours))
 
             except Exception as e:
                 logger.error(f"Error collecting fail2ban logs: {e}")
@@ -461,13 +473,13 @@ in {
 
       serviceConfig = {
         Type = "simple";
-        User = "root"; # Run as root
-        Group = "root"; # Run as root group
+        User = "root";
+        Group = "root";
         ExecStart = "${pythonEnv}/bin/python ${logMonitorScript}";
         Restart = "always";
         RestartSec = "10";
         BindReadOnlyPaths = ["/run/podman/podman.sock"];
-        Environment = "XDG_RUNTIME_DIR=/run"; # for rootful podman socket
+        Environment = "XDG_RUNTIME_DIR=/run";
 
         PrivateTmp = true;
         ProtectSystem = "strict";
@@ -489,11 +501,11 @@ in {
       after = ["log-monitor-setup.service"];
       serviceConfig = {
         Type = "oneshot";
-        User = "root"; # Run as root
-        Group = "root"; # Run as root group
+        User = "root";
+        Group = "root";
         ExecStart = "${pythonEnv}/bin/python ${logMonitorScript}";
         BindReadOnlyPaths = ["/run/podman/podman.sock"];
-        Environment = "XDG_RUNTIME_DIR=/run"; # for rootful podman socket
+        Environment = "XDG_RUNTIME_DIR=/run";
       };
       environment = {
         DISCORD_WEBHOOK_FILE = cfg.discordWebhookUrl;
