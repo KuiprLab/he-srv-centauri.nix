@@ -31,9 +31,9 @@ with lib; let
     from pathlib import Path
     import os
     from typing import Dict, List, Optional
-    import openai
     from dataclasses import dataclass
     import sys
+    from openai import OpenAI  # Add this import at the top
 
     # Configure logging
     logging.basicConfig(
@@ -165,7 +165,7 @@ with lib; let
 
         def __init__(self, config: Config):
             self.config = config
-            # self.client = OpenAI(api_key=config.openai_api_key)
+            self.client = OpenAI(api_key=config.openai_api_key)
 
         def summarize_logs(self, docker_logs: Dict[str, str], fail2ban_logs: str) -> str:
             """Generate AI summary of all logs"""
@@ -178,16 +178,15 @@ with lib; let
 
                 prompt = self._create_summary_prompt(log_content)
 
-                response = openai.ChatCompletion.create(
+                response = self.client.chat.completions.create(
                     model="gpt-3.5-turbo",
                     messages=[
-                        {"role": "system", "content": "You are a system administrator assistant that analyzes server logs and provides concise, actionable summaries."},
+                        {"role": "system", "content": "You are a system administrator assistant..."},
                         {"role": "user", "content": prompt}
                     ],
                     max_tokens=self.config.summary_max_tokens,
                     temperature=0.3
                 )
-
                 return response.choices[0].message.content.strip()
 
             except Exception as e:
