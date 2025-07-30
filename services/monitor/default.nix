@@ -463,7 +463,7 @@ in {
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
-        ExecStart = "${pkgs.coreutils}/bin/chmod g+rw /var/run/docker.sock || true";
+        ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.coreutils}/bin/chmod g+rw /var/run/docker.sock || true'";
       };
     };
 
