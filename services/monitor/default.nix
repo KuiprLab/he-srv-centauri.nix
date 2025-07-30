@@ -300,30 +300,20 @@ with lib; let
 
     def load_config() -> Config:
         """Load configuration from environment variables"""
-        discord_webhook = os.getenv('DISCORD_WEBHOOK_URL')
-        openai_key = os.getenv('OPENAI_API_KEY')
+        discord_webhook_file = os.getenv('DISCORD_WEBHOOK_FILE')
+        openai_key_file = os.getenv('OPENAI_API_KEY_FILE')
 
-        # Handle file-based secrets (common in NixOS)
-        if discord_webhook and discord_webhook.startswith('/'):
-            try:
-                with open(discord_webhook, 'r') as f:
-                    discord_webhook = f.read().strip()
-            except Exception as e:
-                logger.error(f"Error reading Discord webhook from file: {e}")
-                raise ValueError("Could not read DISCORD_WEBHOOK_URL from file")
+        if not discord_webhook_file:
+            raise ValueError("DISCORD_WEBHOOK_FILE environment variable is required")
+        if not openai_key_file:
+            raise ValueError("OPENAI_API_KEY_FILE environment variable is required")
 
-        if openai_key and openai_key.startswith('/'):
-            try:
-                with open(openai_key, 'r') as f:
-                    openai_key = f.read().strip()
-            except Exception as e:
-                logger.error(f"Error reading OpenAI key from file: {e}")
-                raise ValueError("Could not read OPENAI_API_KEY from file")
+        # Read secrets from files
+        with open(discord_webhook_file, 'r') as f:
+            discord_webhook = f.read().strip()
 
-        if not discord_webhook:
-            raise ValueError("DISCORD_WEBHOOK_URL environment variable is required")
-        if not openai_key:
-            raise ValueError("OPENAI_API_KEY environment variable is required")
+        with open(openai_key_file, 'r') as f:
+            openai_key = f.read().strip()
 
         return Config(
             discord_webhook_url=discord_webhook,
