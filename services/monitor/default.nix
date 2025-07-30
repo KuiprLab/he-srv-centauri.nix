@@ -33,6 +33,7 @@ with lib; let
     from typing import Dict, List, Optional
     from dataclasses import dataclass
     import sys
+    import openai
     from openai import OpenAI  # Add this import at the top
 
     # Configure logging
@@ -72,7 +73,7 @@ with lib; let
             try:
                 # Get list of all containers
                 result = subprocess.run(
-                    ["${pkgs.podman}/bin/podman", "ps", "-a", "--format", "{{.Names}}"],
+                    ["sudo", "${pkgs.podman}/bin/podman", "ps", "-a", "--format", "{{.Names}}"],
                     capture_output=True,
                     text=True,
                     check=True
@@ -87,7 +88,7 @@ with lib; let
                     try:
                         # Get logs for each container
                         log_result = subprocess.run(
-                            ["${pkgs.podman}/bin/podman", "logs", "--since", since_str, "--tail", str(self.config.max_log_lines), container],
+                            ["sudo", "${pkgs.podman}/bin/podman", "logs", "--since", since_str, "--tail", str(self.config.max_log_lines), container],
                             capture_output=True,
                             text=True,
                             timeout=30
