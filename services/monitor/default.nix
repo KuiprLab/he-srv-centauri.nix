@@ -221,7 +221,7 @@ with lib; let
                 for container, logs in docker_logs.items():
                     if logs.strip():
                         content_parts.append(f"\n--- Container: {container} ---")
-                        content_parts.append(logs[:2500])  # Limit per container
+                        content_parts.append(logs[:2000])  # Limit per container
 
             return '\n'.join(content_parts)
 
