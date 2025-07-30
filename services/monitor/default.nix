@@ -72,7 +72,7 @@ with lib; let
             try:
                 # Get list of all containers
                 result = subprocess.run(
-                    ["${pkgs.docker}/bin/docker", "ps", "-a", "--format", "{{.Names}}"],
+                    ["${pkgs.podman}/bin/podman", "ps", "-a", "--format", "{{.Names}}"],
                     capture_output=True,
                     text=True,
                     check=True
@@ -87,7 +87,7 @@ with lib; let
                     try:
                         # Get logs for each container
                         log_result = subprocess.run(
-                            ["${pkgs.docker}/bin/docker", "logs", "--since", since_str, "--tail", str(self.config.max_log_lines), container],
+                            ["${pkgs.podman}/bin/podman", "logs", "--since", since_str, "--tail", str(self.config.max_log_lines), container],
                             capture_output=True,
                             text=True,
                             timeout=30
