@@ -89,10 +89,6 @@ with lib; let
                         # Get logs for each container
                         log_result = subprocess.run(
                             ["${pkgs.podman}/bin/podman", "logs", "--since", since_str, "--tail", str(self.config.max_log_lines), container],
-                            capture_output=True,
-                            text=True,
-                            timeout=30
-                        )
 
                         if log_result.stdout or log_result.stderr:
                             combined_logs = f"STDOUT:\n{log_result.stdout}\n\nSTDERR:\n{log_result.stderr}"
@@ -440,7 +436,7 @@ in {
     users.users.${cfg.user} = {
       isSystemUser = true;
       group = cfg.group;
-      extraGroups = ["docker" "systemd-journal"];
+      extraGroups = ["podman" "systemd-journal"];
       description = "Log monitor service user";
     };
 
@@ -455,7 +451,7 @@ in {
     # SystemD service
     systemd.services.log-monitor = {
       description = "Daily Log Monitor and AI Summarizer";
-      after = ["network.target" "docker.service" "fail2ban.service"];
+      after = ["network.target" "podman.service" "fail2ban.service"];
       wants = ["network.target"];
       wantedBy = ["multi-user.target"];
 
@@ -504,8 +500,8 @@ in {
 
     # Ensure required services are available
     warnings =
-      optional (!config.virtualisation.docker.enable)
-      "log-monitor: Docker service is not enabled, Docker log collection will not work"
+      optional (!config.virtualisation.podman.enable)
+      "log-monitor: Podman service is not enabled, container log collection will not work"
       ++ optional (!config.services.fail2ban.enable)
       "log-monitor: fail2ban service is not enabled, security log collection may be limited";
   };
