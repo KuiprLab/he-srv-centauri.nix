@@ -466,6 +466,8 @@ in {
         ExecStart = "${pythonEnv}/bin/python ${logMonitorScript}";
         Restart = "always";
         RestartSec = "10";
+        BindReadOnlyPaths = ["/run/podman/podman.sock"];
+        Environment = "XDG_RUNTIME_DIR=/run"; # for rootful podman socket
 
         PrivateTmp = true;
         ProtectSystem = "strict";
@@ -490,6 +492,8 @@ in {
         User = cfg.user;
         Group = cfg.group;
         ExecStart = "${pythonEnv}/bin/python ${logMonitorScript}";
+        BindReadOnlyPaths = ["/run/podman/podman.sock"];
+        Environment = "XDG_RUNTIME_DIR=/run"; # for rootful podman socket
       };
       environment = {
         DISCORD_WEBHOOK_FILE = cfg.discordWebhookUrl;
