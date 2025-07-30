@@ -60,6 +60,7 @@ with lib; let
 
         def __init__(self, config: Config):
             self.config = config
+            openai.api_key = config.openai_api_key
 
         def get_docker_logs(self, hours: int = 24) -> Dict[str, str]:
             """Collect Docker logs from all containers for the last N hours"""
@@ -177,7 +178,7 @@ with lib; let
 
                 prompt = self._create_summary_prompt(log_content)
 
-                response = self.client.chat.completions.create(
+                response = openai.ChatCompletion.create(
                     model="gpt-3.5-turbo",
                     messages=[
                         {"role": "system", "content": "You are a system administrator assistant that analyzes server logs and provides concise, actionable summaries."},
