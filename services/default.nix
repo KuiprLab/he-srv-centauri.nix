@@ -8,11 +8,17 @@
 
   sops.secrets = {
     "discord-webhook" = {
-      sopsFile = ./secrets.yaml; # or your main secrets file
+      sopsFile = ./secrets.yaml;
+      owner = config.services.log-monitor.user;
+      group = config.services.log-monitor.group;
+      mode = "0400";
       restartUnits = ["log-monitor.service"];
     };
     "openai-api-key" = {
-      sopsFile = ./secrets.yaml; # or your main secrets file
+      sopsFile = ./secrets.yaml;
+      owner = config.services.log-monitor.user;
+      group = config.services.log-monitor.group;
+      mode = "0400";
       restartUnits = ["log-monitor.service"];
     };
   };
