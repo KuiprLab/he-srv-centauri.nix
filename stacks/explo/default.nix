@@ -36,6 +36,9 @@
       "/mnt/data/downloads:/slskd:rw"
       "/mnt/data/media/music:/data:rw"
     ];
+    cmd = [
+      "--platform linux/amd64"
+    ];
     log-driver = "journald";
     extraOptions = [
       "--network-alias=explo"
