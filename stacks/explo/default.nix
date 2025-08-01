@@ -36,15 +36,13 @@
       "/mnt/data/downloads:/slskd:rw"
       "/mnt/data/media/music:/data:rw"
     ];
-    cmd = [
-      "--platform linux/amd64"
-    ];
     log-driver = "journald";
     extraOptions = [
       "--network-alias=explo"
       "--network=explo_default"
       "--network=jellyfin_default"
       "--network=proxy"
+      "--platform=linux/amd64"
     ];
   };
   systemd.services."podman-explo" = {
