@@ -24,6 +24,17 @@
     restartUnits = ["podman-explo.service"];
   };
 
+  # Enable QEMU user emulation for x86_64
+  boot.binfmt.emulatedSystems = ["x86_64-linux"];
+
+  # Ensure qemu is available
+  virtualisation.podman.enable = true;
+
+  # You might also need to explicitly enable the qemu package
+  environment.systemPackages = with pkgs; [
+    qemu
+  ];
+
   # Containers
   virtualisation.oci-containers.containers."explo" = {
     image = "ghcr.io/lumepart/explo:latest";
