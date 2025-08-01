@@ -46,17 +46,11 @@
       allowBroken = true;
       allowInsecure = true; # Fixed typo here
       overlays = [
-        (
-          _: prev: let
-            fetchNixpkgs = rev: (import (builtins.fetchGit {
-              inherit rev;
-              url = "https://github.com/nixos/nixpkgs";
-              ref = "master";
-            }) {inherit (prev) system;});
-          in {
-            inherit ((fetchNixpkgs "a1d539f8eecffd258f3ed1ccc3a055aed56fbaa1").pkgsStatic) libselinux;
-          }
-        )
+        (final: previous: {
+          nettle = previous.nettle.overrideAttrs (oldAttrs: {
+            NIX_CFLAGS_COMPILE = (oldAttrs.NIX_CFLAGS_COMPILE or "") + " -fPIC";
+          });
+        })
       ];
     };
     pkgs = import inputs.nixpkgs {
