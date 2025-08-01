@@ -13,6 +13,6 @@ _: {
     ./beszel
     ./dozzle
     ./update-containers.nix
-    ./explo
+    # ./explo
   ];
 }

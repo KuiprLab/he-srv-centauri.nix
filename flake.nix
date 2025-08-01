@@ -45,13 +45,6 @@
       allowUnsupportedSystem = false;
       allowBroken = true;
       allowInsecure = true; # Fixed typo here
-      overlays = [
-        (final: previous: {
-          nettle = previous.nettle.overrideAttrs (oldAttrs: {
-            NIX_CFLAGS_COMPILE = (oldAttrs.NIX_CFLAGS_COMPILE or "") + " -fPIC";
-          });
-        })
-      ];
     };
     pkgs = import inputs.nixpkgs {
       inherit system;

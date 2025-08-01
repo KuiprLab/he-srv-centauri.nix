@@ -31,7 +31,7 @@
   # Enable QEMU user emulation for x86_64
   boot.binfmt = {
     emulatedSystems = ["x86_64-linux"];
-    preferStaticEmulators = true; # Make it work with Docker
+    # preferStaticEmulators = true; # Make it work with Docker
   };
 
   sops = {
