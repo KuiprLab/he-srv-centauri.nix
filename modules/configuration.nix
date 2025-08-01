@@ -12,16 +12,24 @@
     ./fail2ban.nix
   ];
 
-  virtualisation.podman = {
-    enable = true;
-    dockerCompat = true;
-    dockerSocket.enable = true;
-    autoPrune = {
+  virtualisation = {
+    podman = {
       enable = true;
-      dates = "weekly";
-      flags = ["--all"];
+      dockerCompat = true;
+      dockerSocket.enable = true;
+      defaultNetwork.settings.dns_enabled = true;
+      autoPrune = {
+        enable = true;
+        dates = "weekly";
+        flags = ["--all"];
+      };
     };
+    # Enable container features
+    containers.enable = true;
   };
+
+  # Enable QEMU user emulation for x86_64
+  boot.binfmt.emulatedSystems = ["x86_64-linux"];
 
   sops = {
     age.keyFile = "/var/lib/sops/age-key.txt";
@@ -98,6 +106,8 @@
     cifs-utils # For SMB/CIFS shares
     geoip
     goaccess
+    qemu
+    podman-compose
   ];
 
   # Enable SSH for remote access
