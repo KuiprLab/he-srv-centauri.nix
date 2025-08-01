@@ -37,6 +37,7 @@
     ...
   } @ inputs: let
     system = "aarch64-linux";
+    lib = nixpkgs.lib;
 
     # Settings for Package management
     nixpkgsConfig = {
@@ -44,6 +45,15 @@
       allowUnsupportedSystem = false;
       allowBroken = true;
       allowInsecure = true; # Fixed typo here
+      overlays = [
+        (final: previous: {
+          nettle = previous.nettle.overrideAttrs (
+            lib.optionalAttrs final.stdenv.hostPlatform.isStatic {
+              CCPIC = "-fPIC";
+            }
+          );
+        })
+      ];
     };
     pkgs = import inputs.nixpkgs {
       inherit system;
