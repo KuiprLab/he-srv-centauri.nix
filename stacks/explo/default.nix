@@ -26,7 +26,7 @@
 
   # Containers
   virtualisation.oci-containers.containers."explo" = {
-    image = "ghcr.io/lumepart/explo:latest";
+    image = "ghcr.io/frostplexx/explo:latest";
     environment = {
       "CRON_SCHEDULE" = "15 00 * * 2";
       "TZ" = "UTC";
@@ -42,7 +42,6 @@
       "--network=explo_default"
       "--network=jellyfin_default"
       "--network=proxy"
-      "--platform=linux/amd64"
     ];
   };
   systemd.services."podman-explo" = {
