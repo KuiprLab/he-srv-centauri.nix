@@ -6,8 +6,8 @@
   ...
 }: {
   myFolders = {
-    jellyseerr = {
-      path = "/home/ubuntu/jellyseerr";
+    jellyseer = {
+      path = "/home/ubuntu/jellyseer";
       owner = "ubuntu";
       group = "users";
       mode = "0755";
@@ -23,7 +23,7 @@
       "TZ" = "Asia/Tashkent";
     };
     volumes = [
-      "/home/ubuntu/jellyseerr:/app/config:rw"
+      "/home/ubuntu/jellyseer:/app/config:rw"
     ];
     # ports = [
     #   "5055:5055/tcp"
