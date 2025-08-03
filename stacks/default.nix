@@ -14,6 +14,6 @@ _: {
     ./dozzle
     ./update-containers.nix
     ./explo
-    ./tmp
+    ./jellyseerr
   ];
 }
