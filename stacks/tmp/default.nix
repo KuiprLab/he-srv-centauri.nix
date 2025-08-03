@@ -46,6 +46,8 @@
       "--health-timeout=3s"
       "--network-alias=jellyseerr"
       "--network=jellyseer_default"
+      "--network=jellyfin_default"
+      "--network=proxy"
     ];
   };
   systemd.services."podman-jellyseerr" = {
