@@ -1,44 +1,64 @@
 global:
-  # Global configuration for Discord webhooks
-  resolve_timeout: 5m
-
-# The directory from which notification templates are read.
+    #ENC[AES256_GCM,data:i0lO4SWFoX+9e7LFeW2JG1HaK7v33aa5e6ti47eOzMiCS/V14h5c3H+u,iv:vOR8RruHV4cfBROEO24+6MEmUjWYJBirUTLMYsFZmjA=,tag:OdUNxhwXY4lBNtaiKvfUig==,type:comment]
+    resolve_timeout: ENC[AES256_GCM,data:Vtc=,iv:S6ZbldICkwWADQEGctS8dXkTvSV2na80DxBIWaLynSI=,tag:VVXrFPhYIHm2lajR2JhAeA==,type:str]
+#ENC[AES256_GCM,data:IapnONN31PBFLvMTvA+PkI009JegN1ODEuSaQKh2LzF8d3kmAmgHejgdNBfbP3t1k1BePdSkgXp1ug==,iv:UTIvcWFBCUOlWErElTBfhV1KY6Xhswn5fDO7pC4D/as=,tag:pOs/vX/P+ZPF2zd6q4EG2g==,type:comment]
 templates:
-  - '/etc/alertmanager/template/*.tmpl'
-
-# The root route on which each incoming alert enters.
+    - ENC[AES256_GCM,data:fum7YQC1EzY0NcUs9n4a/wV9e3ke9CTh8E24tRXtckx8,iv:qNvFNoAFcY6Ut31kyPxwg4djDF3LWm4c7rUXoNh6ehg=,tag:0bfmF4uYC2ahmda7YWiwyg==,type:str]
+#ENC[AES256_GCM,data:A02AfbipuZ9n9EV/QDU1HeJd+Ls/RNAZXp1SBsFIhRAFpgSvPHojAnAGIGDmf3dEv9gI1g==,iv:iSREQMLPfIFepnvTq9uUABlg9bo7PmBXPgl0pJUK/iU=,tag:90ZZLKhq1fRKourG9wTuJw==,type:comment]
 route:
-  # The labels by which incoming alerts are grouped together.
-  group_by: ['alertname', 'job']
-
-  # When a new group of alerts is created by an incoming alert, wait at
-  # least 'group_wait' to send the initial notification.
-  group_wait: 10s
-
-  # When the first notification was sent, wait 'group_interval' to send a batch
-  # of new alerts that started firing for that group.
-  group_interval: 10s
-
-  # If an alert has successfully been sent, wait 'repeat_interval' to
-  # resend them.
-  repeat_interval: 1h
-
-  # A default receiver for Discord
-  receiver: discord
-
-# Inhibition rules allow to mute a set of alerts given that another alert is firing.
+    #ENC[AES256_GCM,data:Rz1dTGp/NbX7y2I8KWsRUGH89CDv2Clmql9lOuPYczNV944lENsOe7B72guJPSMY/xkjW4OrQlCf/w==,iv:wzd2k+Yev6wgtF82yvr8q/S1kV9U758zpn/hGu0R1yM=,tag:09UDO15iRLXeyykwtiZ0Fw==,type:comment]
+    group_by:
+        - ENC[AES256_GCM,data:iNJqhoPNmrSb,iv:TxlN3w3Bke3RZNdaf5TbHPaEjnu6zp8BAUYWK29EOPA=,tag:26//OgO8jL7THAKdIlviTg==,type:str]
+        - ENC[AES256_GCM,data:WBcH,iv:CFKlBJFko/WosIuMScSKr1E6TmOZqkRArpx2l4tJrys=,tag:HQpO0RzsESHb9WDRCU1Dkg==,type:str]
+    #ENC[AES256_GCM,data:MEY+USohSju/yLJuYUCrnpDQ6/KiOCI1eoGpaaMVpI0bVlK0eO2hc2MWzyq2DFhhOvYKpOg+KiixauDovuvjqijDwz0=,iv:2Mxte+19QPPIWlzLkzy4MvKSl8wRw9YigqWwYjwP6Hk=,tag:TtSn6VzJuaSY+6em9p6bXQ==,type:comment]
+    #ENC[AES256_GCM,data:eFP5LbaU6MzOS6VFy2XdH2ijvYJSQRGErq9o7R2bv4ZMX0ddKHUIqUTeWW1CJbIiTLfGOOI=,iv:1qUUEMM1MD91vPcoD8v2I6FMHxZ7b7qfyf9r4QR4rSU=,tag:vjpB6Epp8xVGHK98n0EIAQ==,type:comment]
+    group_wait: ENC[AES256_GCM,data:1yD9,iv:SOykC0u5C8xbv7y7DHE4Eqo3SBTY4uRJomo3fdfKBfI=,tag:ZC8GzSE1uVCgnTtWOWe8OQ==,type:str]
+    #ENC[AES256_GCM,data:D/E7T8i9jCz3tDklMRuE1k29s6DgQZWSevFHkYgiBCpVGqxhmzVh+HzeqQmDJ4FwYYdSXgRx9pPw1TSWwkvUtCaEHsrnDWGvm8N1kg==,iv:My4bwKS46T7pVZdwGvDrln6h4nn7X1m7CCeZnNPJu4U=,tag:GAj5i7rWNGZ6UvFgjvTMbg==,type:comment]
+    #ENC[AES256_GCM,data:+04Op2wY6T6UhxJCkcpu9wcSem1ztm/inGQf2F14I8jg2RXEGuwNonyoMuYaLG854iI=,iv:wIeBXBhfF1XOYERm2Dn9IjCeeBn9Ubyd1HJfSKH7HUw=,tag:Pv1XlguMkcKT7eef8JRQ2w==,type:comment]
+    group_interval: ENC[AES256_GCM,data:iwau,iv:AMI8OLXHI2j7RBGMzk77SD8avAIzFE9xNyOUW3woKdY=,tag:WANu2e71+WdZmlMo5SOOdg==,type:str]
+    #ENC[AES256_GCM,data:6rnOLmP18/HouMbdN3+36EMlyjNcPWxj4wupOWnGnEz5AgEZjJ4R+3sB7EHKSTTCtfpHXJ2BqKznXofQGbpTSM2q,iv:aBh1v2kR03gH7/Ac6ZDg+nMCnmo0vhSeCMeJ5KykQ3o=,tag:WlxsJD5p10urOshUFBjxqA==,type:comment]
+    #ENC[AES256_GCM,data:VONcjKY6PFfZhneAGw==,iv:m7HJgA7no+qOCa7PFrsz53C1XvKVuV2DAkBnsgIss/s=,tag:DsaKBv1Ymv0EKHAAUJwsHw==,type:comment]
+    repeat_interval: ENC[AES256_GCM,data:/cY=,iv:MoppS7ap9M0D57B0RKpTDzeBJ4bqVLVb34JeIvrOP/4=,tag:tz+8r5U28Y6C6S4XWLb0Dg==,type:str]
+    #ENC[AES256_GCM,data:fCs2aPpCfJKcfoRWw2yeXe7OAliiTJSFwOdn/n28QA==,iv:sJrqutd+HffQcn5ZVXWKa+qGuCtSUMzIl5ygjPA3jcQ=,tag:FZSYtTC8aGAgu5OGhs+kwg==,type:comment]
+    receiver: ENC[AES256_GCM,data:/tHimexukw==,iv:HzNaC0w+rYPb4O4Yv77jLtLvFT5j0x9sxTNNxjpjoak=,tag:UNe1SmIL8HginagsLkR2PA==,type:str]
+#ENC[AES256_GCM,data:5OQwGDG04NB8c0DcXh/3VqKZQCTRY0ecB+NL4lcX+MRwY70y6U9AuojvbicC716QS2kWyRJIyh+S5Y8NMQFyzWXHHfXY3A2AQd5HzaBSbYR1hN0=,iv:cZylAfIHUyHqMt5OspAQatK2TddqYUO3nmrcQsgTcvA=,tag:kKCcxeYclTeNeuNyIe2XLQ==,type:comment]
 inhibit_rules:
-  - source_match:
-      severity: 'critical'
-    target_match:
-      severity: 'warning'
-    # Apply inhibition if the alertname is the same.
-    equal: ['alertname', 'dev', 'instance']
-
+    - source_match:
+        severity: ENC[AES256_GCM,data:GAavSaRyoPs=,iv:HPKa/f5k0tPG9GSf6/rYIIG9vUD/IZdlsF/c/6nGe90=,tag:e2HM5WvwWKCPEdEfOOxaOA==,type:str]
+      target_match:
+        severity: ENC[AES256_GCM,data:oBmdyXn5Gw==,iv:slN+FUPzjTSs/Gp/xRnycqYmeiRlmVaKnYgCWX2NVHU=,tag:cf/XgfWSt4bFAbABCv8r2Q==,type:str]
+      #ENC[AES256_GCM,data:emjZ6SHBNye6fpEV10bhy96Jl7XGfZ9AU/lfg6ZLLKxazsiZNPROHjmOn49EUpo=,iv:wdwGAgE5ZWexc9o24pCnNoUzf1j/yfPXGEgSzUYlzvc=,tag:SMKYymhxp6/1dFbsoCq7Bg==,type:comment]
+      equal:
+        - ENC[AES256_GCM,data:5QYt1HCjooSf,iv:ktUe2ioZyVY0iRS2NdAmvuFR2OcmW0HUPSi+Mg9H0LU=,tag:wzV6MTWvo2ABvTAKfB3blA==,type:str]
+        - ENC[AES256_GCM,data:KR/o,iv:eBL0WP/PoUpdBlD6lPBprjiYu7j09FoGzeXDy5GwoiI=,tag:9HtUN2oXNvwjq6fWGQc8Bw==,type:str]
+        - ENC[AES256_GCM,data:9DzryfIGg2o=,iv:ui6vdu3vkKZ1HMeXk7qWUqssa+mzQHlNS0FLHkBXBUo=,tag:QAlBAlOdk0EFRoYV54KZng==,type:str]
 receivers:
-  # Discord webhook for general alerts
-  - name: 'discord'
-    discord_configs:
-      - webhook_url: 'https://discord.com/api/webhooks/1401832426376007700/p-CcvRR0ra7YP9ImKBZhZee-4MlRP1jXNvjhUkNjhQL3PU_og0M6nMd-vrVEJlEo4YZx'
-        send_resolved: true
-
+    - ENC[AES256_GCM,data:z2N677km8A+HUjJBCg5mw8DCOYRTN4YfFXR4pDTfcvkaLYI=,iv:FqgwpgIyxzXV8cf5UlMlhIh95FPGItIXaJ0vHKAcDsY=,tag:2ojFG0TchT9qnynn+888ew==,type:comment]
+    - name: ENC[AES256_GCM,data:pWrr0+ut1Q==,iv:vKZMboZ/Cbwe1ZCGfZDepw6CNEHnZ9cwK2KUmlUfOqg=,tag:Z2rjU5z0XjMemD3bYrCZEg==,type:str]
+      discord_configs:
+        - webhook_url: ENC[AES256_GCM,data:1bxW+pyp40HkVlxWnlOLLGMQP79Q4HnuVi83neNYJFiSIK8ZvhAhmutj40PK6J1HdLe70yQoBorG9ee/0wuY6IqKwTB2aH2zRKudz3zfo74qj5O/hvV600KWQjdh7D+aH5SD6etX0ZF/Sh/zG7YJzmuKE956pjntbA==,iv:gcYL+LO5S046U052reOStNbQUehPGd2xKQUywiWBc4o=,tag:uPw3M215Zu9zhsTZP9Uj6w==,type:str]
+          send_resolved: ENC[AES256_GCM,data:9VZS1A==,iv:UXAXMtcZp29CPVQoyl6kBnvuzYGTnth3ytgGrWNQ5sI=,tag:tY9aaJ6QaNLUWEwYC5WdLA==,type:bool]
+sops:
+    age:
+        - recipient: age1207u8skz74quhs0xtunrrp2xwj0dtmffllfk7fw93q5eywd7w37qslc9yh
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBlSFlTTEJFallhVVpyM2pl
+            ZXlPRkJYZ2VHSGNEY3hRV0dlLzcxMXRweEI4CnRvTUJsTk9HWXNiTWJ5U0VtT2FG
+            UEwwTEtDL1J0bUlkcnphN2E0RU14akUKLS0tIHI4VGRvclg4eXV0THJrSTc1bFpy
+            VktKdzJDTFdhZDljSDdVZmhrNU9PL2cKlZQymcuoKAF6XKW2PYqzWWn9huDwrV0/
+            2dZnn3w0JxBvlDHXuWg6gljrfUFwOcEP8PpR1BPHLUOQnymI5T454Q==
+            -----END AGE ENCRYPTED FILE-----
+        - recipient: age1cdr7yexx2vc54q46tkmzw0udh2hynm4dvytjnvzapc64x6rsh59qmemc6g
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBlSC8vNUE1VXlUaWJnT2Jz
+            VkpweFBsWUhtLytmdjRIZFpZazhScUJWdWdrCmNlTFlGWXhOdU9lelduUjJ3RTVz
+            WWo0Sm9QYnh3dFFITWtscE5FTGpSL00KLS0tIDNLcURjVWJjbG9zcUNXMU5mODM2
+            U2NiWkd3UEJTWHIzYTBTYVNHS0tmV0UKqCBWHX3NVLjxQAlVaW/5IC4Xhp0uin5H
+            EPoxaIDQopDbKTUxkM0ggSxNWKQSx9a2Ucz2lzHAsH+8/OtzemxKbw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-08-04T15:37:18Z"
+    mac: ENC[AES256_GCM,data:S+9KaEhAebquF7jfhmHRVhRVh+iKlSSoPskM1PGfM1DaL8FWs6Xvzu8qddrGbzv/QqI3eFQemeGr5W8RBMYuABUpsYxykLrjwXQ0JA59A8WYg/1Wc/Iwr+J6Yk+rjjvQqee6CfDpSzSZddnKAUiVrDLA0xT6Pb0RkN1BrW4GswE=,iv:EfHuVdSfPOUnyzwV6vpZRmDSEkyWvoJ8i6NzwQ3n0BQ=,tag:UprikofpFFIC/nT78AnBEQ==,type:str]
+    unencrypted_suffix: _unencrypted
+    version: 3.10.2

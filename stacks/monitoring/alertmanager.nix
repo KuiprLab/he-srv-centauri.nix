@@ -3,12 +3,23 @@
   config,
   ...
 }: {
+  sops.secrets = {
+    "alertmanager.yml" = {
+      sopsFile = ./config/alertmanager.yml;
+      format = "yml";
+      key = "";
+      restartUnits = [
+        "podman-alertmanager.service"
+      ];
+    };
+  };
+
   # Alertmanager configuration
   virtualisation.oci-containers.containers."alertmanager" = {
     image = "prom/alertmanager:latest";
     volumes = [
       "/home/ubuntu/alertmanager:/alertmanager:rw"
-      "${./config/alertmanager.yml}:/etc/alertmanager/alertmanager.yml:ro"
+      "${config.sops."alertmanager.yml".path}:/etc/alertmanager/alertmanager.yml:ro"
     ];
     cmd = [
       "--config.file=/etc/alertmanager/alertmanager.yml"
