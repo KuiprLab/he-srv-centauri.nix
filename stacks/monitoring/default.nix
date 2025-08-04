@@ -13,8 +13,26 @@
   ];
 
   myFolders = {
-    monitoring = {
-      path = "/home/ubuntu/{prometheus,grafana,loki,alertmanager}";
+    prometheus = {
+      path = "/home/ubuntu/prometheus";
+      owner = "65534"; # nobody user for prometheus
+      group = "65534";
+      mode = "0755";
+    };
+    grafana = {
+      path = "/home/ubuntu/grafana";
+      owner = "472"; # grafana user
+      group = "472";
+      mode = "0755";
+    };
+    loki = {
+      path = "/home/ubuntu/loki";
+      owner = "ubuntu";
+      group = "users";
+      mode = "0755";
+    };
+    alertmanager = {
+      path = "/home/ubuntu/alertmanager";
       owner = "ubuntu";
       group = "users";
       mode = "0755";

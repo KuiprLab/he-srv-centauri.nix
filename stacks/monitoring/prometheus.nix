@@ -11,6 +11,7 @@
       "${./config/prometheus.yml}:/etc/prometheus/prometheus.yml:ro"
       "${./config/alert-rules.yml}:/etc/prometheus/alert-rules.yml:ro"
     ];
+    user = "65534:65534"; # nobody user
     cmd = [
       "--config.file=/etc/prometheus/prometheus.yml"
       "--storage.tsdb.path=/prometheus"
@@ -19,6 +20,8 @@
       "--storage.tsdb.retention.time=30d"
       "--web.enable-lifecycle"
       "--web.enable-admin-api"
+      "--query.max-concurrency=20"
+      "--log.level=info"
     ];
     labels = {
       "traefik.enable" = "true";

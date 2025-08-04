@@ -8,10 +8,11 @@
     image = "grafana/grafana:latest";
     environment = {
       "GF_SECURITY_ADMIN_USER" = "admin";
-      "GF_INSTALL_PLUGINS" = "grafana-piechart-panel,grafana-worldmap-panel,grafana-clock-panel";
       "GF_USERS_ALLOW_SIGN_UP" = "false";
       "GF_SERVER_DOMAIN" = "grafana.kuipr.de";
       "GF_SERVER_ROOT_URL" = "https://grafana.kuipr.de";
+      "GF_PATHS_PLUGINS" = "/var/lib/grafana/plugins";
+      "GF_INSTALL_PLUGINS" = ""; # Remove auto-install to avoid permission issues
     };
     environmentFiles = [
       "${config.sops.secrets."monitoring.env".path}"
