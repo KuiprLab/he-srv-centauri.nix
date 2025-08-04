@@ -111,9 +111,8 @@
     ];
     cmd = [
       "--housekeeping_interval=30s"
-      "--storage_driver=overlay2"
-      "--storage_driver_db=/var/lib/containers/storage/overlay"
-      "--storage_driver_buffer_duration=1m0s"
+      "--disable_metrics=disk,diskIO,tcp,udp,percpu,sched,process"
+      "--docker_only=false"
     ];
     log-driver = "journald";
     extraOptions = [
