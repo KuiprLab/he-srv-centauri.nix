@@ -62,3 +62,16 @@ scrape_configs:
     static_configs:
       - targets: ['host.containers.internal:9323']
     scrape_interval: 30s
+
+  # HAProxy metrics
+  - job_name: 'haproxy'
+    static_configs:
+      - targets: ['host.containers.internal:8404']
+    metrics_path: /
+    scrape_interval: 30s
+
+  # Fail2ban metrics
+  - job_name: 'fail2ban'
+    static_configs:
+      - targets: ['fail2ban-exporter:9534']
+    scrape_interval: 30s

@@ -53,12 +53,3 @@ scrape_configs:
           job: traefik
           service: traefik
           __path__: /var/log/traefik/*.log
-
-  # Nginx logs if any
-  - job_name: nginx
-    static_configs:
-      - targets:
-          - localhost
-        labels:
-          job: nginx
-          __path__: /var/log/nginx/*.log

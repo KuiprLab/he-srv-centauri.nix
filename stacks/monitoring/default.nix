@@ -10,6 +10,7 @@
     ./grafana.nix
     ./loki.nix
     ./alertmanager.nix
+    ./fail2ban-exporter.nix
   ];
 
   myFolders = {
