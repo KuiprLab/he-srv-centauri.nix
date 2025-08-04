@@ -56,17 +56,17 @@ receivers:
   # Discord webhook for general alerts
   - name: 'discord-alerts'
     webhook_configs:
-      - url: 'http://discord-webhook:9094/webhook'
+      - url: 'http://discord-webhook:9094/webhook/critical'
         send_resolved: true
 
   # Discord webhook for critical alerts
   - name: 'discord-critical'
     webhook_configs:
-      - url: 'http://discord-webhook:9094/webhook/critical'
+      - url: 'https://discord.com/api/webhooks/1401832426376007700/p-CcvRR0ra7YP9ImKBZhZee-4MlRP1jXNvjhUkNjhQL3PU_og0M6nMd-vrVEJlEo4YZx'
         send_resolved: true
 
   # Discord webhook for warning alerts
   - name: 'discord-warning'
     webhook_configs:
-      - url: 'http://discord-webhook:9094/webhook/warning'
+      - url: 'https://discord.com/api/webhooks/1401832426376007700/p-CcvRR0ra7YP9ImKBZhZee-4MlRP1jXNvjhUkNjhQL3PU_og0M6nMd-vrVEJlEo4YZx'
         send_resolved: true

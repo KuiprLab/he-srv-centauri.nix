@@ -86,23 +86,13 @@ groups:
           summary: "Container restarting frequently"
           description: "Container {{ $labels.name }} has restarted more than 5 times in the last hour"
 
-  # - name: starr
-  #   rules:
-  #     - alert: ServiceDown
-  #       expr: up{job=~"grafana|loki|alertmanager|prometheus"} == 0
-  #       for: 1m
-  #       labels:
-  #         severity: critical
-  #       annotations:
-  #         summary: "Monitoring service is down"
-  #         description: "Service {{ $labels.job }} is down"
-  #
-  #     - alert: TooManyRestarts
-  #       expr: increase(container_start_time_seconds{name!=""}[1h]) > 5
-  #       for: 5m
-  #       labels:
-  #         severity: warning
-  #       annotations:
-  #         summary: "Container restarting frequently"
-  #         description: "Container {{ $labels.name }} has restarted more than 5 times in the last hour"
-  #
+  - name: starr
+    rules:
+      - alert: QbitFirewalled
+        expr: qbittorrent_firewalled{server="qbit.kuipr.de:443"} == 1
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Qbittorrent got firewalled"
+          description: "Qbittorrent got firewalled"

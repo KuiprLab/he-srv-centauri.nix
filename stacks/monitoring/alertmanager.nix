@@ -53,7 +53,6 @@
   virtualisation.oci-containers.containers."discord-webhook" = {
     image = "plumeeus/alertmanager-discord:latest";
     environment = {
-      "DISCORD_WEBHOOK_URL" = "https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN";
       "LISTEN_ADDRESS" = "0.0.0.0:9094";
     };
     environmentFiles = [
