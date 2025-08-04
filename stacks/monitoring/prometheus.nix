@@ -111,8 +111,6 @@
     ];
     cmd = [
       "--housekeeping_interval=30s"
-      "--disable_metrics=disk,diskIO,tcp,udp,percpu,sched,process"
-      "--docker_only=false"
     ];
     log-driver = "journald";
     extraOptions = [
