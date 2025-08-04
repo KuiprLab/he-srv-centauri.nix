@@ -5,7 +5,7 @@
 }: {
   # Grafana configuration
   virtualisation.oci-containers.containers."grafana" = {
-    image = "grafana/grafana:latest";
+    image = "grafana/grafana-dev";
     environment = {
       "GF_SECURITY_ADMIN_USER" = "admin";
       "GF_USERS_ALLOW_SIGN_UP" = "false";
