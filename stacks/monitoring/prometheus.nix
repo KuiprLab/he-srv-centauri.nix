@@ -105,7 +105,7 @@
       "/:/rootfs:ro"
       "/dev/disk/:/dev/disk:ro"
       "/var/run:/var/run:rw"
-      "sys/fs/cgroup:/sys/fs/cgroup:ro"
+      "/sys/fs/cgroup:/sys/fs/cgroup:ro"
       "/sys:/sys:ro"
       "/var/lib/containers:/var/lib/containers:ro"
       "/dev/disk/:/dev/disk:ro"
