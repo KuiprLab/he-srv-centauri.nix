@@ -111,11 +111,6 @@
       "traefik.http.routers.traefik.tls.certresolver" = "myresolver";
       "traefik.http.routers.traefik.service" = "api@internal";
       "traefik.http.routers.traefik.middlewares" = "authelia@docker";
-
-      "traefik.http.routers.prometheus.rule" = "Host(`traefik.kuipr.de`) && PathPrefix(`/metrics`)";
-      "traefik.http.routers.prometheus.entrypoints" = "websecure";
-      "traefik.http.routers.prometheus.service" = "api@internal";
-      "traefik.http.routers.prometheus.middlewares" = "authelia@docker";
     };
     environmentFiles = [
       "/run/secrets/traefik.env"
@@ -123,6 +118,7 @@
     ports = [
       "8081:80/tcp"
       "8443:443/tcp"
+      "8080:8080/tcp"
     ];
     cmd = [
       "--metrics.prometheus=true"
