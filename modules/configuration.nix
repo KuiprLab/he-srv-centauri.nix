@@ -85,7 +85,7 @@
       8081 # Traefik HTTP
       8443 # Traefik HTTPS
       8181
-      8404 # HAProxy Stats
+      8405 # HAProxy Stats
       9534 # Fail2ban Exporter
     ];
     allowedUDPPorts = [
