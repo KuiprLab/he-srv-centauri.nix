@@ -4,13 +4,10 @@
   ...
 }: {
   virtualisation.oci-containers.containers."fail2ban-exporter" = {
-    image = "crazymax/fail2ban:latest";
+    image = "registry.gitlab.com/hctrdev/fail2ban-prometheus-exporter:latest";
     volumes = [
-      "/var/log:/var/log:ro"
-      "/home/ubuntu/f2b-exporter:/data"
+      "/var/run/fail2ban/:/var/run/fail2ban:ro"
     ];
-    # environmentFiles = [
-    # ];
     log-driver = "journald";
     extraOptions = [
       "--network-alias=fail2ban-exporter"
