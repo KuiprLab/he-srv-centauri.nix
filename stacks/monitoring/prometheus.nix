@@ -110,7 +110,6 @@
       "/var/lib/containers:/var/lib/containers:ro"
       "/dev/disk/:/dev/disk:ro"
       "/run/podman/podman.sock:/var/run/docker.sock:ro"
-      "/var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro"
     ];
     cmd = [
       "--housekeeping_interval=30s"
