@@ -68,6 +68,9 @@ scrape_configs:
     static_configs:
       - targets: ['host.containers.internal:8404']
     metrics_path: /
+    basic_auth:
+      username: admin
+      password: admin
     scrape_interval: 30s
 
   # Fail2ban metrics
