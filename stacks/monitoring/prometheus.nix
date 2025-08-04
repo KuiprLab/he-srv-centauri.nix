@@ -101,6 +101,7 @@
   # cAdvisor for container metrics
   virtualisation.oci-containers.containers."cadvisor" = {
     image = "gcr.io/cadvisor/cadvisor:latest";
+    user = "0:0";
     volumes = [
       "/:/rootfs:ro"
       "/dev/disk/:/dev/disk:ro"
