@@ -6,7 +6,7 @@
   sops.secrets = {
     "alertmanager.yml" = {
       sopsFile = ./config/alertmanager.yml;
-      format = "yml";
+      format = "yaml";
       key = "";
       restartUnits = [
         "podman-alertmanager.service"
