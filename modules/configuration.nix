@@ -15,8 +15,7 @@
   virtualisation = {
     podman = {
       enable = true;
-
-      extraPackages = [pkgs.podman-compose];
+      # extraPackages = [pkgs.podman-compose];
       dockerCompat = true;
       dockerSocket.enable = true;
       defaultNetwork.settings.dns_enabled = true;
