@@ -9,8 +9,8 @@
       format = "yaml";
       key = "";
       mode = "0644";
-      owner = "65534";
-      group = "65534";
+      owner = "1000";
+      group = "100";
       restartUnits = [
         "podman-alertmanager.service"
       ];
@@ -20,7 +20,7 @@
   # Alertmanager configuration
   virtualisation.oci-containers.containers."alertmanager" = {
     image = "prom/alertmanager:latest";
-    user = "65534:65534";
+    user = "1000:100";
     volumes = [
       "/home/ubuntu/alertmanager:/alertmanager:rw"
       "/var/run/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro"
