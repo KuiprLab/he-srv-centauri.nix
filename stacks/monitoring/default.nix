@@ -75,7 +75,7 @@
       ExecStop = "podman network rm -f monitoring_default";
     };
     script = ''
-      podman network inspect monitoring_default || podman network create monitoring_default
+      podman network inspect monitoring_default || podman network create --dns-enabled monitoring_default
     '';
     partOf = ["podman-compose-monitoring-root.target"];
     wantedBy = ["podman-compose-monitoring-root.target"];
