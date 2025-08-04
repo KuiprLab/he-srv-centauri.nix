@@ -1,11 +1,10 @@
-
 {
   lib,
   config,
   ...
 }: {
   virtualisation.oci-containers.containers."fail2ban-exporter" = {
-    image = "crazymax/fail2ban-exporter:latest";
+    image = "crazymax/fail2ban:latest:latest";
     volumes = [
       "/var/log/fail2ban.log:/var/log/fail2ban.log:ro"
     ];
