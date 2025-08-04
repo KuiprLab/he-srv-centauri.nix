@@ -87,6 +87,7 @@
       8181
       8405 # HAProxy Stats
       9534 # Fail2ban Exporter
+      8080 # cAdvisor
     ];
     allowedUDPPorts = [
       6881

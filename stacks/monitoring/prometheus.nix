@@ -99,46 +99,7 @@
   };
 
   # cAdvisor for container metrics
-  virtualisation.oci-containers.containers."cadvisor" = {
-    image = "gcr.io/cadvisor/cadvisor:latest";
-    user = "0:0";
-    volumes = [
-      "/:/rootfs:ro"
-      "/dev/disk/:/dev/disk:ro"
-      "/var/run:/var/run:rw"
-      "/sys/fs/cgroup:/sys/fs/cgroup:ro"
-      "/sys:/sys:ro"
-      "/var/lib/containers:/var/lib/containers:rw"
-      "/dev/disk/:/dev/disk:ro"
-      "/run/podman/podman.sock:/var/run/docker.sock:ro"
-    ];
-    cmd = [
-      "--housekeeping_interval=30s"
-    ];
-    log-driver = "journald";
-    extraOptions = [
-      "--network-alias=cadvisor"
-      "--network=monitoring_default"
-      "--privileged"
-      "--security-opt=label=disable"
-    ];
-  };
-
-  systemd.services."podman-cadvisor" = {
-    serviceConfig = {
-      Restart = lib.mkOverride 90 "always";
-    };
-    after = [
-      "podman-network-monitoring_default.service"
-    ];
-    requires = [
-      "podman-network-monitoring_default.service"
-    ];
-    partOf = [
-      "podman-compose-monitoring-root.target"
-    ];
-    wantedBy = [
-      "podman-compose-monitoring-root.target"
-    ];
+  services.cadvisor = {
+    enable = true;
   };
 }
