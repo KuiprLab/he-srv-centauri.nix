@@ -73,5 +73,5 @@ scrape_configs:
   # Fail2ban metrics
   - job_name: 'fail2ban'
     static_configs:
-      - targets: ['fail2ban-exporter:9534']
+      - targets: ['fail2ban-exporter:9191']
     scrape_interval: 30s
