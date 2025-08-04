@@ -88,6 +88,7 @@
       8405 # HAProxy Stats
       9534 # Fail2ban Exporter
       8081 # cAdvisor
+      9323 # docker daemon
     ];
     allowedUDPPorts = [
       6881
