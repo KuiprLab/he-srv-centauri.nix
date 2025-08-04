@@ -15,6 +15,8 @@
   virtualisation = {
     podman = {
       enable = true;
+
+      extraPackages = [pkgs.podman-compose];
       dockerCompat = true;
       dockerSocket.enable = true;
       defaultNetwork.settings.dns_enabled = true;
@@ -26,6 +28,16 @@
     };
     # Enable container features
     containers.enable = true;
+  };
+
+  systemd.services.podman-metrics = {
+    description = "Podman metrics service";
+    wantedBy = ["multi-user.target"];
+    serviceConfig = {
+      ExecStart = "${pkgs.podman}/bin/podman system service --time=0 tcp://0.0.0.0:9323";
+      Type = "notify";
+      User = "root";
+    };
   };
 
   sops = {

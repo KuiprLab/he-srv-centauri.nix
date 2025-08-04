@@ -51,8 +51,8 @@ scrape_configs:
     metrics_path: /metrics
     scrape_interval: 30s
 
-  # Docker daemon metrics via proxy network
-  - job_name: 'docker-daemon'
+  # Podman daemon metrics
+  - job_name: 'podman-daemon'
     static_configs:
       - targets: ['host.docker.internal:9323']
     scrape_interval: 30s
