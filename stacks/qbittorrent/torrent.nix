@@ -68,7 +68,7 @@
       "qbittorrent"
     ];
     extraOptions = [
-      "--network=monitoring_default"
+      "--network=host"
     ];
   };
 
