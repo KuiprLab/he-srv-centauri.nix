@@ -60,13 +60,13 @@ scrape_configs:
   # Docker daemon metrics via proxy network
   - job_name: 'docker-daemon'
     static_configs:
-      - targets: ['host.containers.internal:9323']
+      - targets: ['host.docker.internal:9323']
     scrape_interval: 30s
 
   # HAProxy metrics
   - job_name: 'haproxy'
     static_configs:
-      - targets: ['host.containers.internal:8405']
+      - targets: ['host.docker.internal:8405']
     metrics_path: /metrics
     scrape_interval: 15s
 
