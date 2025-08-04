@@ -19,7 +19,7 @@
     image = "prom/alertmanager:latest";
     volumes = [
       "/home/ubuntu/alertmanager:/alertmanager:rw"
-      "${config.sops."alertmanager.yml".path}:/etc/alertmanager/alertmanager.yml:ro"
+      "${config.sops.secrets."alertmanager.yml".path}:/etc/alertmanager/alertmanager.yml:ro"
     ];
     cmd = [
       "--config.file=/etc/alertmanager/alertmanager.yml"
