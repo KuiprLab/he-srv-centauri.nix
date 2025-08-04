@@ -3,11 +3,19 @@
   lib,
   ...
 }: {
-  sops.secrets."torrent.env" = {
-    sopsFile = ./qbittorrent.env;
-    format = "dotenv";
-    key = "";
-    restartUnits = ["podman-qbittorrent.service"];
+  sops.secrets = {
+    "torrent.env" = {
+      sopsFile = ./qbittorrent.env;
+      format = "dotenv";
+      key = "";
+      restartUnits = ["podman-qbittorrent.service"];
+    };
+    "qbit_exporter.env" = {
+      sopsFile = ./qbit_exporter.env;
+      format = "dotenv";
+      key = "";
+      restartUnits = ["podman-qbittorrent.service"];
+    };
   };
 
   myFolders = {
@@ -18,7 +26,8 @@
       mode = "0755";
     };
   };
-  # Container
+
+  # qBittorrent Container
   virtualisation.oci-containers.containers."qbittorrent" = {
     image = "ghcr.io/hotio/qbittorrent:latest";
     log-driver = "journald";
@@ -35,7 +44,6 @@
     extraOptions = [
       "--network=container:gluetun"
     ];
-    # Add specific labels for qbittorrent service
     labels = {
       "traefik.enable" = "true";
       "traefik.http.routers.qbittorrent.entrypoints" = "websecure";
@@ -46,7 +54,25 @@
     };
   };
 
-  # Service
+  # qBittorrent Exporter Container
+  virtualisation.oci-containers.containers."qbittorrent-exporter" = {
+    image = "ghcr.io/esanchezm/prometheus-qbittorrent-exporter:latest";
+    log-driver = "journald";
+    environmentFiles = [
+      "/run/secrets/qbit_exporter.env"
+    ];
+    # ports = [
+    #   "8000:8000"
+    # ];
+    dependsOn = [
+      "qbittorrent"
+    ];
+    extraOptions = [
+      "--network=monitoring_default"
+    ];
+  };
+
+  # qBittorrent Service
   systemd.services."podman-qbittorrent" = {
     serviceConfig = {
       Restart = lib.mkOverride 90 "always";
@@ -57,6 +83,27 @@
     ];
     requires = [
       "podman-network-seedbox_default.service"
+      "podman-gluetun.service"
+    ];
+    partOf = [
+      "podman-compose-seedbox-root.target"
+    ];
+    wantedBy = [
+      "podman-compose-seedbox-root.target"
+    ];
+  };
+
+  # qBittorrent Exporter Service
+  systemd.services."podman-qbittorrent-exporter" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "always";
+    };
+    after = [
+      "podman-qbittorrent.service"
+      "podman-gluetun.service"
+    ];
+    requires = [
+      "podman-qbittorrent.service"
       "podman-gluetun.service"
     ];
     partOf = [
