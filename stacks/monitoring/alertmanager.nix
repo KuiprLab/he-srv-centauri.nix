@@ -3,7 +3,6 @@
   config,
   ...
 }: {
-
   sops.secrets = {
     "alertmanager.yml" = {
       sopsFile = ./config/alertmanager.yml;
@@ -16,6 +15,8 @@
         "podman-alertmanager.service"
       ];
     };
+  };
+
   # Alertmanager configuration
   virtualisation.oci-containers.containers."alertmanager" = {
     image = "prom/alertmanager:latest";
