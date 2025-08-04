@@ -108,7 +108,7 @@
       "/var/run:/var/run:rw"
       "/sys/fs/cgroup:/sys/fs/cgroup:ro"
       "/sys:/sys:ro"
-      "/var/lib/containers:/var/lib/containers:ro"
+      "/var/lib/containers:/var/lib/containers:rw"
       "/dev/disk/:/dev/disk:ro"
       "/run/podman/podman.sock:/var/run/docker.sock:ro"
     ];
