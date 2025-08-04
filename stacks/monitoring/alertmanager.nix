@@ -7,6 +7,7 @@
     "alertmanager.yml" = {
       sopsFile = ./config/alertmanager.yml;
       format = "yaml";
+      key = "";
       mode = "0644";
       owner = "65534";
       group = "65534";
@@ -22,7 +23,7 @@
     user = "65534:65534";
     volumes = [
       "/home/ubuntu/alertmanager:/alertmanager:rw"
-      "${config.sops.secrets."alertmanager.yml".path}:/etc/alertmanager/alertmanager.yml:ro"
+      "/var/run/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro"
     ];
     cmd = [
       "--config.file=/etc/alertmanager/alertmanager.yml"
