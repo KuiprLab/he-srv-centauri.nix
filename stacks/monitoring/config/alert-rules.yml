@@ -39,14 +39,14 @@ groups:
 
   - name: containers
     rules:
-      - alert: ContainerDown
+      - alert: TargetHealth
         expr: up == 0
         for: 1m
         labels:
           severity: critical
         annotations:
-          summary: "Container is down"
-          description: "Container {{ $labels.job }} on {{ $labels.instance }} is down"
+          summary: "Prometheus target is down"
+          description: "Target {{ $labels.job }} on {{ $labels.instance }} is down"
 
       - alert: HighContainerCPU
         expr: rate(container_cpu_usage_seconds_total{name!=""}[5m]) * 100 > 80
