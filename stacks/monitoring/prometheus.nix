@@ -101,6 +101,6 @@
   # cAdvisor for container metrics
   services.cadvisor = {
     enable = true;
-    port = "8081";
+    port = 8081;
   };
 }
