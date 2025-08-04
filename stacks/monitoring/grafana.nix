@@ -20,7 +20,7 @@
     volumes = [
       "/home/ubuntu/grafana:/var/lib/grafana:rw"
       "${./config/grafana-datasources.yml}:/etc/grafana/provisioning/datasources/datasources.yml:ro"
-      "${./config/grafana-dashboards.yml}:/etc/grafana/provisioning/dashboards/dashboards.yml:ro"
+      # "${./config/grafana-dashboards.yml}:/etc/grafana/provisioning/dashboards/dashboards.yml:ro"
       "${./config/grafana-custom.ini}:/etc/grafana/grafana.ini:ro"
       # "${./dashboards}:/var/lib/grafana/dashboards:ro"
     ];
