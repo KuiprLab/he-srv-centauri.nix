@@ -105,19 +105,22 @@
       "/:/rootfs:ro"
       "/var/run:/var/run:ro"
       "/sys:/sys:ro"
-      "/var/lib/docker/:/var/lib/docker:ro"
+      "/var/lib/containers:/var/lib/containers:ro"
       "/dev/disk/:/dev/disk:ro"
       "/run/podman/podman.sock:/var/run/docker.sock:ro"
     ];
     cmd = [
       "--housekeeping_interval=30s"
-      "--docker_only=true"
+      "--storage_driver=overlay2"
+      "--storage_driver_db=/var/lib/containers/storage/overlay"
+      "--storage_driver_buffer_duration=1m0s"
     ];
     log-driver = "journald";
     extraOptions = [
       "--network-alias=cadvisor"
       "--network=monitoring_default"
       "--privileged"
+      "--security-opt=label=disable"
     ];
   };
 
