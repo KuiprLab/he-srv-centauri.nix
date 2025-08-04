@@ -23,7 +23,7 @@
     user = "1000:100";
     volumes = [
       "/home/ubuntu/alertmanager:/alertmanager:rw"
-      "/var/run/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro"
+      "/var/run/secrets/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro"
     ];
     cmd = [
       "--config.file=/etc/alertmanager/alertmanager.yml"
