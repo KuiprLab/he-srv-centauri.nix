@@ -7,7 +7,6 @@
     "alertmanager.yml" = {
       sopsFile = ./config/alertmanager.yml;
       format = "yaml";
-      key = "";
       mode = "0644";
       owner = "65534";
       group = "65534";
