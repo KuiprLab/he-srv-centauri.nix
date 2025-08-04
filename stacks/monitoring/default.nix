@@ -38,6 +38,12 @@
       group = "users";
       mode = "0755";
     };
+    fail2ban_exporter = {
+      path = "/home/ubuntu/f2b-exporter";
+      owner = "ubuntu";
+      group = "users";
+      mode = "0755";
+    };
   };
 
   # SOPS secrets for monitoring stack

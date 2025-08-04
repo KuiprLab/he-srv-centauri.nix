@@ -6,8 +6,11 @@
   virtualisation.oci-containers.containers."fail2ban-exporter" = {
     image = "crazymax/fail2ban:latest";
     volumes = [
-      "/var/log/fail2ban.log:/var/log/fail2ban.log:ro"
+      "/var/log:/var/log:ro"
+      "/home/ubuntu/f2b-exporter:/data"
     ];
+    # environmentFiles = [
+    # ];
     log-driver = "journald";
     extraOptions = [
       "--network-alias=fail2ban-exporter"
