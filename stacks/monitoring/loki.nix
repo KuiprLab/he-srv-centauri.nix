@@ -10,6 +10,7 @@
       "/home/ubuntu/loki:/loki:rw"
       "${./config/loki.yml}:/etc/loki/local-config.yaml:ro"
     ];
+    user = "65534:65534"; # nobody user
     cmd = [
       "-config.file=/etc/loki/local-config.yaml"
     ];

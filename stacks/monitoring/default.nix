@@ -27,8 +27,8 @@
     };
     loki = {
       path = "/home/ubuntu/loki";
-      owner = "ubuntu";
-      group = "users";
+      owner = "65534";
+      group = "65534";
       mode = "0755";
     };
     alertmanager = {
