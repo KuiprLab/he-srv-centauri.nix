@@ -103,11 +103,16 @@
     image = "gcr.io/cadvisor/cadvisor:latest";
     volumes = [
       "/:/rootfs:ro"
+      "/dev/disk/:/dev/disk:ro"
+      "/etc/machine-id:/etc/machine-id:ro"
       "/var/run:/var/run:ro"
+      "sys/fs/cgroup:/sys/fs/cgroup:ro"
       "/sys:/sys:ro"
       "/var/lib/containers:/var/lib/containers:ro"
       "/dev/disk/:/dev/disk:ro"
       "/run/podman/podman.sock:/var/run/docker.sock:ro"
+      "/var/lib/dbus/machine-id:/var/lib/dbus/machine-id:ro"
+      "/var/run:/var/run:rw"
     ];
     cmd = [
       "--housekeeping_interval=30s"
