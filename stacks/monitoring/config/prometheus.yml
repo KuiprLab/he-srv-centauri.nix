@@ -23,12 +23,6 @@ scrape_configs:
       - targets: ['node-exporter:9100']
     scrape_interval: 30s
 
-  # cAdvisor for container metrics
-  - job_name: 'cadvisor'
-    static_configs:
-      - targets: ['host.docker.internal:8081']
-    scrape_interval: 30s
-
   # Grafana metrics
   - job_name: 'grafana'
     static_configs:

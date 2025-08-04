@@ -97,10 +97,4 @@
       "podman-compose-monitoring-root.target"
     ];
   };
-
-  # cAdvisor for container metrics
-  services.cadvisor = {
-    enable = true;
-    port = 8081;
-  };
 }
