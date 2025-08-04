@@ -66,12 +66,9 @@ scrape_configs:
   # HAProxy metrics
   - job_name: 'haproxy'
     static_configs:
-      - targets: ['host.containers.internal:8404']
+      - targets: ['host.containers.internal:8405']
     metrics_path: /metrics
-    basic_auth:
-      username: admin
-      password: admin
-    scrape_interval: 30s
+    scrape_interval: 15s
 
   # Fail2ban metrics
   - job_name: 'fail2ban'
