@@ -61,9 +61,9 @@
     environmentFiles = [
       "/run/secrets/qbit_exporter.env"
     ];
-    # ports = [
-    #   "8000:8000"
-    # ];
+    ports = [
+      "8000:8000"
+    ];
     dependsOn = [
       "qbittorrent"
     ];
