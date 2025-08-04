@@ -8,6 +8,7 @@
       sopsFile = ./config/alertmanager.yml;
       format = "yaml";
       key = "";
+      mode = "0400";
       restartUnits = [
         "podman-alertmanager.service"
       ];
