@@ -118,7 +118,6 @@
     ports = [
       "8081:80/tcp"
       "8443:443/tcp"
-      "8080:8080/tcp"
     ];
     cmd = [
       "--metrics.prometheus=true"
