@@ -104,7 +104,6 @@
     volumes = [
       "/:/rootfs:ro"
       "/dev/disk/:/dev/disk:ro"
-      "/etc/machine-id:/etc/machine-id:ro"
       "/var/run:/var/run:rw"
       "sys/fs/cgroup:/sys/fs/cgroup:ro"
       "/sys:/sys:ro"
