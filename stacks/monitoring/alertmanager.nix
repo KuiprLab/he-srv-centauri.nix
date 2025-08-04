@@ -9,8 +9,8 @@
       format = "yaml";
       key = "";
       mode = "0644";
-      owner = "1000";
-      group = "100";
+      owner = "ubuntu";
+      group = "users";
       restartUnits = [
         "podman-alertmanager.service"
       ];
