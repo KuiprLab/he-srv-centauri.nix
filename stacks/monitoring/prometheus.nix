@@ -36,6 +36,7 @@
       "--network-alias=prometheus"
       "--network=monitoring_default"
       "--network=proxy"
+      "--add-host=host.containers.internal:host-gateway"
     ];
   };
 
