@@ -2,8 +2,6 @@ _: {
   imports = [
     ./anubis
     ./authelia
-    ./beszel
-    ./dozzle
     ./explo
     ./gatus
     ./jellyfin
