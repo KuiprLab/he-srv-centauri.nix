@@ -53,7 +53,7 @@
     };
     log-driver = "journald";
     extraOptions = [
-      "--health-cmd=curl-f http://localhost:11011/health"
+      "--health-cmd=curl -f http://localhost:11011/health"
       "--health-interval=30s"
       "--health-retries=3"
       "--health-start-period=30s"
