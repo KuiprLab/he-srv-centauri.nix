@@ -5,11 +5,13 @@
   config,
   ...
 }: {
-  # Runtime
-  virtualisation.podman = {
-    enable = true;
-    autoPrune.enable = true;
-    dockerCompat = true;
+  myFolders = {
+    config = {
+      path = "/home/ubuntu/cleanuparr";
+      owner = "ubuntu";
+      group = "users";
+      mode = "0755";
+    };
   };
 
   # Enable container name DNS for all Podman networks.
@@ -36,7 +38,7 @@
       "UMASK" = "022";
     };
     volumes = [
-      "/path/to/config:/config:rw"
+      "/home/ubuntu/cleanuparr:/config:rw"
     ];
     # ports = [
     #   "11011:11011/tcp"
@@ -58,6 +60,7 @@
       "--health-start-period=30s"
       "--health-timeout=10s"
       "--network-alias=cleanuparr"
+      "--network=proxy"
       "--network=cleanuparr_default"
     ];
   };
