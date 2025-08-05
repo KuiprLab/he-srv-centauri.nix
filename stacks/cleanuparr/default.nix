@@ -46,11 +46,10 @@
     labels = {
       "traefik.enable" = "true";
       "traefik.http.routers.cleanuparr.entrypoints" = "websecure";
-      # "traefik.http.routers.cleanuparr.entrypoints" = "anubis";
+      "traefik.http.routers.cleanuparr.middlewares" = "authelia@docker";
       "traefik.http.routers.cleanuparr.rule" = "Host(`cleanuparr.kuipr.de`)";
       "traefik.http.routers.cleanuparr.tls.certresolver" = "myresolver";
       "traefik.http.services.cleanuparr.loadbalancer.server.port" = "11011";
-      "traefik.http.routers.cleanuparr.middlewares" = "authelia@docker";
     };
     log-driver = "journald";
     extraOptions = [
