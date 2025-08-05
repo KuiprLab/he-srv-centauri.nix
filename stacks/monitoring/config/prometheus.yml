@@ -72,8 +72,8 @@ scrape_configs:
     scrape_interval: 30s
 
   # Jellyfin metrics
-  - job_name: 'jellyfin'
+  - job_name: 'authelia'
     static_configs:
-      - targets: ['jellyfin:8096']
+      - targets: ['authelia:9959']
     scrape_interval: 30s
     metrics_path: /metrics
