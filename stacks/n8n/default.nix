@@ -59,12 +59,13 @@
       "traefik.http.routers.n8n.rule" = "Host(`n8n.kuipr.de`)";
       "traefik.http.routers.n8n.tls" = "true";
       "traefik.http.routers.n8n.tls.certresolver" = "myresolver";
-      "traefik.http.services.slskd.loadbalancer.server.port" = "5678";
+      "traefik.http.services.n8n.loadbalancer.server.port" = "5678";
     };
     log-driver = "journald";
     extraOptions = [
       "--network-alias=n8n"
       "--network=n8n_default"
+      "--network=proxy"
     ];
   };
   systemd.services."podman-n8n-n8n" = {
