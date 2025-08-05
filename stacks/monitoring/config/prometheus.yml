@@ -71,9 +71,16 @@ scrape_configs:
     metrics_path: /metrics
     scrape_interval: 30s
 
-  # Jellyfin metrics
+  # Authelia metrics
   - job_name: 'authelia'
     static_configs:
       - targets: ['authelia:9959']
+    scrape_interval: 30s
+    metrics_path: /metrics
+
+  # Anubis metrics
+  - job_name: 'anubis'
+    static_configs:
+      - targets: ['anubis:9093']
     scrape_interval: 30s
     metrics_path: /metrics
