@@ -6,7 +6,7 @@
   ...
 }: {
   myFolders = {
-    config = {
+    cleanuparr = {
       path = "/home/ubuntu/cleanuparr";
       owner = "ubuntu";
       group = "users";
