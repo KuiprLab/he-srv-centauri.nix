@@ -16,7 +16,6 @@ _: {
     ./starr
     ./traefik
     ./cleanuparr
-    ./n8n
     ./update-containers.nix
   ];
 }
