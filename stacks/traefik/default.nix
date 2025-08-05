@@ -36,6 +36,7 @@
   };
 
   #TODO: figure out how to automatically move ./dynamic.yml to the correct place
+  #TODO: figure out how to get the metrics replacer middleware working globally
 
   # Enable container name DNS for all Podman networks.
   networking.firewall.interfaces = let
