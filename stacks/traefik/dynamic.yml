@@ -17,6 +17,7 @@ http:
       entryPoints:
         - websecure
         - web
+        - anubis
 
     headphones:
       rule: "Host(`headphones.kuipr.de`)"
