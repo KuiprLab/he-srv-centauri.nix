@@ -1,5 +1,23 @@
 http:
+  middlewares:
+    internal-only:
+      ipWhiteList:
+        sourceRange:
+          - "127.0.0.0/8"
+          - "10.0.0.0/8"
+          - "172.16.0.0/12"
+          - "192.168.0.0/16"
+
   routers:
+    metrics-blocker:
+      rule: "PathPrefix(`/metrics`)"
+      middlewares:
+        - "internal-only"
+      priority: 1000
+      entryPoints:
+        - websecure
+        - web
+
     headphones:
       rule: "Host(`headphones.kuipr.de`)"
       entryPoints:
