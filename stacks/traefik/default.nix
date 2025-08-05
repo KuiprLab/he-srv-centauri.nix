@@ -105,6 +105,11 @@
       "traefik.http.routers.web.middlewares" = "redirect-to-https";
       "traefik.http.routers.web.tls" = "false";
 
+      # Block external access to /metrics
+      "traefik.http.middlewares.block-metrics.replacepathregex.regex" = "^/metrics.*";
+      "traefik.http.middlewares.block-metrics.replacepathregex.replacement" = "/404";
+      "traefik.http.middlewares.internal-only.ipwhitelist.sourcerange" = "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16";
+
       # Add Traefik dashboard route on HTTPS with Authelia
       "traefik.http.routers.traefik.rule" = "Host(`traefik.kuipr.de`)";
       "traefik.http.routers.traefik.entrypoints" = "websecure";
