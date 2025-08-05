@@ -42,6 +42,9 @@
       "traefik.http.routers.anubis.tls.certresolver" = "myresolver"; # Telling Traefik to resolve a Cert for Anubis
       "traefik.http.services.anubis.loadbalancer.server.port" = "8181"; # Telling Traefik to which port it should route requests
     };
+    ports = [
+      "9093:9093"
+    ];
     user = "0:0";
     log-driver = "journald";
     extraOptions = [
