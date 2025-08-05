@@ -70,3 +70,10 @@ scrape_configs:
       - targets: ['host.docker.internal:8000']
     metrics_path: /metrics
     scrape_interval: 30s
+
+  # Jellyfin metrics
+  - job_name: 'jellyfin'
+    static_configs:
+      - targets: ['jellyfin:8096']
+    scrape_interval: 30s
+    metrics_path: /metrics
