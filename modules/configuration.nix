@@ -89,6 +89,7 @@
       8405 # HAProxy Stats
       9534 # Fail2ban Exporter
       8000 # qbit exporter
+      9093 # anubis exporter
     ];
     allowedUDPPorts = [
       6881
