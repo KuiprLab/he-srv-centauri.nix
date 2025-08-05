@@ -15,6 +15,7 @@ _: {
     ./soulseek
     ./starr
     ./traefik
+    ./cleanuparr
     ./update-containers.nix
   ];
 }
