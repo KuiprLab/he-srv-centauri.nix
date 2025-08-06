@@ -3,6 +3,20 @@
   config,
   ...
 }: {
+  sops.secrets = {
+    "grafana.ini" = {
+      sopsFile = ./config/grafana-custom.ini;
+      format = "ini";
+      key = "";
+      mode = "0644";
+      owner = "ubuntu";
+      group = "users";
+      restartUnits = [
+        "podman-grafana.service"
+      ];
+    };
+  };
+
   # Grafana configuration
   virtualisation.oci-containers.containers."grafana" = {
     image = "grafana/grafana-dev:12.2.0-257444";
@@ -20,9 +34,7 @@
     volumes = [
       "/home/ubuntu/grafana:/var/lib/grafana:rw"
       "${./config/grafana-datasources.yml}:/etc/grafana/provisioning/datasources/datasources.yml:ro"
-      # "${./config/grafana-dashboards.yml}:/etc/grafana/provisioning/dashboards/dashboards.yml:ro"
-      "${./config/grafana-custom.ini}:/etc/grafana/grafana.ini:ro"
-      # "${./dashboards}:/var/lib/grafana/dashboards:ro"
+      "${config.sops.secrets."grafana.ini".path}:/etc/grafana/grafana.ini:ro"
     ];
     user = "472:472"; # grafana user
     labels = {
