@@ -36,6 +36,9 @@
       "/mnt/data/media:/media:rw"
       "/home/ubuntu/jellyfin/cache:/cache:rw"
       "/home/ubuntu/jellyfin/config:/config:rw"
+      "${./system.xml}:/config/config/system.xml:ro"
+      "${./network.xml}:/config/config/network.xml:ro"
+      "${./branding.xml}:/config/config/branding.xml:ro"
     ];
     labels = {
       "traefik.enable" = "true";
