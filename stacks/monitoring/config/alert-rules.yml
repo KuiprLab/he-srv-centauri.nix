@@ -132,7 +132,7 @@ groups:
         annotations:
           summary: "Qbittorrent got firewalled"
           description: "Qbittorrent got firewalled"
-  
+
   - name: prometheus
     rules:
       - alert: PrometheusConfigReloadFailure
@@ -165,7 +165,7 @@ groups:
           description: "High rate of 5xx errors on service {{ $labels.service }}."
 
       - alert: TraefikHighLatency
-        expr: histogram_quantile(0.99, sum(rate(traefik_service_request_duration_seconds_bucket[5m])) by (le, service)) > 1
+        expr: histogram_quantile(0.99, sum(rate(traefik_service_request_duration_seconds_bucket[5m])) by (le, service)) > 2
         for: 5m
         labels:
           severity: warning
