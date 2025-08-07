@@ -5,6 +5,12 @@ users:
         email: ENC[AES256_GCM,data:Mri+pW5h1oGlP1J7ZqyyxClHPKK7Gtt8,iv:6EvDD6+CVPSSb7aEgwPq1o/hsOFlYdS5lMjD5UEhDHg=,tag:eyUtY5BzemVlWh9t0GAy9w==,type:str]
         groups:
             - ENC[AES256_GCM,data:npFLK5Y=,iv:og6HxTQDeIUmFNlNn4WM76cdIAwh2TvXHG6FMBGT/UQ=,tag:8benEC3ZMEWr7lEcLfPuHQ==,type:str]
+    test:
+        displayname: ENC[AES256_GCM,data:B77YSg==,iv:BKx4IeUH3W59d7BBn6OtY3k4JfeXfF1Mjqy/oSlNisY=,tag:9cv5yQFZthfwj7SnQU4R+A==,type:str]
+        password: ENC[AES256_GCM,data:BwzYuNxd3Y+yYt0N2w7cpncDJfl7v8TczwVVMY3yNoNNFAMm3P77ShcSlNRs7vG4+21BqmXP4b50m5lFcpDsbbhrZg7dD5Q06ShKRCbhsi/viC1nRChYDZp3FTYD7k9ecg==,iv:ecw3M9foylACyXwU2WFoN3j3gWgD9tebNnPLRbZFU9c=,tag:w+GKDknquGovpj8oHUOg6w==,type:str]
+        email: ENC[AES256_GCM,data:GWaiZk5ZkYUgCMZxNB/6KQ==,iv:wGjTxr6NFpeAQHAKxLVZdT0UGk7eTHjYv01hR0ubKUU=,tag:KpnBoAwVLKgv1JMVMrADgA==,type:str]
+        groups:
+            - ENC[AES256_GCM,data:1/llsA==,iv:T7CL1SMtTYBURahrn2SmJwQ/Pob+034z870kxeS8mU0=,tag:/uJrpjS4nVznxxEizt5tBw==,type:str]
 sops:
     age:
         - recipient: age1207u8skz74quhs0xtunrrp2xwj0dtmffllfk7fw93q5eywd7w37qslc9yh
@@ -25,7 +31,7 @@ sops:
             ankvWksvOG01U21id2VVVVNEcjFqVTAKl5vJgFykmRptSY4hVJPD7hT7j9TE9Tdx
             3A82BEBvbIALy+yweSXaM7at74nRD72Re5vlJNGvXb6ViYu4de83bA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-08-06T07:25:58Z"
-    mac: ENC[AES256_GCM,data:4N0r6rgJI29FOfz032r1veeW2vJ8o6ThJo/Ams+PC5OyGx7yQpEVqKTQ+1xsbUBWmxeXdl7hpF880IzQW7X3Hm87vATKlkpvFvu3mSfDbRR1nTK37Evg9lBHOD+HU54ovR+U2b0pKxMSCAkWkWNLrevqOlfNzlJ2DEEais7djdc=,iv:mkjFrINzhgSF6QMUNZMVJqY+gfDaVp7O4a1JT3MaVuo=,tag:6E9b48yI0K3jpUia86Jl/w==,type:str]
+    lastmodified: "2025-08-07T08:32:40Z"
+    mac: ENC[AES256_GCM,data:6LHFNn4SJdM4nIZlgESqA41DGzJILxTPevm3nuEqORM66GmkxvikNrAq4igkvTBWLI62k0KLL2ySmmbly9kaEJuKishPA4tWW1ROM9l2VFLkjBw7NBk9neJJUqcoo3+nmRd4yl4CMlSPYHKW4yS5oM7qADg13c8VIumMUZ+dr2w=,iv:Uk2Pg5Z50n5AyfgKTjmQ5VtK06mSIoV7nj9aF/kDuHg=,tag:xRgf8OrOIU/zV59o7iCO9w==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.10.2
