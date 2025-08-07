@@ -8,7 +8,7 @@ users:
     test:
         displayname: ENC[AES256_GCM,data:B77YSg==,iv:BKx4IeUH3W59d7BBn6OtY3k4JfeXfF1Mjqy/oSlNisY=,tag:9cv5yQFZthfwj7SnQU4R+A==,type:str]
         password: ENC[AES256_GCM,data:BwzYuNxd3Y+yYt0N2w7cpncDJfl7v8TczwVVMY3yNoNNFAMm3P77ShcSlNRs7vG4+21BqmXP4b50m5lFcpDsbbhrZg7dD5Q06ShKRCbhsi/viC1nRChYDZp3FTYD7k9ecg==,iv:ecw3M9foylACyXwU2WFoN3j3gWgD9tebNnPLRbZFU9c=,tag:w+GKDknquGovpj8oHUOg6w==,type:str]
-        email: ENC[AES256_GCM,data:GWaiZk5ZkYUgCMZxNB/6KQ==,iv:wGjTxr6NFpeAQHAKxLVZdT0UGk7eTHjYv01hR0ubKUU=,tag:KpnBoAwVLKgv1JMVMrADgA==,type:str]
+        email: ENC[AES256_GCM,data:wkhJvnMwxZ05UesR7Q==,iv:qaAgwMhS66QSnRmSm7KKoNX7szW3UyUD2V+M2v4teeA=,tag:35WT77GIacxF/FS9Z0rQwQ==,type:str]
         groups:
             - ENC[AES256_GCM,data:1/llsA==,iv:T7CL1SMtTYBURahrn2SmJwQ/Pob+034z870kxeS8mU0=,tag:/uJrpjS4nVznxxEizt5tBw==,type:str]
 sops:
@@ -31,7 +31,7 @@ sops:
             ankvWksvOG01U21id2VVVVNEcjFqVTAKl5vJgFykmRptSY4hVJPD7hT7j9TE9Tdx
             3A82BEBvbIALy+yweSXaM7at74nRD72Re5vlJNGvXb6ViYu4de83bA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-08-07T08:32:40Z"
-    mac: ENC[AES256_GCM,data:6LHFNn4SJdM4nIZlgESqA41DGzJILxTPevm3nuEqORM66GmkxvikNrAq4igkvTBWLI62k0KLL2ySmmbly9kaEJuKishPA4tWW1ROM9l2VFLkjBw7NBk9neJJUqcoo3+nmRd4yl4CMlSPYHKW4yS5oM7qADg13c8VIumMUZ+dr2w=,iv:Uk2Pg5Z50n5AyfgKTjmQ5VtK06mSIoV7nj9aF/kDuHg=,tag:xRgf8OrOIU/zV59o7iCO9w==,type:str]
+    lastmodified: "2025-08-07T08:36:54Z"
+    mac: ENC[AES256_GCM,data:UKBholiL6Ux/YwusPmASfV69skTERqoQ6HFE1IKj9xYCH8TT9+/nmsAiBOwE5Gk10698FFgp5hSt4+5jfSSwSP9elRt+5yXx682mUHLrncVERhq7ACFNDV9zEF59zvlfT3HJa++rQmruUCObSj7iIDR/S6A4zA691ZUCI2NBsuw=,iv:iAIEIZ9Xoe6jYTO5cgAvEZsJUjReef4z2YUF0CgJBX0=,tag:cFPds6Qmach46bTNmdpX9Q==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.10.2
