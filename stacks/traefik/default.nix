@@ -35,7 +35,6 @@
     };
   };
 
-  #TODO: figure out how to automatically move ./dynamic.yml to the correct place
   #TODO: figure out how to get the metrics replacer middleware working globally
 
   # Enable container name DNS for all Podman networks.
@@ -90,6 +89,7 @@
     image = "traefik:v3.4";
     volumes = [
       "/home/ubuntu/traefik/config:/config:rw"
+      "${./dynamic.yml}:/config/dynamic.yml:ro"
       "/home/ubuntu/traefik/letsencrypt:/letsencrypt:rw"
       "/home/ubuntu/traefik/logs:/logs:rw"
       "/run/podman/podman.sock:/var/run/docker.sock:ro"
