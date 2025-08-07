@@ -37,6 +37,24 @@ groups:
           summary: "High system load"
           description: "System load is {{ $value }} on {{ $labels.instance }}"
 
+      - alert: NodeUnreachable
+        expr: up{job="node_exporter"} == 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Node unreachable"
+          description: "Node {{ $labels.instance }} is unreachable."
+
+      - alert: HighDiskIO
+        expr: avg by (instance) (irate(node_disk_io_time_seconds_total[1m])) * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High Disk I/O"
+          description: "Disk I/O on {{ $labels.instance }} is over 80%."
+
   - name: containers
     rules:
       - alert: TargetHealth
@@ -65,6 +83,24 @@ groups:
         annotations:
           summary: "High container memory usage"
           description: "Container {{ $labels.name }} memory usage is above 90%"
+
+      - alert: ContainerKilled
+        expr: time() - container_last_seen > 60
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Container killed"
+          description: "Container {{ $labels.name }} on {{ $labels.instance }} has been killed."
+
+      - alert: ContainerCPUThrottling
+        expr: rate(container_cpu_cfs_throttled_seconds_total[5m]) > 0.25
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Container CPU throttling"
+          description: "Container {{ $labels.name }} on {{ $labels.instance }} is being throttled."
 
   - name: services
     rules:
@@ -96,3 +132,74 @@ groups:
         annotations:
           summary: "Qbittorrent got firewalled"
           description: "Qbittorrent got firewalled"
+  
+  - name: prometheus
+    rules:
+      - alert: PrometheusConfigReloadFailure
+        expr: prometheus_config_last_reload_successful == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Prometheus config reload failed"
+          description: "Prometheus on {{ $labels.instance }} failed to reload its configuration."
+
+      - alert: AlertmanagerConfigReloadFailure
+        expr: alertmanager_config_last_reload_successful == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Alertmanager config reload failed"
+          description: "Alertmanager on {{ $labels.instance }} failed to reload its configuration."
+
+  - name: traefik
+    rules:
+      - alert: Traefik5xxErrorRate
+        expr: sum(rate(traefik_service_requests_total{code=~"5.*"}[5m])) by (service) / sum(rate(traefik_service_requests_total[5m])) by (service) * 100 > 5
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Traefik 5xx error rate"
+          description: "High rate of 5xx errors on service {{ $labels.service }}."
+
+      - alert: TraefikHighLatency
+        expr: histogram_quantile(0.99, sum(rate(traefik_service_request_duration_seconds_bucket[5m])) by (le, service)) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Traefik high latency"
+          description: "High latency on service {{ $labels.service }}."
+
+  - name: haproxy
+    rules:
+      - alert: HAProxyBackendDown
+        expr: haproxy_backend_down_count > 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "HAProxy backend down"
+          description: "HAProxy backend {{ $labels.backend }} is down."
+
+  - name: security
+    rules:
+      - alert: Fail2banIpBanned
+        expr: increase(fail2ban_banned_ips_total[1m]) > 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Fail2ban IP banned"
+          description: "Fail2ban has banned a new IP address."
+
+      - alert: AutheliaHighFailedLogins
+        expr: increase(authelia_logins_failed_total[5m]) > 5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Authelia high failed logins"
+          description: "High number of failed logins on Authelia."
