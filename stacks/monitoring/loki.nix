@@ -52,9 +52,10 @@
   virtualisation.oci-containers.containers."promtail" = {
     image = "grafana/promtail:latest";
     volumes = [
-      "/var/log:/var/log:ro"
       "/run/podman/podman.sock:/var/run/docker.sock:ro"
       "${./config/promtail.yml}:/etc/promtail/config.yml:ro"
+      "/home/ubuntu/traefik/logs:/home/ubuntu/traefik/logs:ro"
+      "/var/log:/var/log:ro"
     ];
     cmd = [
       "-config.file=/etc/promtail/config.yml"
