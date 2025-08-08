@@ -64,6 +64,13 @@ scrape_configs:
       - targets: ['fail2ban-exporter:9191']
     scrape_interval: 30s
 
+    # Podman metrics
+  - job_name: 'podman'
+    static_configs:
+      - targets: [ 'podman-exporter:9882']
+    scrape_interval: 30s
+
+
   # qBittorrent metrics
   - job_name: 'qbittorrent'
     static_configs:
