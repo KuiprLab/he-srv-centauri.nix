@@ -9,7 +9,7 @@
       "/run/podman/podman.sock:/run/podman/podman.sock:rw"
     ];
     log-driver = "journald";
-
+    user = "0:0";
     environment = {
       "CONTAINER_HOST" = "unix:///run/podman/podman.sock";
     };
