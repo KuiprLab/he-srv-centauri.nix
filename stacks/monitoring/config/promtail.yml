@@ -52,4 +52,4 @@ scrape_configs:
         labels:
           job: traefik
           service: traefik
-          __path__: /var/log/traefik/*.log
+          __path__: /home/ubuntu/traefik/logs/*.log
