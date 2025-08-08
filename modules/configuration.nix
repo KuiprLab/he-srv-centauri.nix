@@ -90,6 +90,7 @@
       9534 # Fail2ban Exporter
       8000 # qbit exporter
       9093 # anubis exporter
+      9883 # podman exporter
     ];
     allowedUDPPorts = [
       6881
