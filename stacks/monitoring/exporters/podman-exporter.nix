@@ -6,7 +6,7 @@
   virtualisation.oci-containers.containers."podman-exporter" = {
     image = "quay.io/navidys/prometheus-podman-exporter";
     volumes = [
-      "/run/podman/podman.sock:/run/podman/podman.sock:ro"
+      "/run/podman/podman.sock:/run/podman/podman.sock:rw"
     ];
     log-driver = "journald";
 
