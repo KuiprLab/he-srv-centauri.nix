@@ -60,6 +60,9 @@
     cmd = [
       "-config.file=/etc/promtail/config.yml"
     ];
+    labels = {
+      "traefik.http.services.promtail.loadbalancer.server.port" = "1000";
+    };
     log-driver = "journald";
     extraOptions = [
       "--network-alias=promtail"

@@ -9,6 +9,9 @@
       "/var/run/fail2ban/:/var/run/fail2ban:ro"
     ];
     log-driver = "journald";
+    labels = {
+      "traefik.http.services.fail2ban-exporter.loadbalancer.server.port" = "9191";
+    };
     extraOptions = [
       "--network-alias=fail2ban-exporter"
       "--network=monitoring_default"

@@ -36,6 +36,10 @@
       "/mnt/data/downloads:/slskd:rw"
       "/mnt/data/media/music:/data:rw"
     ];
+
+    labels = {
+      "traefik.http.services.explo.loadbalancer.server.port" = "1000";
+    };
     log-driver = "journald";
     extraOptions = [
       "--network-alias=explo"
