@@ -65,13 +65,13 @@
       "8000:8000"
     ];
     labels = {
-      "traefik.http.services.qbit_exporter.loadbalancer.server.port" = "80000";
+      "traefik.http.services.qbit_exporter.loadbalancer.server.port" = "8000";
     };
     dependsOn = [
       "qbittorrent"
     ];
     extraOptions = [
-      "--network-alias=qbit_exporter"
+      # "--network-alias=qbit_exporter"
       "--network=host"
     ];
   };
