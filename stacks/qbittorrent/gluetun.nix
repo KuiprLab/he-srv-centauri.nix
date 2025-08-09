@@ -23,7 +23,6 @@
       "--network-alias=gluetun"
       "--network=proxy"
       "--network=seedbox_default"
-      "--network=soulseek_default"
     ];
     ports = [
       "8080:8080/tcp"

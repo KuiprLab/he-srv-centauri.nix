@@ -80,6 +80,7 @@
       "--network-alias=flaresolverr"
       "--network=proxy"
       "--network=starr_default"
+      "--network=seedbox_default"
     ];
   };
   systemd.services."podman-flaresolverr" = {
@@ -88,9 +89,11 @@
     };
     after = [
       "podman-network-starr_default.service"
+      "podman-network-seedbox_default.service"
     ];
     requires = [
       "podman-network-starr_default.service"
+      "podman-network-seedbox_default.service"
     ];
     partOf = [
       "podman-compose-starr-root.target"
@@ -120,6 +123,7 @@
       "--network-alias=prowlarr"
       "--network=proxy"
       "--network=starr_default"
+      "--network=seedbox_default"
     ];
   };
   systemd.services."podman-prowlarr" = {
@@ -128,9 +132,11 @@
     };
     after = [
       "podman-network-starr_default.service"
+      "podman-network-seedbox_default.service"
     ];
     requires = [
       "podman-network-starr_default.service"
+      "podman-network-seedbox_default.service"
     ];
     partOf = [
       "podman-compose-starr-root.target"
@@ -162,6 +168,7 @@
       "--network-alias=radarr"
       "--network=proxy"
       "--network=starr_default"
+      "--network=seedbox_default"
     ];
   };
   systemd.services."podman-radarr" = {
@@ -170,9 +177,11 @@
     };
     after = [
       "podman-network-starr_default.service"
+      "podman-network-seedbox_default.service"
     ];
     requires = [
       "podman-network-starr_default.service"
+      "podman-network-seedbox_default.service"
     ];
     partOf = [
       "podman-compose-starr-root.target"
@@ -206,6 +215,7 @@
       "--network-alias=sonarr"
       "--network=proxy"
       "--network=starr_default"
+      "--network=seedbox_default"
     ];
   };
   systemd.services."podman-sonarr" = {
@@ -214,9 +224,11 @@
     };
     after = [
       "podman-network-starr_default.service"
+      "podman-network-seedbox_default.service"
     ];
     requires = [
       "podman-network-starr_default.service"
+      "podman-network-seedbox_default.service"
     ];
     partOf = [
       "podman-compose-starr-root.target"
@@ -240,6 +252,7 @@
       "--network-alias=unpackerr"
       "--network=proxy"
       "--network=starr_default"
+      "--network=seedbox_default"
     ];
   };
 
@@ -269,6 +282,7 @@
       "--network-alias=lidarr"
       "--network=proxy"
       "--network=starr_default"
+      "--network=seedbox_default"
     ];
   };
   systemd.services."podman-lidarr" = {
@@ -277,9 +291,11 @@
     };
     after = [
       "podman-network-starr_default.service"
+      "podman-network-seedbox_default.service"
     ];
     requires = [
       "podman-network-starr_default.service"
+      "podman-network-seedbox_default.service"
     ];
     partOf = [
       "podman-compose-starr-root.target"
@@ -295,9 +311,11 @@
     };
     after = [
       "podman-network-starr_default.service"
+      "podman-network-seedbox_default.service"
     ];
     requires = [
       "podman-network-starr_default.service"
+      "podman-network-seedbox_default.service"
     ];
     partOf = [
       "podman-compose-starr-root.target"
