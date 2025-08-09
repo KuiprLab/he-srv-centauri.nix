@@ -2,7 +2,7 @@ _: {
   imports = [
     ./anubis
     ./authelia
-    ./cleanuparr
+    # ./cleanuparr
     ./explo
     ./gatus
     ./jellyfin
