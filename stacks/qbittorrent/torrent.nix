@@ -71,8 +71,9 @@
       "qbittorrent"
     ];
     extraOptions = [
-      # "--network-alias=qbit_exporter"
-      "--network=host"
+      "--network-alias=qbit_exporter"
+      "--network=seedbox_default"
+      "--network=proxy"
     ];
   };
 
