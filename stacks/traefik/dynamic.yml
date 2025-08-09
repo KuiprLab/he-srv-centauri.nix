@@ -8,6 +8,20 @@ http:
           - "172.16.0.0/12"
           - "192.168.0.0/16"
 
+    # Add request tracing headers
+    add-request-id:
+      headers:
+        customRequestHeaders:
+          X-Request-ID: "{{ .TraefikRequestID }}"
+          X-Forwarded-By: "traefik"
+
+    # Middleware to log real IP information
+    real-ip-headers:
+      headers:
+        customRequestHeaders:
+          X-Debug-Client-IP: "{{ .ClientIP }}"
+          X-Debug-Remote-Addr: "{{ .RemoteAddr }}"
+
   routers:
     metrics-blocker:
       rule: "PathPrefix(`/metrics`)"
@@ -18,19 +32,3 @@ http:
         - websecure
         - web
         - anubis
-
-    headphones:
-      rule: "Host(`headphones.kuipr.de`)"
-      entryPoints:
-        - websecure
-      middlewares:
-        # - authelia@docker
-      service: headphones-service
-      tls:
-        certResolver: myresolver
-
-  services:
-    headphones-service:
-      loadBalancer:
-        servers:
-          - url: "http://37.27.26.175:8181"

@@ -136,6 +136,24 @@
       "--accesslog.filepath=/logs/access.log"
       "--accesslog.format=json"
       "--accesslog.bufferingsize=100"
+
+      # Enhanced access logging with additional fields
+      "--accesslog.fields.defaultmode=keep"
+      "--accesslog.fields.names.ClientUsername=drop"
+      "--accesslog.fields.headers.defaultmode=keep"
+      "--accesslog.fields.headers.names.User-Agent=keep"
+      "--accesslog.fields.headers.names.Referer=keep"
+      "--accesslog.fields.headers.names.X-Forwarded-For=keep"
+      "--accesslog.fields.headers.names.X-Real-IP=keep"
+      "--accesslog.fields.headers.names.X-Forwarded-Proto=keep"
+      "--accesslog.fields.headers.names.CF-Connecting-IP=keep"
+
+      # Trust forwarded headers from proxy networks
+      "--entrypoints.web.forwardedHeaders.trustedIPs=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+      "--entrypoints.websecure.forwardedHeaders.trustedIPs=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+      "--entrypoints.anubis.forwardedHeaders.trustedIPs=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+
+      # Existing configuration
       "--providers.docker=true"
       "--entryPoints.web.address=:80"
       "--entryPoints.websecure.address=:443"
