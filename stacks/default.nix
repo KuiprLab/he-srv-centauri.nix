@@ -2,6 +2,7 @@ _: {
   imports = [
     ./anubis
     ./authelia
+    ./cleanuparr
     ./explo
     ./gatus
     ./jellyfin
@@ -13,7 +14,5 @@ _: {
     ./soulseek
     ./starr
     ./traefik
-    ./cleanuparr
-    ./update-containers.nix
   ];
 }
