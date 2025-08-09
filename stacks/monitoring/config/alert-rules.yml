@@ -125,7 +125,7 @@ groups:
   - name: starr
     rules:
       - alert: QbitFirewalled
-        expr: qbittorrent_firewalled{server="qbit.kuipr.de:443"} == 1
+        expr: qbittorrent_firewalled{server="gluetun:8585"} == 1
         for: 1m
         labels:
           severity: critical
