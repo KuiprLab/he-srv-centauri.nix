@@ -63,41 +63,4 @@
       "podman-compose-monitoring-root.target"
     ];
   };
-
-  # Discord webhook bridge for alertmanager
-  virtualisation.oci-containers.containers."discord-webhook" = {
-    image = "plumeeus/alertmanager-discord:latest";
-    environment = {
-      "LISTEN_ADDRESS" = "0.0.0.0:9094";
-    };
-    environmentFiles = [
-      "${config.sops.secrets."monitoring.env".path}"
-    ];
-    labels = {
-      "traefik.enable" = "false";
-    };
-    log-driver = "journald";
-    extraOptions = [
-      "--network-alias=discord-webhook"
-      "--network=monitoring_default"
-    ];
-  };
-
-  systemd.services."podman-discord-webhook" = {
-    serviceConfig = {
-      Restart = lib.mkOverride 90 "always";
-    };
-    after = [
-      "podman-network-monitoring_default.service"
-    ];
-    requires = [
-      "podman-network-monitoring_default.service"
-    ];
-    partOf = [
-      "podman-compose-monitoring-root.target"
-    ];
-    wantedBy = [
-      "podman-compose-monitoring-root.target"
-    ];
-  };
 }
