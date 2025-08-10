@@ -1,3 +1,4 @@
+metrics: ENC[AES256_GCM,data:yXmcRg==,iv:n/7GD/vHEE/nrDYIoeSoHeVep0Wk4YRt1JPiKW1EA8U=,tag:/McG7ZgK/yhJNLdTm1X3iA==,type:bool]
 alerting:
     discord:
         webhook-url: ENC[AES256_GCM,data:/KYSn1IUZI2fiWrabUn+nNIPzwHwvMhFkhPPyedqS8LTZjxQcGbMsar3m8SnOhUYwmtgZn3O+1vkakOHp2JvWijriuFX8BFLfjkDUL4GS69zU4UYkcHXri/DXPPDMHsB8/4bR8ZtYX37xA4fh5AEVzptyaquu9370g==,iv:MsfmEydgZtgyggMt6T1M7DWeRynSbGZtg1YTUNVsc/c=,tag:/FGpFtH2eTeSC4mTIISxig==,type:str]
@@ -301,7 +302,7 @@ sops:
             M0wvZXZKa2NUMVNtME4xZjBMMFV4RFkKnwf2i/NS0wgXVzvzM6eTppSWKSnjQMOO
             5p8ylKj9Zw/1M6X9Tc1ehZ0qasdbKW8WONlcqZxZV1Yo4ibwISwxEA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-08-10T08:35:12Z"
-    mac: ENC[AES256_GCM,data:vWSi0FfTu/nGrwIn1Or0VaeT/EHx+cycZj6ZYqAQCtUKe+3e+XhOt2z9Zb7fa0tbG0JuznjKUpCAIJ2+Ny/Qt1i6bK6mMyH2gYZ9bDXWTISJkAv6p2M0aMJNW//b9u7GDE1tafwUqBtbYNUBs2H3vSdeScibT2CVbib6tCoX6+c=,iv:WbF4BRO+oYsGJr4/cO+d4+LFDmVHWAzg52zvjE6gNN4=,tag:b90VXlhau2HbwaOI2IiJdQ==,type:str]
+    lastmodified: "2025-08-10T08:50:21Z"
+    mac: ENC[AES256_GCM,data:eWt97W60lJOmyhy747oiduKwzo+SYPi+rfQMvg6jnf1PBdKyV9DqtNiPjQALJu44dNdLhJcBc++26xdidh7P9salE9zayR+3b+kwo9MVbDQ1e987eBpbvR69G+XXj3hin7JqT1W+DnGXe+wZw6k6a0fbhAOu6qDG8rURSTmMIjo=,iv:nxMGkyp7M3csn1gWrFwR9eh8iGr6i7az1fbd/r8Wu9A=,tag:eafcCaVtPq+0t6oLmknXaw==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.10.2

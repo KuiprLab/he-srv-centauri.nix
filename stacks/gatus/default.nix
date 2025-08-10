@@ -48,7 +48,7 @@
       "traefik.docker.network" = "proxy";
       "traefik.enable" = "true";
       "traefik.http.routers.gatus.entrypoints" = "websecure";
-      "traefik.http.routers.gatus.middlewares" = "authelia@docker";
+      "traefik.http.routers.gatus.middlewares" = "authelia@docker,block-metrics@docker";
       "traefik.http.routers.gatus.rule" = "Host(`uptime.kuipr.de`)";
       "traefik.http.routers.gatus.tls.certresolver" = "myresolver";
       "traefik.http.services.gatus.loadbalancer.server.port" = "8080";

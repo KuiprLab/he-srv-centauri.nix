@@ -91,3 +91,10 @@ scrape_configs:
       - targets: ['anubis:9093']
     scrape_interval: 30s
     metrics_path: /metrics
+
+  # Gatus metrics
+  - job_name: 'gatus'
+    static_configs:
+      - targets: ['gatus:8080']
+    scrape_interval: 30s
+    metrics_path: /metrics
