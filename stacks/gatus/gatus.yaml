@@ -277,7 +277,6 @@ endpoints:
       interval: ENC[AES256_GCM,data:UfWR,iv:+x//Hdb1cY4vKwyhTImmxk7Lq4ULiWJPlf7pDXDxPoI=,tag:SWPt4Bs4+z/OtXaDVvcfdQ==,type:str]
       conditions:
         - ENC[AES256_GCM,data:75edRVl7OuyKJP7A/vba,iv:+/9SOYpZ5gKZYg0Mh1/gJYsd3EJ24/GKoAWs5urOc7E=,tag:ed+2roBLT7e7u6aOJnwwlA==,type:str]
-        - ENC[AES256_GCM,data:ewAxFGBaI1+rykpK424nnXAVMEO8PY5L4G0=,iv:VM5ikZpnU0dVHU+X9Gcze1gs3vWe1Wg5KG7fFYMfqvs=,tag:tNhfrg75MaGO+KfyAgT1xQ==,type:str]
       alerts:
         - type: ENC[AES256_GCM,data:fUmU1Pgf6g==,iv:6Eeu5aB9ZRCczTMwS160Lv1Pq+bSM1j+CMR/sgb8y3Y=,tag:KkgfHGzbgJeEN4o12JzdSg==,type:str]
           description: ENC[AES256_GCM,data:MnsV9eZv6C/++PE0TocU2wkP,iv:14zo8KHvPr3T4xXd439B014nwb7gH7wczw6jzP4negs=,tag:uz9/gSkDwvUKwS5DjUvHtA==,type:str]
@@ -302,7 +301,7 @@ sops:
             M0wvZXZKa2NUMVNtME4xZjBMMFV4RFkKnwf2i/NS0wgXVzvzM6eTppSWKSnjQMOO
             5p8ylKj9Zw/1M6X9Tc1ehZ0qasdbKW8WONlcqZxZV1Yo4ibwISwxEA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-08-10T08:32:12Z"
-    mac: ENC[AES256_GCM,data:YQE4iQc6BxYAY4Dyzs388vfUINFJ0wDACeCiUvaG4dHFynZImrG3eS267zCzgg2zhrXgoJeVI+fxuOOO4cge4EyRD5sqX2hFCQwiErbXgHEXiPCQ2DdApFGkyC69gzPXYh3ENmksUJM+DAda0W7c09pscfJkbl4OPnCJO9oySvY=,iv:jriZkoj2/GOt714J4bMjAkD/Vrg9FI6RwJFXS+PrkRI=,tag:zofrBgHB03oqiKb1iFv0Jw==,type:str]
+    lastmodified: "2025-08-10T08:34:09Z"
+    mac: ENC[AES256_GCM,data:shhe2w2zgik4JcXrcQ49EkWAOCA6PyJQj7wjSclmfkziUle7cmsZGKX6Yiul52G9MlElfi8hW6nrjH9r+n4XjD3RTkp6fU2Uh3lds6+cy98GP9ugVY5Nvp4+SaAyNIJC4ynRedn308LPMvn75RYjNKsYfs5PTsnx+r7l+c6CNjY=,iv:p/+YFCoPQw+7d4HqAtV2nw2LC0j08ypuIhFR2uOZOHY=,tag:n1BZ+vO9uoFgTeToTfnLSg==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.10.2
