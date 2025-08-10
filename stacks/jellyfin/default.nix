@@ -24,8 +24,6 @@
     "${matchAll}".allowedUDPPorts = [53];
   };
 
-  virtualisation.oci-containers.backend = "podman";
-
   # Containers
   virtualisation.oci-containers.containers."jellyfin" = {
     image = "jellyfin/jellyfin";
@@ -42,17 +40,16 @@
     ];
     labels = {
       "traefik.enable" = "true";
-      "traefik.http.routers.jellyfin.entrypoints" = "websecure";
-      # "traefik.http.routers.jellyfin.entrypoints" = "anubis";
+      # "traefik.http.routers.jellyfin.entrypoints" = "websecure";
+      "traefik.http.routers.jellyfin.entrypoints" = "anubis";
       "traefik.http.routers.jellyfin.rule" = "Host(`jelly.kuipr.de`)";
-      "traefik.http.routers.jellyfin.tls.certresolver" = "myresolver";
+      # "traefik.http.routers.jellyfin.tls.certresolver" = "myresolver";
       "traefik.http.services.jellyfin.loadbalancer.server.port" = "8096";
       # "traefik.http.routers.jellyfin.middlewares" = "block-metrics@docker";
     };
     user = "0:0";
     log-driver = "journald";
     extraOptions = [
-      "--add-host=host.docker.internal:host-gateway"
       "--network-alias=jellyfin"
       "--network=jellyfin_default"
       "--network=proxy"
