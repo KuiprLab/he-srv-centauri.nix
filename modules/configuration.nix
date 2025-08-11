@@ -91,10 +91,10 @@
       8000 # qbit exporter
       9093 # anubis exporter
       9883 # podman exporter
-      9708
-      9709
-      9710
-      9711
+      9708 # exportarr
+      9709 # exportarr
+      9710 # exportarr
+      9711 # exportarr
     ];
     allowedUDPPorts = [
       6881
