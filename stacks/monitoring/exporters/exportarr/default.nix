@@ -1,0 +1,204 @@
+# Auto-generated using compose2nix v0.3.2-pre.
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: {
+  sops.secrets = {
+    "exportarr-radarr" = {
+      sopsFile = ./exportarr-radarr.env;
+      format = "env";
+      key = "";
+      mode = "0644";
+      owner = "ubuntu";
+      group = "users";
+    };
+
+    "exportarr-sonarr" = {
+      sopsFile = ./exportarr-sonarr.env;
+      format = "env";
+      key = "";
+      mode = "0644";
+      owner = "ubuntu";
+      group = "users";
+    };
+
+    "exportarr-lidarr" = {
+      sopsFile = ./exportarr-lidarr.env;
+      format = "env";
+      key = "";
+      mode = "0644";
+      owner = "ubuntu";
+      group = "users";
+    };
+
+    "exportarr-prowlarr" = {
+      sopsFile = ./exportarr-prowlarr.env;
+      format = "env";
+      key = "";
+      mode = "0644";
+      owner = "ubuntu";
+      group = "users";
+    };
+  };
+
+  # Containers
+  virtualisation.oci-containers.containers."lidarr-exporter" = {
+    image = "ghcr.io/onedr0p/exportarr:v2.0";
+    environmentFiles = [
+      "${config.sops.secrets."exportarr-lidarr.env".path}"
+    ];
+    ports = [
+      "9709:9709/tcp"
+    ];
+    cmd = ["lidarr"];
+    log-driver = "journald";
+    extraOptions = [
+      "--network-alias=lidarr-exporter"
+      "--network=proxy"
+      "--network=exportarr_default"
+    ];
+  };
+  systemd.services."podman-lidarr-exporter" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "always";
+    };
+    after = [
+      "podman-network-exportarr_default.service"
+    ];
+    requires = [
+      "podman-network-exportarr_default.service"
+    ];
+    partOf = [
+      "podman-compose-exportarr-root.target"
+    ];
+    wantedBy = [
+      "podman-compose-exportarr-root.target"
+    ];
+  };
+  virtualisation.oci-containers.containers."prowlarr-exporter" = {
+    image = "ghcr.io/onedr0p/exportarr:v2.0";
+    environmentFiles = [
+      "${config.sops.secrets."exportarr-prowlarr.env".path}"
+    ];
+    ports = [
+      "9710:9710/tcp"
+    ];
+    cmd = ["prowlarr"];
+    log-driver = "journald";
+    extraOptions = [
+      "--network-alias=prowlarr-exporter"
+      "--network=proxy"
+      "--network=exportarr_default"
+    ];
+  };
+  systemd.services."podman-prowlarr-exporter" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "always";
+    };
+    after = [
+      "podman-network-exportarr_default.service"
+    ];
+    requires = [
+      "podman-network-exportarr_default.service"
+    ];
+    partOf = [
+      "podman-compose-exportarr-root.target"
+    ];
+    wantedBy = [
+      "podman-compose-exportarr-root.target"
+    ];
+  };
+  virtualisation.oci-containers.containers."radarr-exporter" = {
+    image = "ghcr.io/onedr0p/exportarr:v2.0";
+    environmentFiles = [
+      "${config.sops.secrets."exportarr-radarr.env".path}"
+    ];
+    ports = [
+      "9708:9708/tcp"
+    ];
+    cmd = ["radarr"];
+    log-driver = "journald";
+    extraOptions = [
+      "--network-alias=radarr-exporter"
+      "--network=proxy"
+      "--network=exportarr_default"
+    ];
+  };
+  systemd.services."podman-radarr-exporter" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "always";
+    };
+    after = [
+      "podman-network-exportarr_default.service"
+    ];
+    requires = [
+      "podman-network-exportarr_default.service"
+    ];
+    partOf = [
+      "podman-compose-exportarr-root.target"
+    ];
+    wantedBy = [
+      "podman-compose-exportarr-root.target"
+    ];
+  };
+  virtualisation.oci-containers.containers."sonarr-exporter" = {
+    image = "ghcr.io/onedr0p/exportarr:v2.0";
+    environmentFiles = [
+      "${config.sops.secrets."exportarr-sonarr.env".path}"
+    ];
+    ports = [
+      "9707:9707/tcp"
+    ];
+    cmd = ["sonarr"];
+    log-driver = "journald";
+    extraOptions = [
+      "--network-alias=sonarr-exporter"
+      "--network=proxy"
+      "--network=exportarr_default"
+    ];
+  };
+  systemd.services."podman-sonarr-exporter" = {
+    serviceConfig = {
+      Restart = lib.mkOverride 90 "always";
+    };
+    after = [
+      "podman-network-exportarr_default.service"
+    ];
+    requires = [
+      "podman-network-exportarr_default.service"
+    ];
+    partOf = [
+      "podman-compose-exportarr-root.target"
+    ];
+    wantedBy = [
+      "podman-compose-exportarr-root.target"
+    ];
+  };
+
+  # Networks
+  systemd.services."podman-network-exportarr_default" = {
+    path = [pkgs.podman];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStop = "podman network rm -f exportarr_default";
+    };
+    script = ''
+      podman network inspect exportarr_default || podman network create exportarr_default
+    '';
+    partOf = ["podman-compose-exportarr-root.target"];
+    wantedBy = ["podman-compose-exportarr-root.target"];
+  };
+
+  # Root service
+  # When started, this will automatically create all resources and start
+  # the containers. When stopped, this will teardown all resources.
+  systemd.targets."podman-compose-exportarr-root" = {
+    unitConfig = {
+      Description = "Root target generated by compose2nix.";
+    };
+    wantedBy = ["multi-user.target"];
+  };
+}
