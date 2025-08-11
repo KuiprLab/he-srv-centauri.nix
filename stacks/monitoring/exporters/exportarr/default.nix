@@ -6,7 +6,7 @@
   ...
 }: {
   sops.secrets = {
-    "exportarr-radarr" = {
+    "exportarr-radarr.env" = {
       sopsFile = ./exportarr-radarr.env;
       format = "env";
       key = "";
@@ -15,7 +15,7 @@
       group = "users";
     };
 
-    "exportarr-sonarr" = {
+    "exportarr-sonarr.env" = {
       sopsFile = ./exportarr-sonarr.env;
       format = "env";
       key = "";
@@ -24,7 +24,7 @@
       group = "users";
     };
 
-    "exportarr-lidarr" = {
+    "exportarr-lidarr.env" = {
       sopsFile = ./exportarr-lidarr.env;
       format = "env";
       key = "";
@@ -33,7 +33,7 @@
       group = "users";
     };
 
-    "exportarr-prowlarr" = {
+    "exportarr-prowlarr.env" = {
       sopsFile = ./exportarr-prowlarr.env;
       format = "env";
       key = "";
