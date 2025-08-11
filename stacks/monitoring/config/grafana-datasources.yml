@@ -39,3 +39,8 @@ datasources:
     basicAuth: false
     jsonData:
       implementation: prometheus
+
+  # Hetzner datasource
+  - name: Hetzner
+    type: hetzner
+    access: proxy
