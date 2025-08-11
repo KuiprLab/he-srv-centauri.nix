@@ -8,7 +8,7 @@
   sops.secrets = {
     "exportarr-radarr.env" = {
       sopsFile = ./exportarr-radarr.env;
-      format = "env";
+      format = "dotenv";
       key = "";
       mode = "0644";
       owner = "ubuntu";
@@ -17,7 +17,7 @@
 
     "exportarr-sonarr.env" = {
       sopsFile = ./exportarr-sonarr.env;
-      format = "env";
+      format = "dotenv";
       key = "";
       mode = "0644";
       owner = "ubuntu";
@@ -26,7 +26,7 @@
 
     "exportarr-lidarr.env" = {
       sopsFile = ./exportarr-lidarr.env;
-      format = "env";
+      format = "dotenv";
       key = "";
       mode = "0644";
       owner = "ubuntu";
@@ -35,7 +35,7 @@
 
     "exportarr-prowlarr.env" = {
       sopsFile = ./exportarr-prowlarr.env;
-      format = "env";
+      format = "dotenv";
       key = "";
       mode = "0644";
       owner = "ubuntu";
