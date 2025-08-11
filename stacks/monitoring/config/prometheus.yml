@@ -109,12 +109,8 @@ scrape_configs:
 
   - job_name: "prowlarr-exporter"  # Renamed job_name for clarity
     static_configs:
-      - targets: ["prowlarr-exporter:9709"]  # Use service name and port
-
-  - job_name: "sabnzbd-exporter"  # Renamed job_name for clarity
-    static_configs:
-      - targets: ["sabnzbd-exporter:9710"]  # Use service name and port
+      - targets: ["prowlarr-exporter:9710"]  # Use service name and port
 
   - job_name: "lidarr-exporter"  # Renamed job_name for clarity
     static_configs:
-      - targets: ["lidarr-exporter:9711"]  # Use service name and port
+      - targets: ["lidarr-exporter:9709"]  # Use service name and port
