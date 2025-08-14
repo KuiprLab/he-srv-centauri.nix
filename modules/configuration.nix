@@ -55,6 +55,8 @@
     efiInstallAsRemovable = true; # Important for some cloud environments
   };
 
+  swapDevices = [ { device = "/swapfile"; size = 16 * 1024; } ];
+
   users.users = {
     ubuntu = {
       isNormalUser = true;
