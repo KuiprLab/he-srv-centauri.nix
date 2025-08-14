@@ -59,6 +59,8 @@
     extraOptions = [
       "--network-alias=mc"
       "--network=minecraft-server_default"
+      "--cap-add=NET_ADMIN"
+      "--cap-add=NET_RAW"
     ];
   };
   systemd.services."podman-minecraft-server-mc" = {
