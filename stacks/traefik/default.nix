@@ -35,6 +35,24 @@
     };
   };
 
+  services.logrotate = {
+    enable = true;
+    configFile = pkgs.writeText "logrotate.conf" ''
+      /home/ubuntu/traefik/logs/access.log {
+        weekly
+        size 100M
+        missingok
+        notifempty
+        dateext
+        dateformat .%Y-%m-%d
+        create 0644 ubuntu users
+        postrotate
+          sudo podman kill --signal="USR1" traefik
+        endscript
+      }
+    '';
+  };
+
   #TODO: figure out how to get the metrics replacer middleware working globally
 
   # Enable container name DNS for all Podman networks.
@@ -128,6 +146,7 @@
     cmd = [
       "--metrics.prometheus=true"
       "--metrics.prometheus.addrouterslabels=true"
+      "--metrics.otlp=true"
       "--api=true"
       "--api.dashboard=true"
       "--api.insecure=true"
@@ -136,10 +155,16 @@
       "--accesslog.filepath=/logs/access.log"
       "--accesslog.format=json"
       "--accesslog.bufferingsize=100"
-      "--accesslog.rotation.maxsize=100"
-      "--accesslog.rotation.maxage=7"
-      "--accesslog.rotation.maxbackups=3"
-      "--accesslog.rotation.compress=true"
+      "--accesslog.fields.defaultmode=keep"
+      "--accesslog.fields.names.ClientUsername=drop"
+      "--accesslog.fields.headers.defaultmode=keep"
+      "--accesslog.fields.headers.names.User-Agent=redact"
+      "--accesslog.fields.headers.names.Authorization=drop"
+      "--accesslog.fields.headers.names.Content-Type=keep"
+      "--log.maxsize=100"
+      "--log.maxbackups=3"
+      "--log.compress=true"
+      "--tracing=true"
 
       # Enhanced access logging with additional fields
       "--accesslog.fields.defaultmode=keep"
