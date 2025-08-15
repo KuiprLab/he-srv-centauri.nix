@@ -13,5 +13,6 @@ _: {
     ./soulseek
     ./starr
     ./traefik
+    ./cleanuparr
   ];
 }
