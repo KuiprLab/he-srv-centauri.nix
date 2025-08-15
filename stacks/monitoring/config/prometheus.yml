@@ -70,6 +70,12 @@ scrape_configs:
       - targets: [ 'podman-exporter:9882']
     scrape_interval: 30s
 
+  # cAdvisor metrics
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+    scrape_interval: 30s
+
 
   # qBittorrent metrics
   - job_name: 'qbittorrent'
