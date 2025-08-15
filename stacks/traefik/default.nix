@@ -136,6 +136,10 @@
       "--accesslog.filepath=/logs/access.log"
       "--accesslog.format=json"
       "--accesslog.bufferingsize=100"
+      "--accesslog.rotation.maxsize=100"
+      "--accesslog.rotation.maxage=7"
+      "--accesslog.rotation.maxbackups=3"
+      "--accesslog.rotation.compress=true"
 
       # Enhanced access logging with additional fields
       "--accesslog.fields.defaultmode=keep"
