@@ -55,7 +55,12 @@
     efiInstallAsRemovable = true; # Important for some cloud environments
   };
 
-  swapDevices = [ { device = "/swapfile"; size = 16 * 1024; } ];
+  swapDevices = [
+    {
+      device = "/swapfile";
+      size = 16 * 1024;
+    }
+  ];
 
   users.users = {
     ubuntu = {
@@ -97,6 +102,7 @@
       9709 # exportarr
       9710 # exportarr
       9711 # exportarr
+      8080 # cAdvisor
     ];
     allowedUDPPorts = [
       6881
