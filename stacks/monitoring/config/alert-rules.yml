@@ -165,7 +165,7 @@ groups:
           description: "High rate of 5xx errors on service {{ $labels.service }}."
 
       - alert: TraefikHighLatency
-        expr: histogram_quantile(0.99, sum(rate(traefik_service_request_duration_seconds_bucket[5m])) by (le, service)) > 2
+        expr: histogram_quantile(0.99, sum(rate(traefik_service_request_duration_seconds_bucket[5m])) by (le, service)) > 4
         for: 10m
         labels:
           severity: warning
