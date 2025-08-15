@@ -1,4 +1,3 @@
-
 {
   lib,
   config,
@@ -20,9 +19,9 @@
       "--network=monitoring_default"
       "--privileged"
     ];
-    ports = [
-      "8080:8080"
-    ];
+    # ports = [
+    #   "8080:8080"
+    # ];
   };
 
   systemd.services."podman-cadvisor" = {
