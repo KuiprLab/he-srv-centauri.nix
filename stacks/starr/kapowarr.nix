@@ -54,7 +54,7 @@
   };
   # Containers
   virtualisation.oci-containers.containers."kapowarr" = {
-    image = "mrcas/kapowarr-alpha:latest";
+    image = "github.io/mrcas/kapowarr-alpha:latest";
     volumes = [
       "/home/ubuntu/kapowarr:/app/db:rw"
       "/mnt/data/downloads:/app/temp_downloads:rw"
