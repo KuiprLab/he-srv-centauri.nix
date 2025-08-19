@@ -46,6 +46,7 @@
       "/mnt/data/media/comics:/data:rw"
     ];
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.docker.network" = "proxy";
       "traefik.enable" = "true";
       # "traefik.http.routers.komga.entrypoints" = "websecure";

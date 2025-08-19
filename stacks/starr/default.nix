@@ -108,6 +108,7 @@
       "/home/ubuntu/prowlarr:/config:rw"
     ];
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.enable" = "true";
       "traefik.http.routers.prowlarr.entrypoints" = "websecure";
       "traefik.http.routers.prowlarr.middlewares" = "authelia@docker";
@@ -156,6 +157,7 @@
       "/run/secrets/radarr.env"
     ];
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.enable" = "true";
       "traefik.http.routers.radarr.entrypoints" = "websecure";
       "traefik.http.routers.radarr.middlewares" = "authelia@docker";
@@ -198,6 +200,7 @@
       "/mnt/data/torrents:/app/qBittorrent/downloads:rw"
     ];
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.docker.network" = "proxy";
       "traefik.enable" = "true";
       "traefik.http.routers.sonarr.entrypoints" = "websecure";
@@ -243,6 +246,7 @@
       "/mnt/data/torrents:/downloads:rw"
     ];
     labels = {
+      "io.containers.autoupdate" = "registry";
       # Dummy port otherwise traefik gets mad
       "traefik.http.services.unpackerr.loadbalancer.server.port" = "1337";
     };
@@ -265,6 +269,7 @@
       "/mnt/data/torrents:/app/qBittorrent/downloads:rw"
     ];
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.docker.network" = "proxy";
       "traefik.enable" = "true";
       "traefik.http.routers.lidarr.entrypoints" = "websecure";

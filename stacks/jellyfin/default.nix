@@ -39,6 +39,7 @@
       "${./branding.xml}:/config/config/branding.xml:ro"
     ];
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.enable" = "true";
       # "traefik.http.routers.jellyfin.entrypoints" = "websecure";
       "traefik.http.routers.jellyfin.entrypoints" = "anubis";

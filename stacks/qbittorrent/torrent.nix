@@ -45,6 +45,7 @@
       "--network=container:gluetun"
     ];
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.enable" = "true";
       "traefik.http.routers.qbittorrent.entrypoints" = "websecure";
       "traefik.http.routers.qbittorrent.rule" = "Host(`qbit.kuipr.de`)";
@@ -65,6 +66,7 @@
       "8000:8000"
     ];
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.http.services.qbit_exporter.loadbalancer.server.port" = "8000";
     };
     dependsOn = [

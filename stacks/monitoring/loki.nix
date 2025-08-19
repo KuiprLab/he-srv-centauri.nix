@@ -15,6 +15,7 @@
       "-config.file=/etc/loki/local-config.yaml"
     ];
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.enable" = "true";
       "traefik.http.routers.loki.entrypoints" = "websecure";
       "traefik.http.routers.loki.middlewares" = "authelia@docker";

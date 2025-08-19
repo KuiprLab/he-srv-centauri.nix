@@ -24,6 +24,7 @@
       "--log.level=info"
     ];
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.enable" = "true";
       "traefik.http.routers.prometheus.entrypoints" = "websecure";
       "traefik.http.routers.prometheus.middlewares" = "authelia@docker";

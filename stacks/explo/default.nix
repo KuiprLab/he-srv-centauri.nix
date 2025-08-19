@@ -38,6 +38,7 @@
     ];
 
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.http.services.explo.loadbalancer.server.port" = "1000";
     };
     log-driver = "journald";

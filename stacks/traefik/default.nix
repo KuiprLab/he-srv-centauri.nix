@@ -71,6 +71,7 @@
   virtualisation.oci-containers.containers."whoami" = {
     image = "traefik/whoami";
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.enable" = "true";
       "traefik.docker.network" = "proxy";
       # "traefik.http.routers.whoami.entrypoints" = "anubis";

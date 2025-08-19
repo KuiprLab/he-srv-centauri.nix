@@ -31,6 +31,7 @@
       "--web.external-url=https://alertmanager.kuipr.de"
     ];
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.enable" = "true";
       "traefik.http.routers.alertmanager.entrypoints" = "websecure";
       "traefik.http.routers.alertmanager.middlewares" = "authelia@docker";

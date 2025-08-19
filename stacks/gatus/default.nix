@@ -45,6 +45,7 @@
       "/home/ubuntu/gatus/data:/data:rw"
     ];
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.docker.network" = "proxy";
       "traefik.enable" = "true";
       "traefik.http.routers.gatus.entrypoints" = "websecure";

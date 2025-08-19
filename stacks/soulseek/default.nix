@@ -58,6 +58,7 @@
     ];
 
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.enable" = "true";
       "traefik.http.routers.slskd.entrypoints" = "websecure";
       "traefik.http.routers.slskd.middlewares" = "authelia@docker";
@@ -104,6 +105,7 @@
       "/mnt/data/downloads:/downloads:rw"
     ];
     labels = {
+      "io.containers.autoupdate" = "registry";
       # Dummy port otherwise traefik gets mad
       "traefik.http.services.soularr.loadbalancer.server.port" = "1337";
     };

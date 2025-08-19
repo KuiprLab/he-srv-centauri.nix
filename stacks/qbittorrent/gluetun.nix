@@ -12,6 +12,9 @@
     environmentFiles = [
       "/run/secrets/gluetun.env"
     ];
+    labels = {
+      "io.containers.autoupdate" = "registry";
+    };
     extraOptions = [
       "--cap-add=NET_ADMIN"
       "--device=/dev/net/tun:/dev/net/tun:rwm"

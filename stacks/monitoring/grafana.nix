@@ -38,6 +38,7 @@
     ];
     user = "472:472"; # grafana user
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.enable" = "true";
       # "traefik.http.routers.grafana.entrypoints" = "websecure";
       "traefik.http.routers.grafana.entrypoints" = "anubis";

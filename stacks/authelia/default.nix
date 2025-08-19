@@ -64,6 +64,7 @@
       "/run/secrets/authelia.env"
     ];
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.enable" = "true";
       "traefik.http.routers.authelia.rule" = "Host(`auth.kuipr.de`)";
       "traefik.http.routers.authelia.entrypoints" = "websecure";

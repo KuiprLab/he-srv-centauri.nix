@@ -69,6 +69,7 @@
     ];
     # Add Traefik labels here for kapowarr
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.enable" = "true";
       "traefik.http.routers.kapowarr.entrypoints" = "websecure";
       "traefik.http.routers.kapowarr.middlewares" = "authelia@docker";

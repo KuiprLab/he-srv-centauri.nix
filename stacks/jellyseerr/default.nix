@@ -30,6 +30,7 @@
     # ];
 
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.enable" = "true";
       # "traefik.http.routers.jellyseerr.entrypoints" = "websecure";
       "traefik.http.routers.jellyseerr.entrypoints" = "anubis";

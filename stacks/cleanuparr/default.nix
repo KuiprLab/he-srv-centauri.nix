@@ -44,6 +44,7 @@
     #   "11011:11011/tcp"
     # ];
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.enable" = "true";
       "traefik.http.routers.cleanuparr.entrypoints" = "websecure";
       "traefik.http.routers.cleanuparr.middlewares" = "authelia@docker";

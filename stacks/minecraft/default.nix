@@ -47,6 +47,7 @@
       "25565:25565/tcp"
     ];
     labels = {
+      "io.containers.autoupdate" = "registry";
       "traefik.enable" = "true";
       "traefik.http.routers.minecraft.entrypoints" = "websecure";
       "traefik.http.routers.minecraft.rule" = "Host(`mc.kuipr.de`)";
