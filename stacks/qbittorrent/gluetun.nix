@@ -7,7 +7,7 @@
   };
 
   virtualisation.oci-containers.containers."gluetun" = {
-    image = "qmcgaw/gluetun";
+    image = "docker.io/qmcgaw/gluetun";
     log-driver = "journald";
     environmentFiles = [
       "/run/secrets/gluetun.env"

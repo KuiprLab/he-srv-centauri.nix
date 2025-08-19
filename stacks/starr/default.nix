@@ -241,7 +241,7 @@
     ];
   };
   virtualisation.oci-containers.containers."unpackerr" = {
-    image = "golift/unpackerr";
+    image = "docker.io/golift/unpackerr";
     volumes = [
       "/mnt/data/torrents:/downloads:rw"
     ];

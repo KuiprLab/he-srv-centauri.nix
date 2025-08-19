@@ -50,7 +50,7 @@
 
   # Containers
   virtualisation.oci-containers.containers."authelia" = {
-    image = "authelia/authelia:latest";
+    image = "docker.io/authelia/authelia:latest";
     volumes = [
       "/home/ubuntu/authelia/config:/config:rw"
       "/run/secrets/configuration.yml:/config/configuration.yml:ro"

@@ -36,7 +36,7 @@
 
   # Containers
   virtualisation.oci-containers.containers."minecraft-server-mc" = {
-    image = "itzg/minecraft-server";
+    image = "docker.io/itzg/minecraft-server";
     environment = {
       "EULA" = "TRUE";
     };
