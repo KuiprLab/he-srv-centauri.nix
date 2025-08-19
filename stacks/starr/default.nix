@@ -261,7 +261,7 @@
   };
 
   virtualisation.oci-containers.containers."lidarr" = {
-    image = "lscr.io/linuxserver/lidarr:2.13.1-nightly";
+    image = "lscr.io/linuxserver/lidarr:latest";
     volumes = [
       "/home/ubuntu/lidarr:/config:rw"
       "/mnt/data/media/music:/music:rw"
