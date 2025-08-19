@@ -39,7 +39,7 @@
 
   # Containers
   virtualisation.oci-containers.containers."slskd" = {
-    image = "slskd/slskd";
+    image = "docker.io/slskd/slskd";
     environment = {
       "SLSKD_REMOTE_CONFIGURATION" = "true";
     };
@@ -95,7 +95,7 @@
     ];
   };
   virtualisation.oci-containers.containers."soularr" = {
-    image = "budinjm/soularr:latest";
+    image = "docker.io/budinjm/soularr:latest";
     environment = {
       "SCRIPT_INTERVAL" = "300";
       "TZ" = "Etc/UTC";

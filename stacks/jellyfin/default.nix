@@ -26,7 +26,7 @@
 
   # Containers
   virtualisation.oci-containers.containers."jellyfin" = {
-    image = "jellyfin/jellyfin";
+    image = "docker.io/jellyfin/jellyfin";
     environment = {
       "JELLYFIN_PublishedServerUrl" = "https://jelly.kuipr.de";
     };

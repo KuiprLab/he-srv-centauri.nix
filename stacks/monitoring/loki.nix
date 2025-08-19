@@ -5,7 +5,7 @@
 }: {
   # Loki for log aggregation
   virtualisation.oci-containers.containers."loki" = {
-    image = "grafana/loki:latest";
+    image = "docker.io/grafana/loki:latest";
     volumes = [
       "/home/ubuntu/loki:/loki:rw"
       "${./config/loki.yml}:/etc/loki/local-config.yaml:ro"

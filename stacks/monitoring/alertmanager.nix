@@ -19,7 +19,7 @@
 
   # Alertmanager configuration
   virtualisation.oci-containers.containers."alertmanager" = {
-    image = "prom/alertmanager:latest";
+    image = "quay.io/prometheus/alertmanager:latest";
     user = "1000:100";
     volumes = [
       "/home/ubuntu/alertmanager:/alertmanager:rw"

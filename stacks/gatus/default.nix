@@ -34,7 +34,7 @@
 
   # Containers
   virtualisation.oci-containers.containers."gatus-gatus" = {
-    image = "twinproduction/gatus:latest";
+    image = "docker.io/twinproduction/gatus:latest";
     user = "0:0"; # Run as root user
     environment = {
       "TZ" = "Europe/Rome";

@@ -34,7 +34,7 @@
 
   # Containers
   virtualisation.oci-containers.containers."komga" = {
-    image = "gotson/komga";
+    image = "docker.io/gotson/komga";
     environment = {
       "KOMGA_OAUTH2_ACCOUNT_CREATION" = "true";
       "KOMGA_OIDC_EMAIL_VERIFICATION" = "false";

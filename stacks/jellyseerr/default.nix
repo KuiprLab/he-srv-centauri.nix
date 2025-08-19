@@ -16,7 +16,7 @@
 
   # Containers
   virtualisation.oci-containers.containers."jellyseerr" = {
-    image = "fallenbagel/jellyseerr:latest";
+    image = "docker.io/fallenbagel/jellyseerr:latest";
     environment = {
       "LOG_LEVEL" = "debug";
       "PORT" = "5055";

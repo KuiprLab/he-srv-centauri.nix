@@ -5,7 +5,7 @@
 }: {
   # Prometheus configuration
   virtualisation.oci-containers.containers."prometheus" = {
-    image = "prom/prometheus:latest";
+    image = "quay.io/prometheus/prometheus:latest";
     volumes = [
       "/home/ubuntu/prometheus:/prometheus:rw"
       "${./config/prometheus.yml}:/etc/prometheus/prometheus.yml:ro"

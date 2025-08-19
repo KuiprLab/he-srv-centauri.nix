@@ -69,7 +69,7 @@
 
   # Containers
   virtualisation.oci-containers.containers."whoami" = {
-    image = "traefik/whoami";
+    image = "docker.io/traefik/whoami";
     labels = {
       "io.containers.autoupdate" = "registry";
       "traefik.enable" = "true";
