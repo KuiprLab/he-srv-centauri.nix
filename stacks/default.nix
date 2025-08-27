@@ -2,7 +2,7 @@ _: {
   imports = [
     ./anubis
     ./authelia
-    ./explo
+    # ./explo
     ./gatus
     ./jellyfin
     ./jellyseerr
