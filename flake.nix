@@ -37,7 +37,6 @@
     ...
   } @ inputs: let
     system = "aarch64-linux";
-    lib = nixpkgs.lib;
 
     # Settings for Package management
     nixpkgsConfig = {
