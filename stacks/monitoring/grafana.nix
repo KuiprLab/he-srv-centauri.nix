@@ -19,7 +19,7 @@
 
   # Grafana configuration
   virtualisation.oci-containers.containers."grafana" = {
-    image = "docker.io/grafana/grafana-dev:12.2.0-257444";
+    image = "docker.io/grafana/grafana-dev:12.2.0-17660687647";
     environment = {
       "GF_SECURITY_ADMIN_USER" = "admin";
       "GF_USERS_ALLOW_SIGN_UP" = "false";
