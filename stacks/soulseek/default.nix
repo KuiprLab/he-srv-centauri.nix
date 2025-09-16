@@ -95,7 +95,7 @@
     ];
   };
   virtualisation.oci-containers.containers."soularr" = {
-    image = "docker.io/budinjm/soularr:latest";
+    image = "budinjm/soularr:latest";
     environment = {
       "SCRIPT_INTERVAL" = "300";
       "TZ" = "Etc/UTC";
