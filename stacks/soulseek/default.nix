@@ -105,7 +105,7 @@
       "/mnt/data/downloads:/downloads:rw"
     ];
     labels = {
-      "io.containers.autoupdate" = "registry";
+      # "io.containers.autoupdate" = "registry";
       # Dummy port otherwise traefik gets mad
       "traefik.http.services.soularr.loadbalancer.server.port" = "1337";
     };
