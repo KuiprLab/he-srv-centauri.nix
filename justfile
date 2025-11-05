@@ -77,18 +77,17 @@ generate-client-secret:
 
 [doc("Show disk usage with a nice summary")]
 disk-usage:
-    @echo "=== Disk Usage Summary ==="
-    @df -h / | tail -n 1
+    @echo "=== Disk Usage Overview ==="
+    @nix run nixpkgs#duf
     @echo ""
-    @echo "=== Nix Store Size ==="
-    @sudo du -sh /nix/store 2>/dev/null || echo "No /nix/store found"
+    @echo "=== Nix Store Usage ==="
+    @sudo nix run nixpkgs#dust -- -d 1 /nix/store 2>/dev/null || echo "No /nix/store found"
     @echo ""
-    @echo "=== Docker/Podman Data ==="
-    @sudo du -sh /var/lib/containers 2>/dev/null || echo "No /var/lib/containers found"
-    @sudo du -sh /var/lib/docker 2>/dev/null || echo "No /var/lib/docker found"
+    @echo "=== Container Data Usage ==="
+    @sudo nix run nixpkgs#dust -- -d 2 /var/lib/containers 2>/dev/null || echo "No /var/lib/containers found"
     @echo ""
-    @echo "=== Home Directory Size ==="
-    @du -sh ~/ 2>/dev/null || echo "Cannot access home"
+    @echo "=== Home Directory Usage ==="
+    @nix run nixpkgs#dust -- -d 2 ~/ 2>/dev/null || echo "Cannot access home"
 
 [doc("Clean up Nix store and generations")]
 nix-clean:
