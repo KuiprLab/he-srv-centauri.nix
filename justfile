@@ -74,3 +74,25 @@ generate-generic-secret:
 [doc("Generate a random pbkdf2 secret for use in authelia")]
 generate-client-secret:
     @docker run --rm authelia/authelia:latest authelia crypto hash generate pbkdf2 --variant sha512 --random --random.length 72 --random.charset rfc3986
+
+[doc("Show disk usage with a nice summary")]
+disk-usage:
+    @echo "=== Disk Usage Summary ==="
+    @df -h / | tail -n 1
+    @echo ""
+    @echo "=== Largest Directories in / ==="
+    @sudo du -h --max-depth=1 / 2>/dev/null | sort -hr | head -n 10
+    @echo ""
+    @echo "=== Nix Store Size ==="
+    @du -sh /nix/store 2>/dev/null || echo "No /nix/store found"
+
+[doc("Clean up Nix store and generations")]
+nix-clean:
+    @echo "=== Cleaning Nix Store ==="
+    @sudo nix-collect-garbage -d
+    @echo ""
+    @echo "=== Optimizing Nix Store ==="
+    @sudo nix-store --optimize
+    @echo ""
+    @echo "=== Current Disk Usage ==="
+    @df -h / | tail -n 1
