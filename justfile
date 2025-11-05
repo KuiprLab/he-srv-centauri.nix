@@ -80,11 +80,15 @@ disk-usage:
     @echo "=== Disk Usage Summary ==="
     @df -h / | tail -n 1
     @echo ""
-    @echo "=== Largest Directories in / ==="
-    @sudo du -h --max-depth=1 / 2>/dev/null | sort -hr | head -n 10
-    @echo ""
     @echo "=== Nix Store Size ==="
     @du -sh /nix/store 2>/dev/null || echo "No /nix/store found"
+    @echo ""
+    @echo "=== Docker/Podman Data ==="
+    @du -sh /var/lib/containers 2>/dev/null || echo "No /var/lib/containers found"
+    @du -sh /var/lib/docker 2>/dev/null || echo "No /var/lib/docker found"
+    @echo ""
+    @echo "=== Home Directory Size ==="
+    @du -sh ~/ 2>/dev/null || echo "Cannot access home"
 
 [doc("Clean up Nix store and generations")]
 nix-clean:
