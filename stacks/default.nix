@@ -4,7 +4,6 @@ _: {
     ./authelia
     ./gatus
     ./jellyfin
-    ./komga
     ./minecraft
     ./monitoring
     ./traefik
