@@ -32,14 +32,7 @@
   sops = {
     age.keyFile = "/var/lib/sops/age-key.txt";
     age.generateKey = false;
-    secrets = {
-      "cifs-creds" = {
-        sopsFile = ./cifs.txt;
-        key = "";
-        format = "binary";
-        restartUnits = [];
-      };
-    };
+    secrets = { };
   };
 
   time.timeZone = "Europe/London";
