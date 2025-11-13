@@ -31,7 +31,6 @@
       "JELLYFIN_PublishedServerUrl" = "https://jelly.kuipr.de";
     };
     volumes = [
-      "/mnt/data/media:/media:rw"
       "/mnt/zurg:/zurg:rw"
       "/home/ubuntu/jellyfin/cache:/cache:rw"
       "/home/ubuntu/jellyfin/config:/config:rw"
