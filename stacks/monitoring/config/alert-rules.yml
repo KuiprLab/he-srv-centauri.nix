@@ -122,17 +122,6 @@ groups:
           summary: "Container restarting frequently"
           description: "Container {{ $labels.name }} has restarted more than 5 times in the last hour"
 
-  - name: starr
-    rules:
-      - alert: QbitFirewalled
-        expr: qbittorrent_firewalled{server="gluetun:8585"} == 1
-        for: 1m
-        labels:
-          severity: critical
-        annotations:
-          summary: "Qbittorrent got firewalled"
-          description: "Qbittorrent got firewalled"
-
   - name: prometheus
     rules:
       - alert: PrometheusConfigReloadFailure
