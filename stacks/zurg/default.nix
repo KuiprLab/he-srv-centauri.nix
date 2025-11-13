@@ -22,6 +22,12 @@
     restartUnits = ["podman-zurg.service"];
   };
 
+  sops.secrets."zurg.env" = {
+    sopsFile = ./zurg.env;
+    format = "dotenv";
+    restartUnits = ["podman-zurg.service"];
+  };
+
   # Containers
   virtualisation.oci-containers.containers."rclone" = {
     image = "rclone/rclone:latest";
@@ -67,6 +73,9 @@
 
   virtualisation.oci-containers.containers."zurg" = {
     image = "ghcr.io/debridmediamanager/zurg-testing:latest";
+    environmentFiles = [
+      config.sops.secrets."zurg.env".path
+    ];
     volumes = [
       "${config.sops.secrets."zurg.yml".path}:/app/config.yml:rw"
       "${../../scripts/jellyfin_update.sh}:/app/jellyfin_update.sh:ro"
@@ -80,6 +89,7 @@
       "--network-alias=zurg"
       "--network=zurg_default"
       "--network=jellyfin_default"
+      "--network=proxy"
     ];
   };
   systemd.services."podman-zurg" = {
