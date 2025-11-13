@@ -32,6 +32,7 @@
     };
     volumes = [
       "/mnt/data/media:/media:rw"
+      "/mnt/zurg:/zurg:rw"
       "/home/ubuntu/jellyfin/cache:/cache:rw"
       "/home/ubuntu/jellyfin/config:/config:rw"
       "${./system.xml}:/config/config/system.xml:rw"
