@@ -9,11 +9,11 @@ _: {
     ./komga
     ./minecraft
     ./monitoring
-    ./qbittorrent
-    ./soulseek
-    ./starr
+    # ./qbittorrent
+    # ./soulseek
+    # ./starr
     ./traefik
-    ./cleanuparr
+    # ./cleanuparr
     ./zurg
   ];
 }
