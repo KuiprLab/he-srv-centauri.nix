@@ -14,5 +14,6 @@ _: {
     ./starr
     ./traefik
     ./cleanuparr
+    ./zurg
   ];
 }
