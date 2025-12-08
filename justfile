@@ -101,8 +101,6 @@ nix-clean:
     @df -h / | tail -n 1
 
 [doc("Prune podman/docker stopped containers, unused images, and dangling volumes")]
-# Usage: just docker-clean confirm=false
-# Set confirm=true to actually run the prune. This avoids accidental destructive runs.
 docker-clean confirm=false:
     @if [ "{{confirm}}" != "true" ]; then \
         echo "Dry run: not executing. To run for real: just docker-clean confirm=true"; \
