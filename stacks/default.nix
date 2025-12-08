@@ -3,7 +3,7 @@ _: {
     ./anubis
     ./authelia
     ./gatus
-    ./jellyfin
+    # ./jellyfin
     ./minecraft
     ./navidrome
     # ./monitoring
