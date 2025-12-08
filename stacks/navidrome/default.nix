@@ -41,26 +41,24 @@
       "${config.sops.secrets."rclone.conf".path}:/config/rclone/rclone.conf:rw"
       "/home/ubuntu/icloud:/data:rw,rshared"
     ];
-    cmd = [ "mount" "icloud:Documents/03 Resources/Music" "/data" "--config" "/config/rclone/rclone.conf" "--allow-other" "--vfs-cache-mode" "full" "--dir-cache-time" "72h" "--poll-interval" "15s" ];
+    cmd = ["mount" "icloud:Documents/03 Resources/Music" "/data" "--config" "/config/rclone/rclone.conf" "--allow-other" "--vfs-cache-mode" "full" "--dir-cache-time" "72h" "--poll-interval" "15s"];
     log-driver = "journald";
     extraOptions = [
       "--cap-add=SYS_ADMIN"
       "--device=/dev/fuse:/dev/fuse:rwm"
       "--security-opt=apparmor:unconfined"
       "--network-alias=rclone-icloud"
-      "--network=navidrome_default"
       "--network=proxy"
     ];
   };
 
   systemd.services."podman-rclone-icloud" = {
-    serviceConfig = { Restart = lib.mkOverride 90 "always"; };
-    after = [ "podman-network-navidrome_default.service" ];
-    requires = [ "podman-network-navidrome_default.service" ];
-    partOf = [ "podman-compose-navidrome-root.target" ];
-    wantedBy = [ "podman-compose-navidrome-root.target" ];
+    serviceConfig = {Restart = lib.mkOverride 90 "always";};
+    after = ["podman-network-navidrome_default.service"];
+    requires = ["podman-network-navidrome_default.service"];
+    partOf = ["podman-compose-navidrome-root.target"];
+    wantedBy = ["podman-compose-navidrome-root.target"];
   };
-
 
   # Podman network for navidrome
   systemd.services."podman-network-navidrome_default" = {
