@@ -5,8 +5,7 @@ _: {
     ./gatus
     ./jellyfin
     ./minecraft
-    ./monitoring
+    # ./monitoring
     ./traefik
-    ./zurg
   ];
 }
