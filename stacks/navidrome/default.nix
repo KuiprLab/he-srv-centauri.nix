@@ -26,7 +26,7 @@
   # sops-managed rclone.conf
   sops.secrets."rclone.conf" = {
     sopsFile = ./rclone-icloud.conf;
-    format = "conf";
+    format = "binary";
     key = "";
     restartUnits = [ "rclone-icloud.service" ];
   };
