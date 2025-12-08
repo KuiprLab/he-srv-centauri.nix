@@ -31,33 +31,36 @@
     group = "users";
     mode = "0755";
     key = "";
-    restartUnits = ["rclone-icloud.service"];
+    restartUnits = ["podman-rclone-icloud.service"];
   };
 
-  # Systemd service to mount iCloud Drive using the decrypted rclone.conf
-  systemd.services.rclone-icloud = {
-    description = "RClone mount for iCloud Drive";
-    after = ["network-online.target"];
-    wants = ["network-online.target"];
-    serviceConfig = {
-      Type = "notify";
-      User = "ubuntu";
-      Group = "users";
-      Restart = "on-failure";
-      RestartSec = "10";
-      ExecStart = ''
-        ${pkgs.rclone}/bin/rclone mount "icloud:Documents/03 Resources/Music" /home/ubuntu/icloud \
-          --config ${config.sops.secrets."rclone.conf".path} \
-          --vfs-cache-mode full \
-          --allow-other \
-          --dir-cache-time 72h \
-          --poll-interval 15s \
-          --log-level INFO
-      '';
-      ExecStop = "${pkgs.coreutils}/bin/fusermount -u /home/ubuntu/icloud";
-    };
-    wantedBy = ["multi-user.target"];
+  # Run rclone as a Podman container to ensure the icloud backend is available
+  virtualisation.oci-containers.containers."rclone-icloud" = {
+    image = "rclone/rclone:latest";
+    volumes = [
+      "${config.sops.secrets."rclone.conf".path}:/config/rclone/rclone.conf:rw"
+      "/home/ubuntu/icloud:/data:rw,rshared"
+    ];
+    cmd = [ "mount" "icloud:Documents/03 Resources/Music" "/data" "--config" "/config/rclone/rclone.conf" "--allow-other" "--vfs-cache-mode" "full" "--dir-cache-time" "72h" "--poll-interval" "15s" ];
+    log-driver = "journald";
+    extraOptions = [
+      "--cap-add=SYS_ADMIN"
+      "--device=/dev/fuse:/dev/fuse:rwm"
+      "--security-opt=apparmor:unconfined"
+      "--network-alias=rclone-icloud"
+      "--network=navidrome_default"
+      "--network=proxy"
+    ];
   };
+
+  systemd.services."podman-rclone-icloud" = {
+    serviceConfig = { Restart = lib.mkOverride 90 "always"; };
+    after = [ "podman-network-navidrome_default.service" ];
+    requires = [ "podman-network-navidrome_default.service" ];
+    partOf = [ "podman-compose-navidrome-root.target" ];
+    wantedBy = [ "podman-compose-navidrome-root.target" ];
+  };
+
 
   # Podman network for navidrome
   systemd.services."podman-network-navidrome_default" = {
@@ -110,8 +113,8 @@
   # Ensure navidrome container starts after rclone mount
   systemd.services."podman-navidrome" = {
     serviceConfig = {Restart = lib.mkOverride 90 "always";};
-    after = ["rclone-icloud.service" "podman-network-navidrome_default.service"];
-    requires = ["rclone-icloud.service" "podman-network-navidrome_default.service"];
+    after = ["podman-rclone-icloud.service" "podman-network-navidrome_default.service"];
+    requires = ["podman-rclone-icloud.service" "podman-network-navidrome_default.service"];
     partOf = ["podman-compose-navidrome-root.target"];
     wantedBy = ["podman-compose-navidrome-root.target"];
   };
