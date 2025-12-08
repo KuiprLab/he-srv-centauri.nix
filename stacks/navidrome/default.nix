@@ -45,14 +45,6 @@
       Group = "users";
       Restart = "on-failure";
       RestartSec = "10";
-      ExecStartPre = lib.mkForce ''
-        # mkdir -p /home/ubuntu/.config/rclone
-        # chown ubuntu:users /home/ubuntu/.config/rclone
-        # Copy the decrypted sops file into the user's rclone config location
-        # cp ${config.sops.secrets."rclone.conf".path} /home/ubuntu/.config/rclone/rclone.conf
-        # chown ubuntu:users /home/ubuntu/.config/rclone/rclone.conf
-        # chmod 600 /home/ubuntu/.config/rclone/rclone.conf
-      '';
       ExecStart = ''
         ${pkgs.rclone}/bin/rclone mount "icloud:Documents/03 Resources/Music" /home/ubuntu/icloud \
           --config ${config.sops.secrets."rclone.conf".path} \
