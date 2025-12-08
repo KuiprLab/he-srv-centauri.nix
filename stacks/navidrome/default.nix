@@ -41,7 +41,7 @@
       "${config.sops.secrets."rclone.conf".path}:/config/rclone/rclone.conf:rw"
       "/home/ubuntu/icloud:/data:rw,rshared"
     ];
-    cmd = ["mount" "icloud:Documents/03 Resources/Music" "/data" "--config" "/config/rclone/rclone.conf" "--allow-other" "--vfs-cache-mode" "full" "--dir-cache-time" "72h" "--poll-interval" "15s"];
+    cmd = ["mount" "iclouddrive:Documents/03 Resources/Music" "/data" "--config" "/config/rclone/rclone.conf" "--allow-other" "--vfs-cache-mode" "full" "--dir-cache-time" "72h" "--poll-interval" "15s"];
     log-driver = "journald";
     extraOptions = [
       "--cap-add=SYS_ADMIN"
