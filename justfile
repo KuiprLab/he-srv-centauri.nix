@@ -100,13 +100,7 @@ nix-clean:
     @echo "=== Current Disk Usage ==="
     @df -h / | tail -n 1
 
-[doc("Prune podman/docker stopped containers, unused images, and dangling volumes")]
-docker-clean confirm=false:
-    @if [ "{{confirm}}" != "true" ]; then \
-        echo "Dry run: not executing. To run for real: just docker-clean confirm=true"; \
-        echo "Run with confirm=true to actually prune podman and docker resources."; \
-        exit 0; \
-    fi
+docker-clean:
     @echo "Pruning podman resources..."
     @sudo podman system prune -a -f --volumes || true
     @echo "Pruning docker resources (if docker present)..."
