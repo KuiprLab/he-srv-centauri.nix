@@ -27,32 +27,35 @@
   sops.secrets."rclone.conf" = {
     sopsFile = ./rclone-icloud.conf;
     format = "binary";
+    owner = "ubuntu";
+    group = "users";
+    mode = "0755";
     key = "";
-    restartUnits = [ "rclone-icloud.service" ];
+    restartUnits = ["rclone-icloud.service"];
   };
 
   # Systemd service to mount iCloud Drive using the decrypted rclone.conf
   systemd.services.rclone-icloud = {
     description = "RClone mount for iCloud Drive";
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
+    after = ["network-online.target"];
+    wants = ["network-online.target"];
     serviceConfig = {
       Type = "notify";
       User = "ubuntu";
-      Group = "ubuntu";
+      Group = "users";
       Restart = "on-failure";
       RestartSec = "10";
       ExecStartPre = lib.mkForce ''
         mkdir -p /home/ubuntu/.config/rclone
         chown ubuntu:users /home/ubuntu/.config/rclone
         # Copy the decrypted sops file into the user's rclone config location
-        cp ${config.sops.secrets."rclone.conf".path} /home/ubuntu/.config/rclone/rclone.conf
-        chown ubuntu:users /home/ubuntu/.config/rclone/rclone.conf
-        chmod 600 /home/ubuntu/.config/rclone/rclone.conf
+        # cp ${config.sops.secrets."rclone.conf".path} /home/ubuntu/.config/rclone/rclone.conf
+        # chown ubuntu:users /home/ubuntu/.config/rclone/rclone.conf
+        # chmod 600 /home/ubuntu/.config/rclone/rclone.conf
       '';
       ExecStart = ''
         ${pkgs.rclone}/bin/rclone mount "icloud:Documents/03 Resources/Music" /home/ubuntu/icloud \
-          --config /home/ubuntu/.config/rclone/rclone.conf \
+          --config ${config.sops.secrets."rclone.conf".path} \
           --vfs-cache-mode full \
           --allow-other \
           --dir-cache-time 72h \
@@ -61,9 +64,8 @@
       '';
       ExecStop = "${pkgs.coreutils}/bin/fusermount -u /home/ubuntu/icloud";
     };
-    wantedBy = [ "multi-user.target" ];
+    wantedBy = ["multi-user.target"];
   };
-
 
   # Podman network for navidrome
   systemd.services."podman-network-navidrome_default" = {
