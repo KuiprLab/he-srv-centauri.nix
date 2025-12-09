@@ -34,20 +34,13 @@
     restartUnits = ["smb-mount-music.service"];
   };
 
-  # Systemd service to mount the SMB share to /home/ubuntu/music
-  systemd.services."smb-mount-music" = {
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStop = "/bin/umount -f /home/ubuntu/music || true";
-    };
-    path = [pkgs.cifs-utils];
-    script = ''
-      mkdir -p /home/ubuntu/music
-      mount -t cifs "//192.168.0.58/data" /home/ubuntu/music -o credentials=${config.sops.secrets."navidrome-smbcredentials".path},uid=1000,gid=100,vers=3.0
-    '';
-    wantedBy = ["podman-compose-navidrome-root.target"];
-    partOf = ["podman-compose-navidrome-root.target"];
+  fileSystems."/mnt/share" = {
+    device = "//192.168.0.58/data";
+    fsType = "cifs";
+    options = let
+      # this line prevents hanging on network split
+      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+    in ["${automount_opts},credentials=${config.sops.secrets."navidrome-smbcredentials".path}"];
   };
 
   # Podman network for navidrome
