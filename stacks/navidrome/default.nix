@@ -26,7 +26,7 @@
   # SMB credentials managed by sops; fill values in `stacks/navidrome/smbcredentials` and encrypt with sops
   sops.secrets."navidrome-smbcredentials" = {
     sopsFile = ./smbcredentials.txt;
-    format = "txt";
+    format = "binary";
     owner = "root";
     group = "root";
     mode = "0600";
