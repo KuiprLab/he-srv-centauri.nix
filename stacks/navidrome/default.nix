@@ -44,7 +44,7 @@
     path = [pkgs.cifs-utils];
     script = ''
       mkdir -p /home/ubuntu/music
-      mountpoint -q /home/ubuntu/music || mount -t cifs "//192.168.0.58/data" /home/ubuntu/music -o credentials=${config.sops.secrets."navidrome-smbcredentials".path},uid=1000,gid=100,vers=3.0
+      mount -t cifs "//192.168.0.58/data" /home/ubuntu/music -o credentials=${config.sops.secrets."navidrome-smbcredentials".path},uid=1000,gid=100,vers=3.0
     '';
     wantedBy = ["podman-compose-navidrome-root.target"];
     partOf = ["podman-compose-navidrome-root.target"];
