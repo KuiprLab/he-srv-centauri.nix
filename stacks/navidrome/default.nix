@@ -65,7 +65,7 @@
       "NAVIDROME_LOG_LEVEL" = "info";
     };
     volumes = [
-      "/home/ubuntu/music:/music:ro"
+      "/mnt/share/Music:/music:ro"
       "/home/ubuntu/navidrome/data:/data:rw"
       "/home/ubuntu/navidrome/conf:/config:rw"
     ];
