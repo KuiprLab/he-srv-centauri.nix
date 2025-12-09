@@ -12,52 +12,42 @@
       group = "users";
       mode = "0755";
     };
-    icloud = {
-      path = "/home/ubuntu/icloud";
+    music = {
+      path = "/home/ubuntu/music";
       owner = "ubuntu";
       group = "users";
       mode = "0755";
     };
   };
 
-  # Ensure rclone and sops are available on the system
-  environment.systemPackages = with pkgs; [rclone sops podman];
+  # Ensure sops, podman and cifs-utils are available on the system
+  environment.systemPackages = with pkgs; [sops podman cifs-utils];
 
-  # sops-managed rclone.conf
-  sops.secrets."rclone.conf" = {
-    sopsFile = ./rclone-icloud.conf;
-    format = "binary";
-    owner = "ubuntu";
-    group = "users";
-    mode = "0755";
+  # SMB credentials managed by sops; fill values in `stacks/navidrome/smbcredentials` and encrypt with sops
+  sops.secrets."navidrome-smbcredentials" = {
+    sopsFile = ./smbcredentials.txt;
+    format = "txt";
+    owner = "root";
+    group = "root";
+    mode = "0600";
     key = "";
-    restartUnits = ["podman-rclone-icloud.service"];
+    restartUnits = ["smb-mount-music.service"];
   };
 
-  # Run rclone as a Podman container to ensure the icloud backend is available
-  virtualisation.oci-containers.containers."rclone-icloud" = {
-    image = "rclone/rclone:latest";
-    volumes = [
-      "${config.sops.secrets."rclone.conf".path}:/config/rclone/rclone.conf:rw"
-      "/home/ubuntu/icloud:/data:rw,rshared"
-    ];
-    cmd = ["mount" "iclouddrive:Documents/03 Resources/Music" "/data" "--config" "/config/rclone/rclone.conf" "--allow-other" "--vfs-cache-mode" "full" "--dir-cache-time" "72h" "--poll-interval" "15s"];
-    log-driver = "journald";
-    extraOptions = [
-      "--cap-add=SYS_ADMIN"
-      "--device=/dev/fuse:/dev/fuse:rwm"
-      "--security-opt=apparmor:unconfined"
-      "--network-alias=rclone-icloud"
-      "--network=proxy"
-    ];
-  };
-
-  systemd.services."podman-rclone-icloud" = {
-    serviceConfig = {Restart = lib.mkOverride 90 "always";};
-    after = ["podman-network-navidrome_default.service"];
-    requires = ["podman-network-navidrome_default.service"];
-    partOf = ["podman-compose-navidrome-root.target"];
+  # Systemd service to mount the SMB share to /home/ubuntu/music
+  systemd.services."smb-mount-music" = {
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStop = "/bin/umount -f /home/ubuntu/music || true";
+    };
+    path = [pkgs.cifs-utils];
+    script = ''
+      mkdir -p /home/ubuntu/music
+      mountpoint -q /home/ubuntu/music || mount -t cifs "//192.168.0.58/data" /home/ubuntu/music -o credentials=${config.sops.secrets."navidrome-smbcredentials".path},uid=1000,gid=100,vers=3.0
+    '';
     wantedBy = ["podman-compose-navidrome-root.target"];
+    partOf = ["podman-compose-navidrome-root.target"];
   };
 
   # Podman network for navidrome
@@ -82,7 +72,7 @@
       "NAVIDROME_LOG_LEVEL" = "info";
     };
     volumes = [
-      "/home/ubuntu/icloud:/music:ro"
+      "/home/ubuntu/music:/music:ro"
       "/home/ubuntu/navidrome/data:/data:rw"
       "/home/ubuntu/navidrome/conf:/config:rw"
     ];
@@ -108,11 +98,11 @@
     wantedBy = ["multi-user.target"];
   };
 
-  # Ensure navidrome container starts after rclone mount
+  # Ensure navidrome container starts after the SMB mount
   systemd.services."podman-navidrome" = {
     serviceConfig = {Restart = lib.mkOverride 90 "always";};
-    after = ["podman-rclone-icloud.service" "podman-network-navidrome_default.service"];
-    requires = ["podman-rclone-icloud.service" "podman-network-navidrome_default.service"];
+    after = ["smb-mount-music.service" "podman-network-navidrome_default.service"];
+    requires = ["smb-mount-music.service" "podman-network-navidrome_default.service"];
     partOf = ["podman-compose-navidrome-root.target"];
     wantedBy = ["podman-compose-navidrome-root.target"];
   };

@@ -5,7 +5,7 @@ _: {
     ./gatus
     # ./jellyfin
     ./minecraft
-    ./navidrome
+    # ./navidrome
     # ./monitoring
     ./traefik
   ];
