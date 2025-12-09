@@ -94,8 +94,8 @@
   # Ensure navidrome container starts after the SMB mount
   systemd.services."podman-navidrome" = {
     serviceConfig = {Restart = lib.mkOverride 90 "always";};
-    after = ["smb-mount-music.service" "podman-network-navidrome_default.service"];
-    requires = ["smb-mount-music.service" "podman-network-navidrome_default.service"];
+    after = [ "podman-network-navidrome_default.service"];
+    requires = [ "podman-network-navidrome_default.service"];
     partOf = ["podman-compose-navidrome-root.target"];
     wantedBy = ["podman-compose-navidrome-root.target"];
   };
