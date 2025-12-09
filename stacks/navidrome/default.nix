@@ -60,7 +60,7 @@
 
   # Navidrome container
   virtualisation.oci-containers.containers."navidrome" = {
-    image = "deluan/navidrome:latest";
+    image = "docker.io/deluan/navidrome:latest";
     environment = {
       "NAVIDROME_LOG_LEVEL" = "info";
     };
