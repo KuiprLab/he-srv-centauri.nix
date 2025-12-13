@@ -14,6 +14,28 @@
     };
   };
 
+
+
+  # SMB credentials managed by sops; fill values in `stacks/navidrome/smbcredentials` and encrypt with sops
+  sops.secrets."navidrome-smbcredentials" = {
+    sopsFile = ./smbcredentials.txt;
+    format = "binary";
+    owner = "root";
+    group = "root";
+    mode = "0600";
+    key = "";
+    restartUnits = ["smb-mount-music.service"];
+  };
+
+  fileSystems."/mnt/share" = {
+    device = "//192.168.0.58/data";
+    fsType = "cifs";
+    options = let
+      # this line prevents hanging on network split
+      automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+    in ["${automount_opts},credentials=${config.sops.secrets."navidrome-smbcredentials".path}"];
+  };
+
   # Enable container name DNS for all Podman networks.
   networking.firewall.interfaces = let
     matchAll =
@@ -31,7 +53,7 @@
       "JELLYFIN_PublishedServerUrl" = "https://jelly.kuipr.de";
     };
     volumes = [
-      "/mnt/zurg:/zurg:rw"
+      "/mnt/share/Music:/music:rw"
       "/home/ubuntu/jellyfin/cache:/cache:rw"
       "/home/ubuntu/jellyfin/config:/config:rw"
       "${./system.xml}:/config/config/system.xml:rw"

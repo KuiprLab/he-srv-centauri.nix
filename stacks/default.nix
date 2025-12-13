@@ -3,9 +3,9 @@ _: {
     ./anubis
     ./authelia
     ./gatus
-    # ./jellyfin
+    ./jellyfin
     ./minecraft
-    ./navidrome
+    # ./navidrome
     # ./monitoring
     ./traefik
   ];
