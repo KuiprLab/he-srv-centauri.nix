@@ -153,7 +153,7 @@
       "--api.insecure=true"
       "--log.level=INFO"
       "--accesslog=true"
-      "--accesslog.filepath=/logs/access.log"
+      # "--accesslog.filepath=/logs/access.log"
       "--accesslog.format=json"
       "--accesslog.bufferingsize=100"
       "--accesslog.fields.defaultmode=keep"
