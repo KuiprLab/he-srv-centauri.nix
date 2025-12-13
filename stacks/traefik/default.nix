@@ -183,12 +183,13 @@
       "--entrypoints.websecure.forwardedHeaders.trustedIPs=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
       "--entrypoints.anubis.forwardedHeaders.trustedIPs=10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
 
-      # Existing configuration
       "--providers.docker=true"
       "--entryPoints.web.address=:80"
       "--entryPoints.websecure.address=:443"
       "--entryPoints.anubis.address=:3923"
-      "--certificatesresolvers.myresolver.acme.dnschallenge=true"
+      # use tls challenge because hetzner dns stopped working
+      "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      "--certificatesresolvers.myresolver.acme.dnschallenge=false"
       "--certificatesresolvers.myresolver.acme.dnschallenge.provider=hetzner"
       "--certificatesresolvers.myresolver.acme.email=daniel.inama02@gmail.com"
       "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
