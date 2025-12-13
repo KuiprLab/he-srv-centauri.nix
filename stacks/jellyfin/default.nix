@@ -48,7 +48,7 @@
 
   # Containers
   virtualisation.oci-containers.containers."jellyfin" = {
-    image = "docker.io/jellyfin/jellyfin";
+    image = "docker.io/jellyfin/jellyfin:latest";
     environment = {
       "JELLYFIN_PublishedServerUrl" = "https://jelly.kuipr.de";
     };
@@ -121,3 +121,5 @@
     wantedBy = ["multi-user.target"];
   };
 }
+
+
