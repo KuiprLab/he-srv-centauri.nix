@@ -56,8 +56,8 @@
       "/mnt/share/Music:/music:rw"
       "/home/ubuntu/jellyfin/cache:/cache:rw"
       "/home/ubuntu/jellyfin/config:/config:rw"
-      "${./system.xml}:/config/config/system.xml:rw"
-      "${./network.xml}:/config/config/network.xml:ro"
+      # "${./system.xml}:/config/config/system.xml:rw"
+      # "${./network.xml}:/config/config/network.xml:ro"
       "${./branding.xml}:/config/config/branding.xml:ro"
     ];
     labels = {
