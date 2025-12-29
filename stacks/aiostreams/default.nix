@@ -64,6 +64,7 @@
       "traefik.http.routers.aiostreams.entrypoints" = "websecure";
       "traefik.http.routers.aiostreams.middlewares" = "authelia@docker,block-metrics@docker";
       "traefik.http.routers.aiostreams.rule" = "Host(`aiostreams.kuipr.de`)";
+      "traefik.http.routers.aiostreams.tls.certresolver" = "myresolver";
       "traefik.http.services.aiostreams.loadbalancer.server.port" = "3000";
       "traefik.port" = "3000";
     };
