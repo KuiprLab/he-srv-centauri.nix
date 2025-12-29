@@ -61,9 +61,11 @@
     labels = {
       "io.containers.autoupdate" = "registry";
       "traefik.enable" = "true";
-      "traefik.http.routers.aiostreams.entrypoints" = "anubis";
+      "traefik.http.routers.aiostreams.entrypoints" = "websecure";
+      "traefik.http.routers.aiostreams.middlewares" = "authelia@docker,block-metrics@docker";
       "traefik.http.routers.aiostreams.rule" = "Host(`aiostreams.kuipr.de`)";
       "traefik.http.services.aiostreams.loadbalancer.server.port" = "3000";
+      "traefik.port" = "3000";
     };
     extraOptions = [
       "--health-cmd=wget -qO- http://localhost:3000/api/v1/status"
