@@ -49,9 +49,9 @@
     volumes = [
       "/home/ubuntu/aiostreams:/app/data:rw"
     ];
-    ports = [
-      "3000:3000/tcp"
-    ];
+    # ports = [
+    #   "3000:3000/tcp"
+    # ];
 
     environmentFiles = [
       "/run/secrets/aiostreams.env"
@@ -62,10 +62,10 @@
       "io.containers.autoupdate" = "registry";
       "traefik.enable" = "true";
       # "traefik.http.routers.jellyfin.entrypoints" = "websecure";
-      "traefik.http.routers.jellyfin.entrypoints" = "anubis";
-      "traefik.http.routers.jellyfin.rule" = "Host(`aiostreams.kuipr.de`)";
+      "traefik.http.routers.aiostreams.entrypoints" = "anubis";
+      "traefik.http.routers.aiostreams.rule" = "Host(`aiostreams.kuipr.de`)";
       # "traefik.http.routers.jellyfin.tls.certresolver" = "myresolver";
-      "traefik.http.services.jellyfin.loadbalancer.server.port" = "3000";
+      "traefik.http.services.aiostreams.loadbalancer.server.port" = "3000";
       # "traefik.http.routers.jellyfin.middlewares" = "block-metrics@docker";
     };
     extraOptions = [
