@@ -69,14 +69,13 @@
       "traefik.port" = "3000";
     };
     extraOptions = [
-      "--network=container:gluetun"
       "--health-cmd=wget -qO- http://localhost:3000/api/v1/status"
       "--health-interval=1m0s"
       "--health-retries=5"
       "--health-start-period=10s"
       "--health-timeout=10s"
-      "--network-alias=aiostreams"
-      # "--network=aiostreams_default"
+      # "--network-alias=aiostreams"
+      "--network=aiostreams_default"
       "--network=container:gluetun"
     ];
   };
