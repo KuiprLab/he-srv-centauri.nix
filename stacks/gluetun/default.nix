@@ -13,7 +13,7 @@
       "/run/secrets/gluetun.env"
     ];
     extraOptions = [
-      "--cap-add=NET_ADMIN"
+      # "--cap-add=NET_ADMIN"
       "--device=/dev/net/tun:/dev/net/tun:rwm"
       "--health-cmd=[\"wget\", \"-qO-\", \"https://ipinfo.io/ip\"]"
       "--health-interval=30s"
@@ -24,7 +24,7 @@
       "--network=proxy"
     ];
     ports = [
-      "8080:8080/tcp"
+      "8080:8080"
       "47594/tcp"
       "47594/udp"
     ];
