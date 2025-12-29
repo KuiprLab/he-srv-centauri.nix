@@ -76,7 +76,7 @@
       "--health-start-period=10s"
       "--health-timeout=10s"
       "--network-alias=aiostreams"
-      "--network=aiostreams_default"
+      # "--network=aiostreams_default"
       "--network=container:gluetun"
     ];
   };
