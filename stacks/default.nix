@@ -8,5 +8,6 @@ _: {
     # ./navidrome
     # ./monitoring
     ./traefik
+    ./aiostreams
   ];
 }
