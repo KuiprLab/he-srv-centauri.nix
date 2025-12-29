@@ -61,12 +61,9 @@
     labels = {
       "io.containers.autoupdate" = "registry";
       "traefik.enable" = "true";
-      # "traefik.http.routers.jellyfin.entrypoints" = "websecure";
       "traefik.http.routers.aiostreams.entrypoints" = "anubis";
       "traefik.http.routers.aiostreams.rule" = "Host(`aiostreams.kuipr.de`)";
-      # "traefik.http.routers.jellyfin.tls.certresolver" = "myresolver";
       "traefik.http.services.aiostreams.loadbalancer.server.port" = "3000";
-      # "traefik.http.routers.jellyfin.middlewares" = "block-metrics@docker";
     };
     extraOptions = [
       "--health-cmd=wget -qO- http://localhost:3000/api/v1/status"
