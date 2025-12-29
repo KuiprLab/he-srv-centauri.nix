@@ -43,7 +43,7 @@
       # "traefik.http.routers.grafana.entrypoints" = "websecure";
       "traefik.http.routers.grafana.entrypoints" = "anubis";
       "traefik.http.routers.grafana.rule" = "Host(`grafana.kuipr.de`)";
-      # "traefik.http.routers.grafana.tls.certresolver" = "myresolver";
+      "traefik.http.routers.grafana.tls.certresolver" = "myresolver";
       "traefik.http.services.grafana.loadbalancer.server.port" = "3000";
     };
     log-driver = "journald";

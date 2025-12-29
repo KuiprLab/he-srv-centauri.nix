@@ -66,7 +66,7 @@
       # "traefik.http.routers.jellyfin.entrypoints" = "websecure";
       "traefik.http.routers.jellyfin.entrypoints" = "anubis";
       "traefik.http.routers.jellyfin.rule" = "Host(`jelly.kuipr.de`)";
-      # "traefik.http.routers.jellyfin.tls.certresolver" = "myresolver";
+      "traefik.http.routers.jellyfin.tls.certresolver" = "myresolver";
       "traefik.http.services.jellyfin.loadbalancer.server.port" = "8096";
       # "traefik.http.routers.jellyfin.middlewares" = "block-metrics@docker";
     };
