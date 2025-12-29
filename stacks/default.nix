@@ -9,5 +9,6 @@ _: {
     # ./monitoring
     ./traefik
     ./aiostreams
+        ./gluetun
   ];
 }
