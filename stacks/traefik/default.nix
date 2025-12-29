@@ -188,7 +188,8 @@
       "--entryPoints.websecure.address=:443"
       "--entryPoints.anubis.address=:3923"
       # use tls challenge because hetzner dns stopped working
-      "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      # "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
       "--certificatesresolvers.myresolver.acme.dnschallenge=false"
       "--certificatesresolvers.myresolver.acme.dnschallenge.provider=hetzner"
       "--certificatesresolvers.myresolver.acme.email=daniel.inama02@gmail.com"
