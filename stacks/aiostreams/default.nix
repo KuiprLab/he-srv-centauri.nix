@@ -24,6 +24,16 @@
       "${matchAll}".allowedUDPPorts = [ 53 ];
     };
 
+
+  myFolders = {
+    aiostreams = {
+      path = "/home/ubuntu/aiostreams";
+      owner = "ubuntu";
+      group = "users";
+      mode = "0755";
+    };
+  };
+
   sops.secrets."aiostreams.env" = {
     sopsFile = ./aio.env;
     format = "dotenv";
@@ -37,7 +47,7 @@
   virtualisation.oci-containers.containers."aiostreams" = {
     image = "ghcr.io/viren070/aiostreams:latest";
     volumes = [
-      "/Users/daniel/Developer/github.com/KuiprLab/dev-environment/he-srv-centauri.nix/data:/app/data:rw"
+      "/home/ubuntu/aiostreams:/app/data:rw"
     ];
     ports = [
       "3000:3000/tcp"
